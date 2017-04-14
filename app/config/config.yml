@@ -80,3 +80,15 @@ fos_user:
             from_email:
                 address:        huilierhugo@gmail.com
                 sender_name:    Demo Registration
+
+liip_imagine:
+    resolvers:
+        default:
+            web_path: ~
+    filter_sets:
+        cache: ~
+        small_image:
+            quality: 75
+            filters:
+                scale:
+                    dim: [200,100]

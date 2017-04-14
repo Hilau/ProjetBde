@@ -14,3 +14,6 @@ user:
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+_liip_imagine:
+  resource: '@LiipImagineBundle/Resources/config/routing.xml'
