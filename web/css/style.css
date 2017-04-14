@@ -167,6 +167,17 @@ hr
   width: 60px;
 }
 
+.dropdown-menu
+{
+  min-width: 180px;
+}
+
+.caret
+{
+  float: right;
+  margin-top: 8px;
+}
+
 
 
 
