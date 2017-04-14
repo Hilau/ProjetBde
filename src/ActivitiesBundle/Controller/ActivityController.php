@@ -16,6 +16,13 @@ class ActivityController extends Controller
 		return $this->render('ActivitiesBundle::listActivity.html.twig');
 	}
 
+	/**
+	* @Route("vote", name="activitiesVote")
+	*/
+	public function showActivitiesVote(){
+		return $this->render('ActivitiesBundle::listActivityVote.html.twig');
+	}
+
 }
 
 

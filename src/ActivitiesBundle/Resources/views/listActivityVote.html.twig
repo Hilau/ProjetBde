@@ -1,0 +1,92 @@
+{%extends "::base.html.twig"%}
+
+{% block header %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/styleVote.css') }}">
+{% endblock%}
+
+{% block body %}
+	<div class="row">
+					<h3>Voter pour vos activités préférées</h3>
+					<div class="col-lg-offset-1 col-lg-4 activityVote">
+						<h4>Titre de l'activité</h4><br>
+						<div class="conteneurImg"><img src="{{ asset('img/index.jpg') }}" alt="photo activite" class="img1"><br></div>
+						<a href="#">Plus de détails</a>
+						<p>Choisissez votre date et votre horaire :</p>
+						<div class="row">
+							<div class="col-lg-5 btnAdj">
+								<form class="formActivities">
+									<select name="horaire" class="form-control">
+										<option value="14:00">14:00</option>
+										<option value="15:00">15:00</option>
+										<option value="16:00">16:00</option>
+										<option value="17:00">17:00</option>
+									</select>			
+								</form>	
+							</div>
+							<div class="col-lg-3 btnAdj">
+								<button class="btn btn-primary voter" type="button">Voter</button>
+							</div>
+							<div class="col-lg-offset-2 col-lg-1">
+								<span class="glyphicon glyphicon-thumbs-up"></span>	
+							</div>		
+							<br><br>
+						</div>
+					</div>
+
+					<div class="col-lg-offset-1 col-lg-4 activityVote">
+						<h4>Titre de l'activité</h4><br>
+						<div class="conteneurImg"><img src="{{ asset('img/index.jpg') }}" alt="photo activite" class="img1"><br></div>
+						<a href="#">Plus de détails</a>
+						<p>Choisissez votre date et votre horaire :</p>
+						<div class="row">
+							<div class="col-lg-5 btnAdj">
+								<form class="formActivities">
+									<select name="horaire" class="form-control">
+										<option value="14:00">14:00</option>
+										<option value="15:00">15:00</option>
+										<option value="16:00">16:00</option>
+										<option value="17:00">17:00</option>
+									</select>			
+								</form>	
+							</div>
+							<div class="col-lg-3 btnAdj">
+								<button class="btn btn-primary voter" type="button">Voter</button>
+							</div>
+							<div class="col-lg-offset-2 col-lg-1">
+								<span class="glyphicon glyphicon-thumbs-up"></span>	
+							</div>		
+							<br><br>
+						</div>
+					</div>
+				</div>
+
+				<br><br>
+
+				<div class="row">
+					<div class="col-lg-offset-1 col-lg-4 activityVote">
+						<h4>Titre de l'activité</h4><br>
+						<div class="conteneurImg"><img src="{{ asset('img/index.jpg') }}" alt="photo activite" class="img1"><br></div>
+						<a href="#">Plus de détails</a>
+						<p>Choisissez votre date et votre horaire :</p>
+						<div class="row">
+							<div class="col-lg-5 btnAdj">
+								<form class="formActivities">
+									<select name="horaire" class="form-control">
+										<option value="14:00">14:00</option>
+										<option value="15:00">15:00</option>
+										<option value="16:00">16:00</option>
+										<option value="17:00">17:00</option>
+									</select>			
+								</form>	
+							</div>
+							<div class="col-lg-3 btnAdj">
+								<button class="btn btn-primary voter" type="button">Voter</button>
+							</div>
+							<div class="col-lg-offset-2 col-lg-1">
+								<span class="glyphicon glyphicon-thumbs-up"></span>	
+							</div>		
+							<br><br>
+						</div>
+					</div>
+				</div>
+{% endblock %}
