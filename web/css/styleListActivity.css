@@ -182,7 +182,20 @@ hr
 	width: 100%;
 }
 
-.imgPrincip
+.image
 {
-
+  width: 100%;
 }
+
+.comment
+{
+  border: solid 1px black;
+  margin-bottom: 4px;
+  padding: 2px;
+}
+
+.textComment
+{
+  text-align: justify;
+}
+

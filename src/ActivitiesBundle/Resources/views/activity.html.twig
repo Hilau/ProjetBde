@@ -13,7 +13,56 @@
 
 	<div class="row">
 		<div class="col-lg-offset-1 col-lg-10">
-			<img class="img-responsive" src="{{ asset('img/gateau.jpg') }}">
+			<a href="" data-toggle="modal" data-target="#modalCommentaire">
+				<img class="img-responsive" src="{{ asset('img/gateau.jpg') }}">
+			</a>
+		</div>
+	</div>
+
+	<div id="modalCommentaire" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-footer">
+					<button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-offset-1 col-lg-10">
+							<div class="row">
+								<img class="image" src="{{ asset('img/gateau.jpg') }}">
+								<div class="row">
+									<div class="form-group row">
+										<input class="form-control" type="text" placeholder="Commentaire" id="example-text-input">
+									</div>
+								</div><br>
+								<div class="row comment">
+									<div class="col-lg-2">
+										<img class="avatar" src="{{ asset('img/index.jpg') }}">
+									</div>
+									<div class="col-lg-10 textComment">
+										Je suis un commentaire, je suis un commentaire , je suis un commentaire , je suis un commentaire , je suis un commentaire.<br><br> 
+									</div>
+									<div class="row">
+										<p class="col-lg-3 date">15 Avril 2017 à 15:47</p>
+									</div>
+								</div>
+								<div class="row comment">
+									<div class="col-lg-2">
+										<img class="avatar" src="{{ asset('img/index.jpg') }}">
+									</div>
+									<div class="col-lg-10 textComment">
+										Je suis un commentaire, je suis un commentaire , je suis un commentaire , je suis un commentaire , je suis un commentaire. Je suis un commentaire, je suis un commentaire , je suis un commentaire , je suis un commentaire , je suis un commentaire. Je suis un commentaire, je suis un commentaire , je suis un commentaire , je suis un commentaire , je suis un commentaire.<br><br>
+									</div>
+									<div class="row">
+										<p class="col-lg-3 date">15 Avril 2017 à 15:47</p>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
