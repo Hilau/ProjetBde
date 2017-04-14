@@ -1,1 +1,72 @@
-Hey
+{%extends "::base.html.twig"%}
+
+{% block header %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/styleListActivity.css') }}">
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<h3>Nos activités</h3>
+		<hr>
+	</div>
+	<div class="row">
+		<div class="col-lg-offset-1 col-lg-10 activity">
+			<div class="row">
+				<h4 class="title">Bataille de boules de neiges</h4>
+				<h4 class="date">13/04/2017</h4><br><br>
+			</div>
+			<div class="row activityInfo">
+				<div class="col-lg-3 ctnBtn">
+					<img class="img-responsive" src="{{ asset('img/bataille.jpg') }}">
+				</div>
+				<div class="col-lg-9">
+					<p class="description">
+					Ca va être rigolo, venez vous amuser avec nous !<br>L'inscription est gratuite, il faut juste amener votre sourire et de la bonne humeur. L'inscription est gratuite, il faut juste amener votre sourire et de la bonne humeur. L'inscription est gratuite, il faut juste amener votre sourire et de la bonne humeur. 
+					</p>
+					<button type="button" class="btn btn-primary subscribe">S'inscrire</button>
+					<a class="details" href="#">Plus de détails</a>
+				</div>
+			</div>
+		</div>	
+	</div> <br><br>
+	<div class="row">
+		<div class="col-lg-offset-1 col-lg-10 activity">
+			<div class="row">
+				<h4 class="title">Fondue au chocolat</h4>
+				<h4 class="date">15/05/2017</h4><br><br>
+			</div>
+			<div class="row activityInfo">
+				<div class="col-lg-3 ctnBtn">
+					<img class="img-responsive" src="{{ asset('img/fondue.jpg') }}">
+				</div>
+				<div class="col-lg-9">
+					<p class="description">
+					C'est très très bon ! Et en plus il y a des chamallow et des bonbons.<br>L'inscription est gratuite, mais n'oubliez pas votre estomac. Attention, n'oubliez pas d'indiquer dans le formulaire d'inscription les aliments que vous ne tolérer pas.
+					</p>
+					<button type="button" class="btn btn-primary subscribe">S'inscrire</button>
+					<a class="details" href="#">Plus de détails</a>
+				</div>
+			</div>
+		</div>	
+	</div><br><br>
+	<div class="row">
+		<div class="col-lg-offset-1 col-lg-10 activity">
+			<div class="row">
+				<h4 class="title">Anniversaire de Julie</h4>
+				<h4 class="date">09/07/2017</h4><br><br>
+			</div>
+			<div class="row activityInfo">
+				<div class="col-lg-3 ctnBtn">
+					<img class="img-responsive" src="{{ asset('img/gateau.jpg') }}">
+				</div>
+				<div class="col-lg-9">
+					<p class="description">
+					On va fêtez l'anniversaire de Julie ! On va manger du gâteau au chocolat ! Ca va être très très bon ! Miam miam.<br>N'oubliez pas d'indiquer les aliments que vous ne tolérez pas. Déguisez vous en chevaux.
+					</p>
+					<button type="button" class="btn btn-primary subscribe">S'inscrire</button>
+					<a class="details" href="#">Plus de détails</a>
+				</div>
+			</div>
+		</div>	
+	</div>
+{% endblock %}

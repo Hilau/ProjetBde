@@ -1,0 +1,207 @@
+html,body{
+  height:100%;
+  margin:0;
+  padding:0;
+}
+
+body
+{
+	background-color: rgb(27, 109, 171);
+}
+
+.container
+{
+	background-color: rgb(190, 190, 190);
+	border: solid 1px rgb(190, 190, 190);
+	border-radius: 5px;
+	min-height: 100%;
+  	padding: 1%;
+}
+
+/* liScroll styles */
+
+.tickercontainer { /* the outer div with the black border */
+height: 50px; 
+margin: 20px; 
+line-height: 50px;
+overflow: hidden; 
+}
+
+ul.newsticker { /* that's your list */
+position: relative;
+left: 750px;
+font: 20px Verdana;
+list-style-type: none;
+margin: 0;
+padding: 0;
+
+}
+ul.newsticker li {
+float: left; /* important: display inline gives incorrect results when you check for elem's width */
+margin: 0;
+padding: 0;
+}
+ul.newsticker a {
+text-decoration: none;
+} 
+
+ul.newsticker span {
+margin: 0 10px 0 40px;
+} 
+
+.navbar
+{
+  background-color: rgb(27, 109, 171);
+  border-color: rgb(27, 109, 171);
+  margin-top: 2.5%;
+}
+
+.navbar-inverse .navbar-nav>.active>a
+{
+  background-color: rgb(27, 109, 171);
+}
+
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav>li>a
+{
+  color: white;
+}
+
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav>li
+{
+  color: white;
+  width: calc(100% / 6);
+  text-align: center;
+}
+
+.navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>li>a:hover
+{
+  background-color: rgb(0, 173, 237);
+}
+
+ul
+{
+  width: 100%;
+}
+
+img
+{
+  width: 100px;
+  margin-bottom: 20px;
+}
+
+hr
+{
+  color: rgb(27, 109, 171);
+  background-color: rgb(27, 109, 171);
+  border: solid 3px;
+  border-radius: 5px;
+}
+
+.glyphicon
+{
+  margin-right: 10px;
+}
+
+.activity 
+{
+  background-color: white;
+  box-shadow: 6px 6px 6px #535860;
+  padding-right: 3%;
+  padding-left: 3%;
+}
+
+.title
+{
+  float: left;
+  font-weight: bold;
+}
+
+.date
+{
+  float: right;
+}
+
+.img-responsive
+{
+	max-width: 100%;
+	min-width: 100%;
+}
+
+.description
+{
+	margin-top: 2%;
+	text-align: justify;
+}
+
+.activityInfo
+{
+	vertical-align: middle;
+}
+
+.details 
+{
+	float: right;
+}
+
+.subscribe
+{
+	margin-bottom: 1%;
+}
+
+.ctnBtn
+{
+	margin-top: 1%;
+	text-align: center;
+}
+
+.titleActivity
+{
+	float: left;
+}
+
+.addImg
+{
+	width: 100%;
+}
+
+.formInscription
+{
+	background-color: #838487;
+  	box-shadow: 6px 6px 6px 6px #535860;
+  	padding: 3%;
+}
+
+.inpAutres
+{
+	height: 3vh;
+	margin-top: 1vh;
+}
+
+.Btn-valid 
+{
+	width: 100%;
+}
+
+.image
+{
+  width: 100%;
+}
+
+.comment
+{
+  border: solid 1px black;
+  margin-bottom: 4px;
+  padding: 2px;
+}
+
+.textComment
+{
+  text-align: justify;
+}
+
+.ptImg
+{
+  max-height: 150px;
+  width: auto;
+}
+
