@@ -1,13 +1,67 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <title>BDE</title>
+        <link rel="shortcut icon" href="http://bde.exia-st.fr/wp-content/uploads/2016/01/logo-bde-st-vector-favicon.png">
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="{{ asset('js/scroll.js') }}"></script>
+        <meta charset="utf-8">
     </head>
+
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-2 col-lg-2">
+                    <center><img src="http://bde.exia-st.fr/wp-content/uploads/2016/01/logo-bde-exia-st-5-rouge.png" ></center>
+                </div>
+
+                <div class="col-xs-8 col-lg-8">
+                    <header>
+                        {% if app.user %}
+                            <nav class="navbar navbar-inverse">
+                                <ul class="nav navbar-nav">
+                                    <li><a href=""><span class="glyphicon glyphicon-home"></span>BDE</a></li>
+                                    <li>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href=""><span class="glyphicon glyphicon-knight"></span>Activités</a><span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">Toutes les activités</a></li>
+                                            <li><a href="">Soumettre une activité</a></li>
+                                            <li><a href="">Voter pour une activité</a></li>
+                                          </ul>
+                                    </li>
+                                    <li><a href=""><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a></li>
+                                    <li><a href=""><span class="glyphicon glyphicon-info-sign"></span>A propos</a></li>
+                                    <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span>Déconnexion</a></li>
+                                </ul>                           
+                            </nav>
+                        {% else %}
+                            <nav class="navbar navbar-inverse">
+                                <ul class="nav navbar-nav">
+                                    <li><a href=""><span class="glyphicon glyphicon-home"></span>BDE</a></li>
+                                    <li><a href=""><span class="glyphicon glyphicon-knight"></span>Activités</a></li>
+                                    <li><a href=""><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a></li>
+                                    <li><a href=""><span class="glyphicon glyphicon-pencil"></span>Inscription</a></li>
+                                    <li><a href=""><span class="glyphicon glyphicon-user"></span>Connexion</a></li>
+                                    <li><a href=""><span class="glyphicon glyphicon-info-sign"></span>A propos</a></li>
+                                </ul>                           
+                            </nav>
+                        {% endif %}
+                    </header>
+                </div>
+            </div>
+
+            {% block body %}
+            {% endblock %}            
+
+            <footer>
+                <hr>
+            </footer>
+
+            {% block javascripts %}
+            {% endblock %}
+        </div>
     </body>
 </html>

@@ -72,3 +72,11 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: UserBundle\Entity\User
+    registration:
+        form:
+            type: UserBundle\Form\RegistrationType
+        confirmation:
+            enabled: true
+            from_email:
+                address:        huilierhugo@gmail.com
+                sender_name:    Demo Registration
