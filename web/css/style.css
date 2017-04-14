@@ -15,7 +15,6 @@ body
 	border: solid 1px rgb(190, 190, 190);
 	border-radius: 5px;
 	min-height: 100%;
-  padding: 1%;
 }
 
 
@@ -100,7 +99,6 @@ margin: 0 10px 0 40px;
 .navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav>li
 {
   color: white;
-  width: calc(100% / 5);
   text-align: center;
 }
 
@@ -182,25 +180,42 @@ hr
 
 
 
-/*#container-login
+#container-login
 {
-    display:flex;
-    height:80vh;
-    background-image: url("http://commons.studyrama.com/data/bc2e/20952/photo_953.jpg");
-    background-repeat: no-repeat;
+  background-image: url("http://commons.studyrama.com/data/bc2e/20952/photo_953.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%
 }
 
 .element
 {
-    margin:auto;
     background-color: rgba(235, 235, 235,0.5);
-    height: 40%;
-    width: 20%;
     border-radius: 10px;
-    padding: 3%;
+    padding: 2%;
+    position: absolute;
+    margin: auto;
+    height: 200px;
+    width: 300px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
 }
 
-.form
+#loginIcon
+{
+  width: 100px; 
+  height: 100px;
+  margin-top: -35%; 
+}
+
+footer
+{
+  height:50px;
+}
+
+/*.form
 {
     display:flex;
     flex-direction: column;

@@ -83,7 +83,7 @@ class User extends BaseUser
      *      maxMessage = "Votre promotion doit être inférieur ou égale à {{ limit }}"
      * )
      */
-    protected $promotion;
+    protected $promotion = 0;
 
 
     public function __construct()

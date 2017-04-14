@@ -3,11 +3,79 @@
 {% block body %}
 
 {% trans_default_domain 'FOSUserBundle' %}
+<div class="row">
+	<div class="col-lg-offset-4 col-lg-4 form-horizontal">
+		{{ form_errors(form) }}
 
-{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-    {{ form_widget(form) }}
-     
-    <input type="submit" value="{{ 'registration.submit'|trans }}" />
-{{ form_end(form) }}
+		{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+
+			<div class="form-group">
+	      		<label class="control-label col-lg-4" for="nom">Nom:</label>
+	      		<div class="col-lg-8">
+	        		{{ form_widget(form.nom, { 'attr': { 'class': 'form-control','placeholder': 'Nom' } }) }}
+	      		</div>
+
+	      		{{ form_errors(form.nom) }}
+	    	</div>
+
+			<div class="form-group">
+	      		<label class="control-label col-lg-4" for="prenom">Prénom:</label>
+	      		<div class="col-lg-8">
+	        		{{ form_widget(form.prenom, { 'attr': { 'class': 'form-control','placeholder': 'Prénom' } }) }}
+	      		</div>
+
+	      		{{ form_errors(form.prenom) }}
+	    	</div>
+
+	    	<div class="form-group">
+	      		<label class="control-label col-lg-4" for="password">Mot de passe:</label>
+	      		<div class="col-lg-8">
+	        		{{ form_widget(form.password, { 'attr': { 'class': 'form-control','placeholder': 'Mot de passe' } }) }}
+	      		</div>
+
+	      		{{ form_errors(form.password) }}
+	    	</div>
+
+	    	<div class="form-group">
+	      		<label class="control-label col-lg-4" for="password">Vérification:</label>
+	      		<div class="col-lg-8">
+	        		{{ form_widget(form.plainPassword, { 'attr': { 'class': 'form-control','placeholder': 'Vérification' } }) }}
+	      		</div>
+
+	      		{{ form_errors(form.plainPassword) }}
+	    	</div>
+
+	    	<div class="form-group">
+	      		<label class="control-label col-lg-4" for="email">Adresse mail:</label>
+	      		<div class="col-lg-8">
+	        		{{ form_widget(form.email, { 'attr': { 'class': 'form-control','placeholder': 'Adresse mail' } }) }}
+	      		</div>
+
+	      		{{ form_errors(form.email) }}
+	    	</div>
+
+	    	<div class="form-group">
+			   	<label class="control-label col-lg-4" for="avatar">Avatar:</label>
+			   	<div class="col-lg-8">
+	        		{{ form_widget(form.avatar, { 'attr': { 'class': 'form-control-file','placeholder': 'Avatar' } }) }}
+	      		</div>
+	      		{{ form_errors(form.avatar) }}
+	    	</div>
+
+	    	<div class="form-group">
+			    <label class="control-label col-lg-4" for="promotion">Promotion:</label>
+			    <div class="col-lg-8">
+			    	{{ form_widget(form.promotion, { 'attr': { 'class': 'form-control'} }) }}
+			    </div>		    
+			</div>
+
+			<div class="form-group">		    
+			    <div class="col-lg-offset-4 col-lg-8">
+			    	<input type="submit" class="btn btn-primary" value="S'inscrire" />
+			    </div>		    
+			</div>		
+		{{ form_end(form) }}
+    </div>
+</div>
 
 {% endblock %}

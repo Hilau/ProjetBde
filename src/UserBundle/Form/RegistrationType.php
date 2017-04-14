@@ -25,7 +25,17 @@ class RegistrationType extends AbstractType
                 ->add('plainPassword', PasswordType::class, array('label' => 'Vérification'))
                 ->add('email', EmailType::class, array('label' => 'Adresse mail'))
                 ->add('avatar', FileType::class, array('label' => 'Avatar', 'required' => false))
-                ->add('promotion', ChoiceType::class, array('label' => 'Promotion', 'choices' => array('1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5)));
+                ->add('promotion', ChoiceType::class, array(
+                        'label' => 'Promotion', 
+                        'choices' => array(
+                            '1' => 'A1', 
+                            '2' => 'A2', 
+                            '3' => 'A3', 
+                            '4' => 'A4', 
+                            '5' => 'A5'
+                        )
+                    )
+                );
 
 
     }
