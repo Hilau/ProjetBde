@@ -199,3 +199,9 @@ hr
   text-align: justify;
 }
 
+.ptImg
+{
+  max-height: 150px;
+  width: auto;
+}
+

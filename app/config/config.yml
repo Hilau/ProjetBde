@@ -88,7 +88,7 @@ liip_imagine:
     filter_sets:
         cache: ~
         small_image:
-            quality: 75
             filters:
-                scale:
-                    dim: [200,100]
+                relative-resize:
+                    heighten: 500
+
