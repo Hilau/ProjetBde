@@ -86,66 +86,10 @@ ul
   width: 100%;
 }
 
-img
-{
-  width :100px;
-  margin-bottom: 20px;
-}
-
-
 hr
 {
   color: rgb(27, 109, 171);
   background-color: rgb(27, 109, 171);
   border: solid 3px;
   border-radius: 5px;
-}
-
-td {
-  width: 20%;
-}
-
-
-.activityVote {
-  border: solid 1px black;
-  background-color: white;
-  box-shadow: 6px 6px 6px #535860;
-}
-
-.glyphicon-thumbs-up {
-  font-size: 30px;
-  color: blue;
-}
-
-.glyphicon {
-  margin-right: 10px;
-}
-
-
-.input-group{
-  line-height: 50px;
-  vertical-align: middle;
-}
-
-.btnAdj {
-  padding: 0;
-}
-
-.formActivities {
-    margin-left: 10px;
-}
-
-
-.activityVote a {
-  text-decoration: none;
-}
-
-.conteneurImg {
-  text-align: center;
-}
-
-.img1 {
-  max-height: 15vh;
-  width: auto;
-
 }

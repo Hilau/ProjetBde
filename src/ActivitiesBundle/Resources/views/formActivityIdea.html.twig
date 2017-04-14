@@ -1,0 +1,47 @@
+{%extends "::base.html.twig"%}
+
+{% block header %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/style3.css') }}">
+{% endblock%}
+
+{% block body %}
+	<form>
+		<div class="row">
+			<div class="col-lg-offset-2 col-lg-2">
+				<label>Titre de l'activité :</label>
+			</div>
+			<div class="col-lg-5">
+				<input type="text" name="titre" class="form-control"><br>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-offset-2 col-lg-2">
+				<label>Description :</label>
+			</div>
+			<div class="col-lg-5">
+				<input type="text" name="description" class="form-control"><br>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-offset-2 col-lg-2">
+				<label>Ajouter une image :</label>
+			</div>
+			<div class="col-lg-5">
+				<br><br>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-offset-2 col-lg-2">
+				<label>Proposez une date :</label>
+			</div>
+			<div class="col-lg-5">
+				<input type="datetime-local" name="date" class="form-control">
+			</div>
+		</div>
+	</form>
+
+
+
+
+{% endblock %}
+
