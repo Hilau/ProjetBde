@@ -48,9 +48,9 @@
                                     <li>
                                         <a class="dropdown-toggle" data-toggle="dropdown" href=""><span class="glyphicon glyphicon-knight"></span>Activités <span class="caret"></span></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="">Toutes les activités</a></li>
-                                            <li><a href="">Soumettre une activité</a></li>
-                                            <li><a href="">Voter pour une activité</a></li>
+                                            <li><a href="{{ path('activitiesShow') }}">Toutes les activités</a></li>
+                                            <li><a href="{{ path('activityIdea') }}">Soumettre une activité</a></li>
+                                            <li><a href="{{ path('activitiesVote') }}">Voter pour une activité</a></li>
                                         </ul>
                                     </li>
                                     <li><a href=""><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a></li>
@@ -73,7 +73,7 @@
                             <nav class="navbar navbar-inverse">
                                 <ul class="nav navbar-nav">
                                     <li><a href=""><span class="glyphicon glyphicon-home"></span>BDE</a></li>
-                                    <li><a href=""><span class="glyphicon glyphicon-knight"></span>Activités</a></li>
+                                    <li><a href="{{ path('activitiesShow') }}"><span class="glyphicon glyphicon-knight"></span>Activités</a></li>
                                     <li><a href=""><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a></li>
                                     <li><a href=""><span class="glyphicon glyphicon-pencil"></span>Inscription</a></li>
                                     <li><a href=""><span class="glyphicon glyphicon-user"></span>Connexion</a></li>
