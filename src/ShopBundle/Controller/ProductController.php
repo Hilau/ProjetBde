@@ -16,6 +16,20 @@ class ProductController extends Controller
 		return $this->render('ShopBundle::product.html.twig');
 	}
 
+	/**
+	 * @Route("acceuilShop", name="acceuilShopShow")
+	 */
+	public function showAcceuilShopAction(){
+		return $this->render('ShopBundle::shopAcceuil.html.twig');
+	}
+
+	/**
+	 * @Route("categoryShop", name="categorieShopShow")
+	 */
+	public function showCategoryShopAction(){
+		return $this->render('ShopBundle::shopCategory.html.twig');
+	}
+
 }
 
 ?>

@@ -1,0 +1,154 @@
+{%extends "::base.html.twig"%}
+
+{% block header %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/styleShopAcceuil.css') }}">
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+						<h1 class="col-lg-offset-1-5" id="boutique">Boutique</h1>
+			</div>
+			
+			<!-- sous-menu -->
+			<nav class="row">
+                <div class="col-lg-2 ctnListe">
+                    <a class="liste" href="boutique_categorie.html">Matériel informatique</a> <!-- Lien vers la page de catégorie Matos -->
+                </div>
+                <div class="col-lg-2 ctnListe">
+                    <a class="liste" href="#">T-shirts</a>
+            	</div>
+                <div class="col-lg-2 ctnListe">
+                    <a class="liste" href="#">Mug</a>
+                </div>
+                <div class="col-lg-2 ctnListe">
+                    <a class="liste" href="#">Déguisements</a>
+                </div>
+                <div class="col-lg-2 ctnListe">
+                    <a class="liste" href="#">Poster</a>
+                </div>
+                <div class="col-lg-2 ctnListe">
+                    <a class="liste" href="#">Livres</a>
+                </div>
+            </nav>
+			
+			<hr>
+
+
+			<!-- Articles populaires-->
+
+			<div class="row">
+				<div class="col-lg-offset-1">	
+					<h2>Articles populaires :</h2>
+				</div>
+			</div>
+				
+			<div class="row"> 
+				<article> 
+						<div class="col-xs-12 col-md-3 col-lg-3">
+							<div class="thumbnail">
+								<div class="caption">
+										<h3 class="arcticlepop"> Article populaire 1 </h3>   <!-- titre article -->
+										<center><img src="image/T.jpg" alt="Bureautique" class="images"></center>
+										<p>Je donnerai à ton Wifi la puissance infini ! <br/><br/></p>
+								</div>
+							</div>
+						</div>
+					</article>
+				
+					<article>
+						<div class="col-xs-12 col-md-3 col-lg-3">		
+							<div class="thumbnail">
+								<div class="caption">
+									<h3 class="arcticlepop"> Article populaire 2 </h3>
+									<center><img src="image/T.jpg" alt="Bureautique" class="images"></center>
+									<p>Je donnerai à ton Wifi la puissance infini ! <br/><br/></p>
+								</div>
+							</div>
+						</div>
+													
+					</article>
+					<article> 
+						<div class="col-xs-12 col-md-3 col-lg-3">
+							<div class="thumbnail">
+								<div class="caption">
+									<h3 class="arcticlepop"> Article populaire 3 </h3>
+									<center><img src="image/T.jpg" alt="Gadgets" class="images"></center>
+									<p>Je donnerai à ton Wifi la puissance infini ! <br/><br/></p>
+								</div>
+							</div>
+						</div>
+					</article>
+					<article> 
+						<div class="col-xs-12 col-md-3 col-lg-3">
+							<div class="thumbnail">
+								<div class="caption">
+										<h3 class="arcticlepop"> Article populaire 4 </h3>   <!-- titre article -->
+										<center><img src="image/T.jpg" alt="matériel Hi-fi" class="images"></center>
+										<p>Je donnerai à ton Wifi la puissance infini ! <br/><br/></p>
+								</div>
+							</div>
+						</div>
+					</article>
+			</div>
+			
+
+			
+
+			<!-- Nouveautés-->
+
+
+			
+			<div class="row">
+				<div class="col-lg-offset-1">
+					<h2>Nouveautés :</h2>
+				</div>
+			</div>
+			<div class="row"> 
+				<article> 
+						<div class="col-xs-12 col-md-3 col-lg-3">
+							<div class="thumbnail">
+								<div class="caption">
+										<h3 class="arcticlepop"> Article nouveau 1 </h3>   <!-- titre article -->
+										<center><img src="image/T.jpg" alt="Bureautique" class="images"></center>
+										<p>Je donnerai à ton Wifi la puissance infini ! <br/><br/></p>
+								</div>
+							</div>
+						</div>
+					</article>
+				
+					<article>
+						<div class="col-xs-12 col-md-3 col-lg-3">		
+							<div class="thumbnail">
+								<div class="caption">
+									<h3 class="arcticlepop"> Article nouveau 2 </h3>
+									<center><img src="image/T.jpg" alt="Bureautique" class="images"></center>
+									<p>Je donnerai à ton Wifi la puissance infini ! <br/><br/></p>
+								</div>
+							</div>
+						</div>
+													
+					</article>
+					<article> 
+						<div class="col-xs-12 col-md-3 col-lg-3">
+							<div class="thumbnail">
+								<div class="caption">
+									<h3 class="arcticlepop"> Article nouveau 3 </h3>
+									<center><img src="image/T.jpg" alt="Gadgets" class="images"></center>
+									<p>Je donnerai à ton Wifi la puissance infini ! <br/><br/></p>
+								</div>
+							</div>
+						</div>
+					</article>
+					<article> 
+						<div class="col-xs-12 col-md-3 col-lg-3">
+							<div class="thumbnail">
+								<div class="caption">
+										<h3 class="arcticlepop"> Article nouveau 4 </h3>   <!-- titre article -->
+										<center><img src="image/T.jpg" alt="matériel Hi-fi" class="images"></center>
+										<p>Je donnerai à ton Wifi la puissance infini ! <br/><br/></p>
+								</div>
+							</div>
+						</div>
+					</article>
+			</div>
+{% endblock %}
