@@ -12,23 +12,33 @@ class ProductController extends Controller
 	/**
 	 * @Route("product", name="productShow")
 	 */
-	public function showProductAction(){
-		return $this->render('ShopBundle::product.html.twig');
+	public function showProductAction(Request $request){
+		$id = $request->request->get("id");
+		$product = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->find($id);
+		return $this->render('ShopBundle::product.html.twig', array(
+			'name' => $product->getName(),
+			'description' => $product->getDescription(),
+			'price' => $product->getPrice()  
+			));
 	}
 
 	/**
 	 * @Route("acceuilShop", name="acceuilShopShow")
 	 */
 	public function showAcceuilShopAction(){
-		return $this->render('ShopBundle::shopAcceuil.html.twig');
+		$listArticle = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->findAll();
+		return $this->render('ShopBundle::shopAcceuil.html.twig', array('listArticle' => $listArticle));
 	}
 
 	/**
 	 * @Route("categoryShop", name="categorieShopShow")
 	 */
 	public function showCategoryShopAction(){
-		return $this->render('ShopBundle::shopCategory.html.twig');
+		$listArticle = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->findAll();
+		return $this->render('ShopBundle::shopCategory.html.twig', array('listArticle' => $listArticle));
 	}
+
+
 
 }
 

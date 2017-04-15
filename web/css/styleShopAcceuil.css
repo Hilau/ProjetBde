@@ -139,6 +139,10 @@ hr
 
 .details{
   float: left;
+  background: transparent;
+  border: 0px;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .prix{
@@ -155,4 +159,9 @@ hr
 .thumbnail{
   background-color: white;
   box-shadow: 2px 2px 2px 2px #535860;
+}
+
+.ctnListe
+{
+  text-align: center;
 }
