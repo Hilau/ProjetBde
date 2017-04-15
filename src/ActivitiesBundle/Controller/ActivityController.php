@@ -38,10 +38,14 @@ class ActivityController extends Controller
 	}
 
 	/**
-	* @Route("vote", name="activitiesVote")
+	* @Route("activityToVote", name="activitiesVote")
 	*/
 	public function showActivitiesVoteAction(){
-		return $this->render('ActivitiesBundle::listActivityVote.html.twig');
+		$listActivitiesVote = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityIdea')->findAll();
+
+
+		return $this->render('ActivitiesBundle::listActivityVote.html.twig', array(
+			'listActivitiesVote' => $listActivitiesVote));
 	}
 
 	/**
@@ -56,6 +60,20 @@ class ActivityController extends Controller
 	*/
 	public function formActivityIdeaAction(){
 		return $this->render('ActivitiesBundle::formActivityIdea.html.twig');
+	}
+
+	/**
+	* @Route("vote", name="vote")
+	*/
+	public function VoteAction(Request $request){
+		$id = $request->request->get("id");
+		$activity = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->find($id);
+
+		$activity->setVote($activity->getVote()+1);
+
+		$this->getDoctrine()->getManager()->flush();
+
+		return $this->redirectToRoute('activitiesVote');
 	}
 
 }
