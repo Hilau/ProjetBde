@@ -63,6 +63,14 @@
 	    	</div>
 
 	    	<div class="form-group">
+			   	<label class="control-label col-lg-4" for="roles">Rôle:</label>
+			   	<div class="col-lg-8">
+	        		{{ form_widget(form.roles, { 'attr': { 'class': 'form-control-file'} }) }}
+	      		</div>
+	      		{{ form_errors(form.roles) }}
+	    	</div>
+
+	    	<div class="form-group">
 			    <label class="control-label col-lg-4" for="promotion">Promotion:</label>
 			    <div class="col-lg-8">
 			    	{{ form_widget(form.promotion, { 'attr': { 'class': 'form-control'} }) }}

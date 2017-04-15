@@ -194,7 +194,7 @@ hr
     padding: 2%;
     position: absolute;
     margin: auto;
-    height: 200px;
+    height: 225px;
     width: 300px;
     top: 0;
     right: 0;
@@ -213,6 +213,17 @@ hr
 footer
 {
   height:50px;
+}
+
+.input-group-addon, .input-group-btn
+{
+  padding-right: 2px;
+  width: 0;
+}
+
+input
+{
+  height: 30px;
 }
 
 /*.form

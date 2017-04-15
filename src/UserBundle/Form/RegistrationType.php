@@ -25,6 +25,18 @@ class RegistrationType extends AbstractType
                 ->add('plainPassword', PasswordType::class, array('label' => 'Vérification'))
                 ->add('email', EmailType::class, array('label' => 'Adresse mail'))
                 ->add('avatar', FileType::class, array('label' => 'Avatar', 'required' => false))
+                ->add('roles', 'collection', array(
+                        'label' => 't',
+                        'type' => 'choice',
+                        'options' => array(
+                            'choices' => array(
+                                'ROLE_BDE' => 'BDE',
+                                'ROLE_ETUDIANT' => 'Etudiant',
+                                'ROLE_TUTEUR' => 'Tuteur'
+                            )
+                        )
+                    )
+                )
                 ->add('promotion', ChoiceType::class, array(
                         'label' => 'Promotion', 
                         'choices' => array(
@@ -36,8 +48,6 @@ class RegistrationType extends AbstractType
                         )
                     )
                 );
-
-
     }
 
     public function getParent()
