@@ -6,15 +6,15 @@
 
 {% block body %}
 	<div class="row">
-		<h3 class="titleActivity">Bataille de boules de neige</h3>
-		<h3 class="date">13/04/2017</h3><br><br>
+		<h3 class="titleActivity">{{ titre}}</h3>
+		<h3 class="date">58</h3><br><br>
 		<hr>
 	</div>
 
 	<div class="row">
 		<div class="col-lg-offset-1 col-lg-10">
 			<a href="" data-toggle="modal" data-target="#modalCommentaire">
-				<img class="img-responsive" src="{{ asset('img/gateau.jpg')}}">
+				<img class="img-responsive" src="{{asset ('{{photos[0].photo}}')}}">
 			</a>
 		</div>
 	</div>
@@ -99,7 +99,7 @@
 	<div class="row">
 		<div class="col-lg-offset-1 col-lg-10">
 			<p class="description">
-				Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description 
+				{{description}}
 			</p>
 		</div>
 	</div><br>
@@ -118,7 +118,7 @@
 					</div>
 					<div class="col-lg-9">
 						<select class=form-control>
-							<option value=un>Bataille de boules de neige</option>
+							<option value=un>{{titre}}</option>
 							<option value=deux>Fondue au chocolat</option>
 							<option value=trois>Anniversaire Julie</option>
 						</select>
