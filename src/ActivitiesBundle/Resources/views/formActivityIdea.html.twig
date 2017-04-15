@@ -5,43 +5,58 @@
 {% endblock%}
 
 {% block body %}
-	<form>
-		<div class="row">
-			<div class="col-lg-offset-2 col-lg-2">
-				<label>Titre de l'activité :</label>
-			</div>
-			<div class="col-lg-5">
-				<input type="text" name="titre" class="form-control"><br>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-offset-2 col-lg-2">
-				<label>Description :</label>
-			</div>
-			<div class="col-lg-5">
-				<input type="text" name="description" class="form-control"><br>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-offset-2 col-lg-2">
-				<label>Ajouter une image :</label>
-			</div>
-			<div class="col-lg-5">
-				<br><br>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-offset-2 col-lg-2">
-				<label>Proposez une date et une heure :</label>
-			</div>
-			<div class="col-lg-5">
-				<input type="datetime-local" name="date" class="form-control">
-			</div>
-		</div>
-	</form>
+	<div class="row">
+	<div class="col-lg-offset-3 col-lg-6 form-horizontal">
+		{{ form_errors(form) }}
 
+		{{ form_start(form, {'method': 'post', 'action': path('activityIdea')}) }}
 
+			<div class="form-group">
+	      		<label class="control-label col-lg-4" for="name">Nom de l'activité:</label>
+	      		<div class="col-lg-6">
+	        		{{ form_widget(form.name, { 'attr': { 'class': 'form-control','placeholder': 'Nom de l\'activité' } }) }}
+	      		</div>
 
+	      		{{ form_errors(form.name) }}
+	    	</div>
 
+	    	<div class="form-group">
+	      		<label class="control-label col-lg-4" for="description">Description:</label>
+	      		<div class="col-lg-6">
+	        		{{ form_widget(form.description, { 'attr': { 'class': 'form-control','placeholder': 'Description' } }) }}
+	      		</div>
+
+	      		{{ form_errors(form.description) }}
+	    	</div>
+
+	    	<div class="form-group">
+	      		<label class="control-label col-lg-4" for="date">Date:</label>
+	      		<div class="col-lg-6">
+	        		{{ form_widget(form.date) }}
+	      		</div>
+
+	      		{{ form_errors(form.date) }}
+	    	</div>
+			
+			<div class="form-group">		    
+			    <div class="col-lg-offset-4 col-lg-8">
+			    	<input type="submit" class="btn btn-primary" value="Soumettre l'idée" />
+			    </div>		    
+			</div>	
+
+			{% for flash_message in app.session.flashBag.get('success') %}
+			    <div class="alert alert-success">
+					{{ flash_message }}
+				</div>
+			{% endfor %}
+
+			{% for flash_message in app.session.flashBag.get('error') %}
+			    <div class="alert alert-danger">
+					{{ flash_message }}
+				</div>
+			{% endfor %}	
+		{{ form_end(form) }}
+    </div>
+</div>
 {% endblock %}
 

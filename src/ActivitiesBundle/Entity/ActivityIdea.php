@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ActivityIdea
 {
     /**
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -126,5 +126,28 @@ class ActivityIdea
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \UserBundle\Entity\User $user
+     * @return Product
+     */
+    public function setUser(\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

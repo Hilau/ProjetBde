@@ -6,7 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use ActivitiesBundle\Entity\ActivityIdea;
+use Doctrine\ORM\EntityRepository;
 
 class ActivityController extends Controller 
 {
@@ -58,8 +63,46 @@ class ActivityController extends Controller
 	/**
 	* @Route("activityIdea", name="activityIdea")
 	*/
-	public function formActivityIdeaAction(){
-		return $this->render('ActivitiesBundle::formActivityIdea.html.twig');
+	public function formActivityIdeaAction(Request $request)
+	{
+		$em = $this->getDoctrine()->getManager();
+	    $activityIdea = new activityIdea();
+	    $user = $this->get('security.context')->getToken()->getUser();
+
+		$form = $this->createFormBuilder($activityIdea)
+	        ->add('name', TextType::class)
+	        ->add('description', TextareaType::class)
+	        ->add('date', DateTimeType::class)
+	        ->getForm();
+	        
+		$form->handleRequest($request);
+
+	    if ($form->isSubmitted() && $form->isValid()) {	        
+	        $activityIdea = $form->getData();
+	        $activityIdea->setUser($user);
+	       	        
+	        $em->persist($activityIdea);
+	        $em->flush();
+
+	        $this->addFlash(
+	            'success',
+	            'Votre idée d\'activité a bien été soumise !'
+	        );
+
+	        return $this->redirectToRoute('activityIdea');
+	    }
+
+	    else if($form->isSubmitted() && !$form->isValid())
+	    {
+	    	$this->addFlash(
+	            'error',
+	            'Error !'
+	        );
+	    }
+
+		return $this->render('ActivitiesBundle::formActivityIdea.html.twig', array(
+				'form' => $form->createView(),
+			));
 	}
 
 	/**
