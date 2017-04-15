@@ -50,7 +50,10 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="{{ path('activitiesShow') }}">Toutes les activités</a></li>
                                             <li><a href="{{ path('activityIdea') }}">Soumettre une activité</a></li>
-                                            <li><a href="{{ path('activitiesVote') }}">Voter pour une activité</a></li>
+                                            <li><a href="{{ path('showActivitiesVote') }}">Voter pour une activité</a></li>
+                                            {% if app.user.roles[0] == "ROLE_BDE" %}
+                                                <li><a href="">Voir les inscrits</a></li>
+                                            {% endif %}
                                         </ul>
                                     </li>
                                     <li><a href=""><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a></li>
@@ -75,8 +78,8 @@
                                     <li><a href=""><span class="glyphicon glyphicon-home"></span>BDE</a></li>
                                     <li><a href="{{ path('activitiesShow') }}"><span class="glyphicon glyphicon-knight"></span>Activités</a></li>
                                     <li><a href=""><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a></li>
-                                    <li><a href=""><span class="glyphicon glyphicon-pencil"></span>Inscription</a></li>
-                                    <li><a href=""><span class="glyphicon glyphicon-user"></span>Connexion</a></li>
+                                    <li><a href="{{ path('fos_user_registration_register') }}"><span class="glyphicon glyphicon-pencil"></span>Inscription</a></li>
+                                    <li><a href="{{ path('fos_user_security_login') }}"><span class="glyphicon glyphicon-user"></span>Connexion</a></li>
                                     <li><a href=""><span class="glyphicon glyphicon-info-sign"></span>A propos</a></li>
                                 </ul>                           
                             </nav>

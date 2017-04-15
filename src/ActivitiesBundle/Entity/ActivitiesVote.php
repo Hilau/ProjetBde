@@ -14,7 +14,7 @@ class ActivitiesVote
 {
 
     /**
-    * @ORM\ManyToOne(targetEntity="ActivitiesBundle\Entity\Activity")
+    * @ORM\ManyToOne(targetEntity="ActivitiesBundle\Entity\ActivityIdea")
     * @ORM\JoinColumn(nullable=false)
     */
     private $activity;
@@ -97,5 +97,28 @@ class ActivitiesVote
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set activity
+     *
+     * @param \ActivitiesBundle\Entity\ActivityIdea $activity
+     * @return Activity
+     */
+    public function setActivity(\ActivitiesBundle\Entity\ActivityIdea $activity = null)
+    {
+        $this->activity = $activity;
+
+        return $this;
+    }
+
+    /**
+     * Get activity
+     *
+     * @return \ActivitiesBundle\Entity\ActivityIdea
+     */
+    public function getActivity()
+    {
+        return $this->activity;
     }
 }

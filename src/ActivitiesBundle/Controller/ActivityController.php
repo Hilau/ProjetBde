@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use ActivitiesBundle\Entity\ActivityIdea;
+use ActivitiesBundle\Entity\ActivitiesVote;
 use Doctrine\ORM\EntityRepository;
 
 class ActivityController extends Controller 
@@ -43,14 +44,29 @@ class ActivityController extends Controller
 	}
 
 	/**
-	* @Route("activityToVote", name="activitiesVote")
+	* @Route("showActivitiesVote", name="showActivitiesVote")
 	*/
 	public function showActivitiesVoteAction(){
-		$listActivitiesVote = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityIdea')->findAll();
+		$listActivitiesIdea = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityIdea')->findAll();
+		$listActivitiesVote = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivitiesVote');
 
+		$dates = [];
+
+		foreach($listActivitiesIdea as $activity)
+		{
+			$activityDates = $listActivitiesVote->findByActivity($activity);
+
+			foreach($activityDates as $date)
+			{
+				$dates[$activity->getId()][] = $date->getDate();
+			}
+		}
 
 		return $this->render('ActivitiesBundle::listActivityVote.html.twig', array(
-			'listActivitiesVote' => $listActivitiesVote));
+				'listActivitiesIdea' => $listActivitiesIdea,
+				'dates' => $dates
+
+			));
 	}
 
 	/**
@@ -84,12 +100,41 @@ class ActivityController extends Controller
 	        $em->persist($activityIdea);
 	        $em->flush();
 
+	        $date = $activityIdea->getDate();
+	        $dates = [$date];   
+
+	        $date2 = clone($date);	  
+	        $date2->add(new \DateInterval('P1D'))->setTime(10, 0, 0);
+
+	        $dates[] = $date2;
+
+	        $date = clone($date2);
+	        $date->add(new \DateInterval('P1D'))->setTime(14, 30, 0);
+
+	        $dates[] = $date;
+
+	        $date2 = clone($date);
+	        $date2->add(new \DateInterval('P1D'))->setTime(16, 15, 0);
+
+	        $dates[] = $date2;
+
+	        foreach($dates as $date)
+	        {
+	        	$activityVote = new activitiesVote();
+		        $activityVote->setActivity($activityIdea);
+		        $activityVote->setVote(0);
+		        $activityVote->setDate($date);
+
+		        $em->persist($activityVote);
+		        $em->flush();
+	        }
+
 	        $this->addFlash(
 	            'success',
 	            'Votre idée d\'activité a bien été soumise !'
 	        );
 
-	        return $this->redirectToRoute('activityIdea');
+	        // return $this->redirectToRoute('activityIdea');
 	    }
 
 	    else if($form->isSubmitted() && !$form->isValid())
@@ -106,21 +151,30 @@ class ActivityController extends Controller
 	}
 
 	/**
-	* @Route("vote", name="vote")
+	* @Route("activitiesVote", name="activitiesVote")
 	*/
 	public function VoteAction(Request $request){
+		$em = $this->getDoctrine()->getManager();
+	    $repositoryActivityVote = $this->getDoctrine()->getRepository('ActivitiesBundle:ActivitiesVote');	
+
 		$id = $request->request->get("id");
-		$activity = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->find($id);
+		$date = $request->request->get("horaire");
 
-		$activity->setVote($activity->getVote()+1);
+		$date2 = \DateTime::createFromFormat('Y-m-d H:i:s', $date);
 
-		$this->getDoctrine()->getManager()->flush();
+		$activityVote = $repositoryActivityVote->findOneBy(array(
+				'activity' => $id,
+				'date' => $date2,
+			));
 
-		return $this->redirectToRoute('activitiesVote');
+		$vote = $activityVote->getVote();
+		$activityVote->setVote($vote + 1);
+
+		$em->persist($activityVote);
+	    $em->flush();
+
+		return $this->redirectToRoute('showActivitiesVote');
 	}
 
 }
-
-
-
 ?>

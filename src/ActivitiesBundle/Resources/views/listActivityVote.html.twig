@@ -7,35 +7,36 @@
 {% block body %}
 	<div class="row">
 					<h3>Voter pour vos activités préférées</h3>
-					{% for activityVote in listActivitiesVote %}
+					{% for activityIdea in listActivitiesIdea %}
 
 					<div class="col-lg-offset-1 col-lg-4 activityVote">
-						<h4>{{activityVote.name}}</h4><br>
+						<h4>{{activityIdea.name}}</h4><br>
 						<div class="conteneurImg"><img src="{{ asset('img/index.jpg') }}" alt="photo activite" class="img1"><br></div>
 						<a href="#">Plus de détails</a>
 						<p>Choisissez votre date et votre horaire :</p>
 						<div class="row">
 							<div class="col-lg-6 btnAdj">
-								<form class="formActivities" name="voter" method="post" action="vote">
-									<select name="horaire" class="form-control">
-										<option value="{{activityVote.date|date('Y m d H:i:s') }}">{{activityVote.date|date('Y m d H:i:s') }}</option>
-										<option value="15:00">{{activityVote.date|date("Y m d H:i:s")}}</option>
-										<option value="16:00">16:00</option>
-										<option value="17:00">17:00</option>
-									</select>			
+								<form class="formActivities" name="voter" method="post" action="{{ path('activitiesVote') }}">
+									<select name="horaire" class="form-control">										
+										{% for dates2 in dates %}
+											{% for date in dates2 %}
+												<option value="{{ date|date('Y-m-d H:i:s') }}">{{ date|date('d/m/Y H:i:s') }}</option>
+											{% endfor %}
+										{% endfor %}
+
+									</select>
+									<div class="col-lg-3 btnAdj">
+										<input type="hidden" name="id" value="{{ activityIdea.id }}">
+										<button class="btn btn-primary voter" type="submit">Voter</button>
+									</div>
+									<div class="col-lg-offset-2 col-lg-1">
+										<span class="glyphicon glyphicon-thumbs-up"></span>	
+									</div>		
+									<br><br>
 								</form>	
-							</div>
-							<div class="col-lg-3 btnAdj">
-								<input type="hidden" name="id" value="{{activityVote.id}}">
-								<button class="btn btn-primary voter" type="submit">Voter</button>
-							</div>
-							<div class="col-lg-offset-2 col-lg-1">
-								<span class="glyphicon glyphicon-thumbs-up"></span>	
-							</div>		
-							<br><br>
+							</div>							
 						</div>
 					</div>
-
 					{% endfor %}
 				</div>
 {% endblock %}

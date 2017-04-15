@@ -132,7 +132,7 @@ class ActivityIdea
      * Set user
      *
      * @param \UserBundle\Entity\User $user
-     * @return Product
+     * @return User
      */
     public function setUser(\UserBundle\Entity\User $user = null)
     {
