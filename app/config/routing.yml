@@ -1,5 +1,6 @@
 shop:
-    resource: "@ShopBundle/Resources/config/routing.yml"
+    resource: "@ShopBundle/Controller"
+    type: annotation
     prefix:   /shop
 
 activities:

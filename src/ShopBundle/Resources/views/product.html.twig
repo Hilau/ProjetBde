@@ -1,0 +1,78 @@
+{%extends "::base.html.twig"%}
+
+{% block header %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/styleProduct.css') }}">
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<h1 id="boutique">Boutique</h1>
+	</div><br><br>
+	
+	<!-- sous-menu -->
+	<nav class="row">
+		<div class="col-lg-2 ctnListe">
+			<a class="liste" href="#">Matériel informatique</a>
+		</div>
+		<div class="col-lg-2 ctnListe">
+			<a class="liste" href="#">T-shirts</a>
+		</div>
+		<div class="col-lg-2 ctnListe">
+			<a class="liste" href="#">Mug</a>
+		</div>
+		<div class="col-lg-2 ctnListe">
+			<a class="liste" href="#">Déguisements</a>
+		</div>
+		<div class="col-lg-2 ctnListe">
+			<a class="liste" href="#">Poster</a>
+		</div>
+		<div class="col-lg-2 ctnListe">
+			<a class="liste" href="#">Livres</a>
+		</div>
+	</nav>
+	<hr>
+
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="row">
+				<div class="col-lg-offset-1">
+					<h4>Nom de l'article :</h4><br>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-lg-offset-3">
+					<p>Gateau au chocolat</p><br>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-offset-1">
+					<h4>Description :</h4>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-offset-3 description">
+					<p>C'est un très bon gateau au chocolat, parfait pour les anniversaire à fêter. C'est un très bon gateau au chocolat, parfait pour les anniversaire à fêter. C'est un très bon gateau au chocolat, parfait pour les anniversaire à fêter. C'est un très bon gateau au chocolat, parfait pour les anniversaire à fêter. C'est un très bon gateau au chocolat, parfait pour les anniversaire à fêter. </p>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-offset-1 col-lg-5">
+			<img class="img-responsive productImg" src="{{asset('img/gateau.jpg')}}">
+		</div>
+	</div><br><br>
+
+	<div class="row">
+		<div class="col-lg-offset-5 col-lg-2 prize">
+			<p>Prix : 25.99 €</p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-offset-5 col-lg-2">
+			<button class="btn btn-primary btnBuy">Ajouter au panier</button>
+		</div>	
+	</div><br><br>
+{% endblock %}
