@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * PhotoComment
  *
- * @ORM\Table(name="photo_comment")
+ * @ORM\Table(name="photos_comments")
  * @ORM\Entity(repositoryClass="ActivitiesBundle\Repository\PhotoCommentRepository")
  */
 class PhotoComment

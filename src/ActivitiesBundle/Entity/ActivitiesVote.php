@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ActivitiesVote
  *
- * @ORM\Table(name="activities_vote")
+ * @ORM\Table(name="activities_votes")
  * @ORM\Entity(repositoryClass="ActivitiesBundle\Repository\ActivitiesVoteRepository")
  */
 class ActivitiesVote
@@ -31,7 +31,7 @@ class ActivitiesVote
     /**
      * @var int
      *
-     * @ORM\Column(name="vote", type="integer", nullable=true)
+     * @ORM\Column(name="vote", type="integer")
      */
     private $vote;
 
