@@ -6,87 +6,89 @@
 
 {% block body %}
 	<div class="row">
-				<h3>Récapitulatif des inscrits</h3>
-				<br>
-				<form class="formActivities">
-					<div class="row">
-						<div class="col-lg-offset-1 col-lg-2">
-							<label>Choix de l'activité</label>
-						</div>
-						<div class="col-lg-4">
-							<select name="activite" class="form-control">
-								<option value="activite1">activite1</option>
-								<option value="activite2">activite2</option>
-								<option value="activite3">activite3</option>
-								<option value="activite4">activite4</option>
-							</select>
-						</div>
+		<h3>Récapitulatif des inscrits</h3>
+		<br>
+		<form class="formActivities">
+			<div class="col-lg-offset-1 col-lg-8">
+				<div class="row">
+					<div class="col-lg-3">
+						<label>Choix de l'activité</label>
 					</div>
-					<br>
-					<div class="row">
-						<div class="col-lg-offset-1 col-lg-2">
-							<label>Date retenue :</label>
-						</div>
-						<div class="col-lg-4">
-							<input type="text" name="date" value="15 Avril 2017" readonly="readonly" class="form-control">
-						</div>
-					</div>
-					<br>
-					<div class="row">
-						<div class="col-lg-offset-1 col-lg-2">
-							<label>Nombre d'inscrits :</label>
-						</div>
-						<div class="col-lg-4">
-							<input type="text" name="nbInscrits" value="29" readonly="readonly" class="form-control">	
-						</div>
-					</div>
-					<br>
-				</form>
-				<br>
-
-			<div class="row">
-				<div class="col-lg-offset-1 col-lg-10">
-					<table class="table table-responsive">
-						<thead>
-							<th>Nom</th>
-							<th>Prénom</th>
-							<th>Promotion</th>
-							<th>Problèmes</th>
-							<th>Adresse mail</th>
-						</thead>
-
-						<tbody>
-							<tr>
-								<td>Julie</td>
-								<td>MEYER</td>
-								<td>A2</td>
-								<td>Autres</td>
-								<td>julie.meyer@viacesi.fr</td>
-							</tr>
-							<tr>
-								<td>Mélanie</td>
-								<td>GSTALTER</td>
-								<td>A2</td>
-								<td>Autres</td>
-								<td>melanie.gstalter@viacesi.fr</td>
-							</tr>
-							<tr>
-								<td>Hugo</td>
-								<td>HUILIER</td>
-								<td>A2</td>
-								<td>Autres</td>
-								<td>hugo.huilier@viacesi.fr</td>
-							</tr>
-							<tr>
-								<td>François</td>
-								<td>SCHAEFER</td>
-								<td>A2</td>
-								<td>Autres</td>
-								<td>francois.schaefer@viacesi.fr</td>
-							</tr>
-						</tbody>
-					</table>
+					<div class="col-lg-6">
+						<select name="activite" class="form-control">
+							<option value="activite1">activite1</option>
+							<option value="activite2">activite2</option>
+							<option value="activite3">activite3</option>
+							<option value="activite4">activite4</option>
+						</select>
+					</div>				
 				</div>
-
+				<br>
+				<div class="row">
+					<div class="col-lg-3">
+						<label>Date retenue :</label>
+					</div>
+					<div class="col-lg-6">
+						<input type="text" name="date" value="15 Avril 2017" readonly="readonly" class="form-control">
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-lg-3">
+						<label>Nombre d'inscrits :</label>
+					</div>
+					<div class="col-lg-6">
+						<input type="text" name="nbInscrits" value="29" readonly="readonly" class="form-control">	
+					</div>
+				</div>
+				<br>
 			</div>
+		</form>
+		<br>
+
+	<div class="row">
+		<div class="col-lg-offset-1 col-lg-10">
+			<table class="table table-responsive">
+				<thead>
+					<th>Nom</th>
+					<th>Prénom</th>
+					<th>Promotion</th>
+					<th>Problèmes</th>
+					<th>Adresse mail</th>
+				</thead>
+
+				<tbody>
+					<tr>
+						<td>Julie</td>
+						<td>MEYER</td>
+						<td>A2</td>
+						<td>Autres</td>
+						<td>julie.meyer@viacesi.fr</td>
+					</tr>
+					<tr>
+						<td>Mélanie</td>
+						<td>GSTALTER</td>
+						<td>A2</td>
+						<td>Autres</td>
+						<td>melanie.gstalter@viacesi.fr</td>
+					</tr>
+					<tr>
+						<td>Hugo</td>
+						<td>HUILIER</td>
+						<td>A2</td>
+						<td>Autres</td>
+						<td>hugo.huilier@viacesi.fr</td>
+					</tr>
+					<tr>
+						<td>François</td>
+						<td>SCHAEFER</td>
+						<td>A2</td>
+						<td>Autres</td>
+						<td>francois.schaefer@viacesi.fr</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
 {% endblock %}
