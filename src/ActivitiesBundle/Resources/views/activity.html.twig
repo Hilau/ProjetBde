@@ -6,8 +6,8 @@
 
 {% block body %}
 	<div class="row">
-		<h3 class="titleActivity">{{ titre}}</h3>
-		<h3 class="date">58</h3><br><br>
+		<h3 class="titleActivity">{{ activity.name }}</h3>
+		<h3 class="date">{{ activity.date|date("d/m/Y H:i:s") }}</h3><br><br>
 		<hr>
 	</div>
 
@@ -101,7 +101,7 @@
 	<div class="row">
 		<div class="col-lg-offset-1 col-lg-10">
 			<p class="description">
-				{{description}}
+				{{ activity.description }}
 			</p>
 		</div>
 	</div><br>
@@ -112,7 +112,23 @@
 	</div>
 
 	<div class="well">
-		{{form(form)}}
+		{{ form_errors(form) }}
+
+		{{ form_start(form, {'method': 'post', 'action': path('signInActivity', {'activity_id': activity.id})}) }}
+
+		{% for flash_message in app.session.flashBag.get('success') %}
+		    <div class="alert alert-success">
+				{{ flash_message }}
+			</div>
+		{% endfor %}
+
+		{% for flash_message in app.session.flashBag.get('error') %}
+		    <div class="alert alert-danger">
+				{{ flash_message }}
+			</div>
+		{% endfor %}	
+
+		{{ form_end(form) }}
 	</div>
 
 <!--
@@ -125,7 +141,7 @@
 					</div>
 					<div class="col-lg-9">
 						<select class=form-control>
-							<option value=un>{{titre}}</option>
+							<option value=un></option>
 							<option value=deux>Fondue au chocolat</option>
 							<option value=trois>Anniversaire Julie</option>
 						</select>

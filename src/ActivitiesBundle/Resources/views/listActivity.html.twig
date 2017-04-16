@@ -27,10 +27,8 @@
 					<p class="description">
 					{{activity.description}}
 					</p>
-					<form name="FormInscription" method="post" action="activity">
-						<input type="hidden" name="id" value="{{activity.id}}">
-						<button type="submit" class="btn btn-primary subscribe">S'inscrire</button>
-					</form>
+					
+					<a href="{{ path('signInActivity', {'activity_id': activity.id}) }}"><button type="submit" class="btn btn-primary subscribe">S'inscrire</button></a>
 					
 					<a class="details" href="#">Plus de détails</a>
 				</div>

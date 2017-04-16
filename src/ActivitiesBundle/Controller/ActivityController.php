@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use ActivitiesBundle\Entity\ActivityIdea;
 use ActivitiesBundle\Entity\ActivityUser;
 use ActivitiesBundle\Entity\ActivitiesVote;
@@ -29,10 +30,62 @@ class ActivityController extends Controller
 	}
 
 	/**
+	 * @Route("signInActivity/{activity_id}", name="signInActivity")
+	 */
+	public function signInActivityAction(Request $request, $activity_id)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$activity = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->find($activity_id);
+		$photos = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->findByActivity($activity);
+		$user = $this->get('security.context')->getToken()->getUser();
+
+		$activityUser = new ActivityUser();
+
+		$form = $this->createFormBuilder($activityUser)	        
+	        ->add('S\'inscrire', 'submit')
+	        ->getForm();
+
+	    $form->handleRequest($request);
+
+	    if ($form->isSubmitted() && $form->isValid()) {	        
+	        $activityUser = $form->getData();
+	        $activityUser->setUser($user);
+	        $activityUser->setActivity($activity);
+	        $activityUser->setOtherParticipation(0);
+	       	        
+	        $em->persist($activityUser);
+	        $em->flush();
+
+
+	        $this->addFlash(
+	            'success',
+	            'Vous êtes inscrit !'
+	        );
+
+	        return $this->redirectToRoute('signInActivity', array('activity_id' => $activity_id));
+	    }
+
+	    else if($form->isSubmitted() && !$form->isValid())
+	    {
+	    	$this->addFlash(
+	            'error',
+	            'Error !'
+	        );
+	    }
+			
+
+		return $this->render('ActivitiesBundle::activity.html.twig', array(
+				'activity' => $activity,
+				'photos' => $photos,
+				'form' => $form->createView(),
+			));
+	}
+
+	/**
 	 * @Route("activity", name="activityShow")
 	 */
-	public function showActivityAction(Request $request){
-		$id = $request->request->get("id");
+	public function showActivityAction(){
+		/*$id = $request->request->get("id");
 
 		$activity = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->find($id);
 		$photos = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->findBy(array('activity'=>$activity));
@@ -44,8 +97,8 @@ class ActivityController extends Controller
 	    $user = $this->get('security.context')->getToken()->getUser();
 
 		$form = $this->createFormBuilder($activityUser)
-	        ->add('user', TextType::class)
-	        ->add('activity', TextType::class)
+	        ->add('user', HiddenType::class)
+	        ->add('activity', HiddenType::class)
 	        ->add('save', 'submit')
 	        ->getForm();
 	        
@@ -79,11 +132,10 @@ class ActivityController extends Controller
 		return $this->render('ActivitiesBundle::activity.html.twig', array(
 			'titre'=> $activity->getName(),
 			'description' => $activity->getDescription(),
-			//'date' => DateTime::format ( $activity->getDate() ),
 			'vote' =>$activity->getVote(),
 			'photos' => $photos,
 			'form' => $form->createView(),
-			));
+			));*/
 	}
 
 	/**
