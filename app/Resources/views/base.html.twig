@@ -52,7 +52,7 @@
                                             <li><a href="{{ path('activityIdea') }}">Soumettre une activité</a></li>
                                             <li><a href="{{ path('showActivitiesVote') }}">Voter pour une activité</a></li>
                                             {% if app.user.roles[0] == "ROLE_BDE" %}
-                                                <li><a href="">Voir les inscrits</a></li>
+                                                <li><a href="{{ path('summaryActivity') }}">Voir les inscrits</a></li>
                                             {% endif %}
                                         </ul>
                                     </li>

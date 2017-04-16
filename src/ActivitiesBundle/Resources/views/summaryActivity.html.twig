@@ -16,10 +16,9 @@
 					</div>
 					<div class="col-lg-6">
 						<select name="activite" class="form-control">
-							<option value="activite1">activite1</option>
-							<option value="activite2">activite2</option>
-							<option value="activite3">activite3</option>
-							<option value="activite4">activite4</option>
+							{% for activity in activities%}
+							<option value="{{ activity.name }}">{{ activity.name }}</option>
+							{% endfor%}
 						</select>
 					</div>				
 				</div>
