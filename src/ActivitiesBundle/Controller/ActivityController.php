@@ -79,7 +79,10 @@ class ActivityController extends Controller
 	* @Route("summary", name="summaryActivity")
 	*/
 	public function showSummaryActivityAction(){
-		return $this->render('ActivitiesBundle::summaryActivity.html.twig');
+		$activities = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->findAll();
+		return $this->render('ActivitiesBundle::summaryActivity.html.twig', array(
+			"activities" => $activities
+			));
 	}
 
 	/**
