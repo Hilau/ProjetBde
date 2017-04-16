@@ -216,5 +216,34 @@ class ActivityController extends Controller
 		
 	}
 
+	/**
+	* @Route("showPhotoGallery", name="showPhotoGallery")
+	*/
+	public function showPhotoGalleryAction(){
+		$photos = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->findAll();
+
+		return $this->render('ActivitiesBundle::moderationPhotos.html.twig', array(
+			"photos" => $photos
+			));
+	}
+
+	/**
+	* @Route("deletephoto", name="deletePhoto")
+	*/
+	public function deletePhotoAction(Request $request){
+
+		$photoASupprimer = $request->request->get('photo');
+		foreach ($photoASupprimer as $photo) {
+			$suppr = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->find($photo);
+			$this->getDoctrine()->getManager()->remove($suppr);
+		}
+
+		$this->getDoctrine()->getManager()->flush();
+
+		return $this->redirectToRoute('showPhotoGallery');
+
+
+	}
+
 }
 ?>

@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new ActivitiesBundle\ActivitiesBundle(),
             new ShopBundle\ShopBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
+            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

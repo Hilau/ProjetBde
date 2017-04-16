@@ -54,6 +54,10 @@
                                             {% if app.user.roles[0] == "ROLE_BDE" %}
                                                 <li><a href="{{ path('summaryActivity') }}">Voir les inscrits</a></li>
                                             {% endif %}
+
+                                            {% if app.user.roles[0] == "ROLE_TUTEUR" %}
+                                                <li><a href="{{ path('showPhotoGallery') }}">Modérer les photos</a></li>
+                                            {% endif %}
                                         </ul>
                                     </li>
                                     <li><a href=""><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a></li>

@@ -1,0 +1,47 @@
+{%extends "::base.html.twig"%}
+
+{% block header %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/styleModerationPhoto.css') }}">
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+	<h3>Choisissez les photos à supprimer</h3><br>
+	<div class="col-lg-offset-2 col-lg-10">
+		<form class="form-group" method="POST" action="{{ path('deletePhoto') }}">
+			<div class="row">
+				{% for photo in photos%}
+					<div class="col-lg-5">
+						<label class="btn btn-primary">
+							<img src="{{ asset(photo.photo) }}" alt="image galerie" class="img-thumbnail img-check">
+							<input type="checkbox" name="photo[]" value="{{photo.id}}" class="hidden">
+						</label>
+					</div>
+				{% endfor %}
+			</div>
+		
+			<div class="row">
+				<br><br><input type="submit" name="supprimer" class="btn btn-danger" value="Supprimer">
+			</div>
+		</form>
+	</div>
+		
+		
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+	$(document).ready(function(e){
+    		$(".img-check").on('click', function(){
+    			if($(this).hasClass("checked")){
+    				$(this).removeClass("checked");
+    			}
+    			else{
+    				$(this).addClass("checked");
+    			}
+			});
+	});
+</script>
+{% endblock%}
+
