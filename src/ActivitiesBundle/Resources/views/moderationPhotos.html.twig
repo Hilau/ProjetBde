@@ -13,9 +13,9 @@
 				{% for photo in photos%}
 					<div class="col-lg-5">
 						<label class="btn btn-primary">
-							<img src="{{ asset(photo.photo) }}" alt="image galerie" class="img-thumbnail img-check">
-							<input type="checkbox" name="photo[]" value="{{photo.id}}" class="hidden">
+							<img src="{{ asset(photo.photo) }}" id="img{{ photo.id }}" alt="image galerie" class="img-thumbnail">							
 						</label>
+						<input type="checkbox" name="photo[]" value="{{ photo.id }}" class="checkbox">
 					</div>
 				{% endfor %}
 			</div>
@@ -32,15 +32,22 @@
 
 {% block javascripts %}
 <script type="text/javascript">
-	$(document).ready(function(e){
-    		$(".img-check").on('click', function(){
-    			if($(this).hasClass("checked")){
-    				$(this).removeClass("checked");
-    			}
-    			else{
-    				$(this).addClass("checked");
-    			}
-			});
+	$(function()
+	{
+    	$(".checkbox").on('click', function(){
+
+    		var id = $(this).val();
+
+    		if($('#img'+id).hasClass("checked"))
+    		{
+    			$('#img'+id).removeClass("checked");
+    		}
+
+    		else
+    		{
+    			$('#img'+id).addClass("checked");
+    		}
+		});
 	});
 </script>
 {% endblock%}

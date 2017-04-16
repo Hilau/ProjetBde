@@ -233,6 +233,7 @@ class ActivityController extends Controller
 	public function deletePhotoAction(Request $request){
 
 		$photoASupprimer = $request->request->get('photo');
+		
 		foreach ($photoASupprimer as $photo) {
 			$suppr = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->find($photo);
 			$this->getDoctrine()->getManager()->remove($suppr);
@@ -241,8 +242,6 @@ class ActivityController extends Controller
 		$this->getDoctrine()->getManager()->flush();
 
 		return $this->redirectToRoute('showPhotoGallery');
-
-
 	}
 
 }
