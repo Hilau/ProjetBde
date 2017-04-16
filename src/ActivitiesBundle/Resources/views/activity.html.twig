@@ -14,7 +14,9 @@
 	<div class="row">
 		<div class="col-lg-offset-1 col-lg-10">
 			<a href="" data-toggle="modal" data-target="#modalCommentaire">
-				<img class="img-responsive" src="{{asset ('{{photos[0].photo}}')}}">
+			{% for photo in photos%}
+				<img class="img-responsive" src="{{ asset(photo.photo) }}">
+			{%endfor%}
 			</a>
 		</div>
 	</div>

@@ -35,13 +35,48 @@ class ActivityController extends Controller
 
 		$activity = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->find($id);
 		$photos = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->findBy(array('activity'=>$activity));
+
+		//Création du bon objet ex : $advert = new Advert()
+
+		$formBuilder = $this->get('form.factory')->creteBuilder('form', /*variable au dessus ex $advert*/);
+		$formBuilder
+			//Champs de l'entite avec champs que l'on veut dans le formulaire
+			->add('activity', ChoiceType::class, array(
+								'choices' => array(
+												1 => "Activité 1",
+												2 => "Activité 2",
+												3 => "Activité 3"),
+								'multiple' => false,
+								'expanded' => false,
+								'empty_value' => "Choisissez votre activité"))
+			->add('problems', ChoiceType::class, array(
+								'choices' => array(
+												1 => "Aucun"
+												2 => "Allergies",
+												3 => "Handicap particulier",
+												4 => "Vue",
+												5 => "Audition"
+												6 => "Autres"),
+								'multiple' => true,
+								'expanded' => true,
+								'empty_data' => 1))
+			->add('everParticipate', ChoiceType::class, array(
+										'choices' => array(
+											"Oui" => true,
+											"Non" => false),
+										))
+			);
+			
+		$form = $formBuilder->getForm();
+			
 		
 		return $this->render('ActivitiesBundle::activity.html.twig', array(
 			'titre'=> $activity->getName(),
 			'description' => $activity->getDescription(),
 			//'date' => DateTime::format ( $activity->getDate() ),
 			'vote' =>$activity->getVote(),
-			'photos' => $photos
+			'photos' => $photos,
+			'form' => $form->createView(),
 			));
 	}
 

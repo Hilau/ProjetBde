@@ -13,7 +13,7 @@
 				{% for photo in photos%}
 					<div class="col-lg-5">
 						<label class="btn btn-primary">
-							<img src="{{ asset(photo.photo) }}" id="img{{ photo.id }}" alt="image galerie" class="img-thumbnail">							
+							<img src="{{ asset(photo.photo) }}" id="img{{ photo.id }}" alt="image galerie" class="img-thumbnail">			
 						</label>
 						<input type="checkbox" name="photo[]" value="{{ photo.id }}" class="checkbox">
 					</div>
