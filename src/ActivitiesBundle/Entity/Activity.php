@@ -12,10 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Activity
 {
-    /**
-     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User")
-     */
-    private $users;
 
     /**
      * @var int
