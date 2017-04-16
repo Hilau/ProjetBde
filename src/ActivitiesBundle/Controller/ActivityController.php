@@ -35,10 +35,10 @@ class ActivityController extends Controller
 
 		$activity = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->find($id);
 		$photos = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->findBy(array('activity'=>$activity));
-
+/*
 		//Création du bon objet ex : $advert = new Advert()
 
-		$formBuilder = $this->get('form.factory')->creteBuilder('form', /*variable au dessus ex $advert*/);
+		$formBuilder = $this->get('form.factory')->creteBuilder('form', variable au dessus ex $advert);
 		$formBuilder
 			//Champs de l'entite avec champs que l'on veut dans le formulaire
 			->add('activity', ChoiceType::class, array(
@@ -69,14 +69,14 @@ class ActivityController extends Controller
 			
 		$form = $formBuilder->getForm();
 			
-		
+		*/
 		return $this->render('ActivitiesBundle::activity.html.twig', array(
 			'titre'=> $activity->getName(),
 			'description' => $activity->getDescription(),
 			//'date' => DateTime::format ( $activity->getDate() ),
 			'vote' =>$activity->getVote(),
 			'photos' => $photos,
-			'form' => $form->createView(),
+			//'form' => $form->createView(),
 			));
 	}
 
