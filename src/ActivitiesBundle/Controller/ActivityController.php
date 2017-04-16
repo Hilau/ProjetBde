@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use ActivitiesBundle\Entity\ActivityIdea;
 use ActivitiesBundle\Entity\ActivitiesVote;
 use Doctrine\ORM\EntityRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Response;
 
 class ActivityController extends Controller 
 {
@@ -51,21 +53,25 @@ class ActivityController extends Controller
 		$listActivitiesVote = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivitiesVote');
 
 		$dates = [];
+		$votes = [];
 
 		foreach($listActivitiesIdea as $activity)
 		{
 			$activityDates = $listActivitiesVote->findByActivity($activity);
+			$activityVote = $listActivitiesVote->findOneByActivity($activity);
 
 			foreach($activityDates as $date)
 			{
-				$dates[$activity->getId()][] = $date->getDate();
+				$dates[$activity->getId()][] = $date->getDate();				
 			}
+
+			$votes[$activity->getId()] = $activityVote->getVote();
 		}
 
 		return $this->render('ActivitiesBundle::listActivityVote.html.twig', array(
 				'listActivitiesIdea' => $listActivitiesIdea,
-				'dates' => $dates
-
+				'dates' => $dates,
+				'votes' => $votes,
 			));
 	}
 
@@ -155,7 +161,7 @@ class ActivityController extends Controller
 	*/
 	public function VoteAction(Request $request){
 		$em = $this->getDoctrine()->getManager();
-	    $repositoryActivityVote = $this->getDoctrine()->getRepository('ActivitiesBundle:ActivitiesVote');	
+	    $repositoryActivityVote = $this->getDoctrine()->getRepository('ActivitiesBundle:ActivitiesVote');
 
 		$id = $request->request->get("id");
 		$date = $request->request->get("horaire");
@@ -174,6 +180,37 @@ class ActivityController extends Controller
 	    $em->flush();
 
 		return $this->redirectToRoute('showActivitiesVote');
+	}
+
+	/**
+	* @Route("showActivityLike", name="showActivityLike")
+	*/
+	public function showActivityLikeAction()
+	{
+		$request = $this->container->get('request');
+
+		if($request->isXmlHttpRequest())
+    	{
+    		$activity_id = $request->query->get('activity_id');
+    		$date = $request->query->get('date');
+
+			$date2 = \DateTime::createFromFormat('Y-m-d H:i:s', $date);
+		
+			$repositoryActivityVote = $this->getDoctrine()->getRepository('ActivitiesBundle:ActivitiesVote');
+			$activityVote = $repositoryActivityVote->findOneBy(array(
+				'activity' => $activity_id,
+				'date' => $date2,
+			));
+
+			$votes = $activityVote->getVote();
+
+			return $this->container->get('templating')->renderResponse('ActivitiesBundle::test.html.twig', array(
+            	'votes' => $votes,
+            ));
+        }
+
+        return new Response("Erreur");
+		
 	}
 
 }

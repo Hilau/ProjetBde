@@ -17,19 +17,17 @@
 						<div class="row">
 							<div class="col-lg-6 btnAdj">
 								<form class="formActivities" name="voter" method="post" action="{{ path('activitiesVote') }}">
-									<select name="horaire" class="form-control">										
-										{% for dates2 in dates %}
-											{% for date in dates2 %}
-												<option value="{{ date|date('Y-m-d H:i:s') }}">{{ date|date('d/m/Y H:i:s') }}</option>
-											{% endfor %}
+									<select name="horaire" id="{{ activityIdea.id }}" class="form-control horaire">
+										{% for date in dates[activityIdea.id] %}											
+											<option value="{{ date|date('Y-m-d H:i:s') }}">{{ date|date('d/m/Y H:i:s') }}</option>
 										{% endfor %}
-
 									</select>
 									<div class="col-lg-3 btnAdj">
 										<input type="hidden" name="id" value="{{ activityIdea.id }}">
 										<button class="btn btn-primary voter" type="submit">Voter</button>
 									</div>
 									<div class="col-lg-offset-2 col-lg-1">
+										<span id="vote{{ activityIdea.id }}">{{ votes[activityIdea.id] }}</span>
 										<span class="glyphicon glyphicon-thumbs-up"></span>	
 									</div>		
 									<br><br>
@@ -39,4 +37,28 @@
 					</div>
 					{% endfor %}
 				</div>
+{% endblock %}
+
+
+{% block javascripts %}
+<script type="text/javascript">
+$(function()
+{
+	$('.horaire').on("change", function()
+	{
+		var activity_id = $(this).attr("id");
+		var date = $(this).val();
+
+		$.ajax({
+			type: "GET",
+			url: "{{ path('showActivityLike') }}",
+			cache: false,
+			data: {activity_id: activity_id, date: date},
+			success: function(data){
+	           $('#vote' + activity_id).html(data);
+	        }
+		});
+	});	
+});
+</script>
 {% endblock %}
