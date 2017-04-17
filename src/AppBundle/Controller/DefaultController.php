@@ -13,9 +13,36 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
+        $activityRepository = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity');
+        $activityPhotoRepository = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto');
+
+        $query = $activityRepository->createQueryBuilder('a')                            
+                            ->orderBy('a.id', 'DESC')
+                            ->getQuery();
+
+        $lastActivities = $query->setMaxResults(3)->getResult();
+
+        $lastActivitiesInfo = [];
+        $lastActivitiesPhoto = [];
+
+        foreach($lastActivities as $activity)
+        {
+            $lastActivitiesInfo[] = ["id" => $activity->getId(), "date" => $activity->getDate(), "name" => $activity->getName()];
+
+            $query2 = $activityPhotoRepository->createQueryBuilder('ap')
+                                                ->orderBy('ap.id', 'ASC')
+                                                ->where('ap.activity = :activity_id')
+                                                ->setParameter('activity_id', $activity->getId())
+                                                ->getQuery();
+
+            $activitiesPhoto = $query2->setMaxResults(1)->getResult();                                 
+            $lastActivitiesPhoto[] = $activitiesPhoto[0]->getPhoto();
+        }
+
         return $this->render('default/index.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+            'lastActivitiesInfo' => $lastActivitiesInfo,
+            'lastActivitiesPhoto' => $lastActivitiesPhoto,
         ));
     }
 }

@@ -44,14 +44,6 @@ class Activity
     private $date;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="vote", type="integer")
-     */
-    private $vote;
-
-
-    /**
      * Get id
      *
      * @return integer 
@@ -128,28 +120,5 @@ class Activity
     public function getDate()
     {
         return $this->date;
-    }
-
-    /**
-     * Set vote
-     *
-     * @param integer $vote
-     * @return Activity
-     */
-    public function setVote($vote)
-    {
-        $this->vote = $vote;
-
-        return $this;
-    }
-
-    /**
-     * Get vote
-     *
-     * @return integer 
-     */
-    public function getVote()
-    {
-        return $this->vote;
     }
 }

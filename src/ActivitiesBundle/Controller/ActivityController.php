@@ -44,6 +44,12 @@ class ActivityController extends Controller
 		$photos = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->findByActivity($activity);
 		$user = $this->get('security.context')->getToken()->getUser();
 
+		$activityUserRepository = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityUser');
+		$alreadySignIn = $activityUserRepository->findBy(array(
+				"activity" => $activity,
+				"user" => $user,
+			));
+
 		$activityUser = new ActivityUser();
 
 		$form = $this->createFormBuilder($activityUser)	        
@@ -52,22 +58,25 @@ class ActivityController extends Controller
 
 	    $form->handleRequest($request);
 
-	    if ($form->isSubmitted() && $form->isValid()) {	        
-	        $activityUser = $form->getData();
-	        $activityUser->setUser($user);
-	        $activityUser->setActivity($activity);
-	        $activityUser->setOtherParticipation(0);
-	       	        
-	        $em->persist($activityUser);
-	        $em->flush();
+	    if ($form->isSubmitted() && $form->isValid()) {
+	    	if(count($alreadySignIn) == 0)
+	    	{
+		        $activityUser = $form->getData();
+		        $activityUser->setUser($user);
+		        $activityUser->setActivity($activity);
+		        $activityUser->setOtherParticipation(0);
+		       	        
+		        $em->persist($activityUser);
+		        $em->flush();
 
 
-	        $this->addFlash(
-	            'success',
-	            'Vous êtes inscrit !'
-	        );
+		        $this->addFlash(
+		            'success',
+		            'Vous êtes inscrit !'
+		        );
+		    }
 
-	        return $this->redirectToRoute('signInActivity', array('activity_id' => $activity_id));
+		    return $this->redirectToRoute('signInActivity', array('activity_id' => $activity_id));
 	    }
 
 	    else if($form->isSubmitted() && !$form->isValid())
@@ -76,13 +85,13 @@ class ActivityController extends Controller
 	            'error',
 	            'Error !'
 	        );
-	    }
-			
+	    }			
 
 		return $this->render('ActivitiesBundle::activity.html.twig', array(
 				'activity' => $activity,
 				'photos' => $photos,
 				'form' => $form->createView(),
+				'alreadySignIn' => count($alreadySignIn),
 			));
 	}
 
@@ -371,7 +380,7 @@ class ActivityController extends Controller
 		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY') || !$this->container->get('security.authorization_checker')->isGranted('ROLE_TUTEUR')) {
             return new Response("Erreur");
         }
-        
+
 		$photoASupprimer = $request->request->get('photo');
 		
 		foreach ($photoASupprimer as $photo) {
