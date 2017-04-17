@@ -40,30 +40,37 @@
                 </div>
 
                 {% if app.user %}
-                    <div class="col-xs-8 col-lg-8">
+                    <div class=" col-lg-8">
                         <header>                        
                             <nav class="navbar navbar-inverse">
-                                <ul class="nav navbar-nav">
-                                    <li><a href=""><span class="glyphicon glyphicon-home"></span>BDE</a></li>
-                                    <li>
-                                        <a class="dropdown-toggle" data-toggle="dropdown" href=""><span class="glyphicon glyphicon-knight"></span>Activités <span class="caret"></span></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="{{ path('activitiesShow') }}">Toutes les activités</a></li>
-                                            <li><a href="{{ path('activityIdea') }}">Soumettre une activité</a></li>
-                                            <li><a href="{{ path('showActivitiesVote') }}">Voter pour une activité</a></li>
-                                            {% if app.user.roles[0] == "ROLE_BDE" %}
-                                                <li><a href="{{ path('summaryActivity') }}">Voir les inscrits</a></li>
-                                            {% endif %}
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="myNavbar">
+                                    <ul class="nav navbar-nav">
+                                        <li><a href=""><span class="glyphicon glyphicon-home"></span>BDE</a></li>
+                                        <li>
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href=""><span class="glyphicon glyphicon-knight"></span>Activités <span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="{{ path('activitiesShow') }}">Toutes les activités</a></li>
+                                                <li><a href="{{ path('activityIdea') }}">Soumettre une activité</a></li>
+                                                <li><a href="{{ path('showActivitiesVote') }}">Voter pour une activité</a></li>
+                                                {% if app.user.roles[0] == "ROLE_BDE" %}
+                                                    <li><a href="{{ path('summaryActivity') }}">Voir les inscrits</a></li>
+                                                {% endif %}
 
-                                            {% if app.user.roles[0] == "ROLE_TUTEUR" %}
-                                                <li><a href="{{ path('showPhotoGallery') }}">Modérer les photos</a></li>
-                                            {% endif %}
-                                        </ul>
-                                    </li>
-                                    <li><a href=""><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a></li>
-                                    <li><a href=""><span class="glyphicon glyphicon-info-sign"></span>A propos</a></li>
-                                    <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span>Déconnexion</a></li>
-                                </ul>                           
+                                                {% if app.user.roles[0] == "ROLE_TUTEUR" %}
+                                                    <li><a href="{{ path('showPhotoGallery') }}">Modérer les photos</a></li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+                                        <li><a href=""><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a></li>
+                                        <li><a href=""><span class="glyphicon glyphicon-info-sign"></span>A propos</a></li>
+                                        <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span>Déconnexion</a></li>
+                                    </ul>
+                                </div>                            
                             </nav>
                         </header>
                     </div>
@@ -78,14 +85,21 @@
                     <div class="col-xs-8 col-lg-8">
                         <header>
                             <nav class="navbar navbar-inverse">
-                                <ul class="nav navbar-nav">
-                                    <li><a href=""><span class="glyphicon glyphicon-home"></span>BDE</a></li>
-                                    <li><a href="{{ path('activitiesShow') }}"><span class="glyphicon glyphicon-knight"></span>Activités</a></li>
-                                    <li><a href=""><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a></li>
-                                    <li><a href="{{ path('fos_user_registration_register') }}"><span class="glyphicon glyphicon-pencil"></span>Inscription</a></li>
-                                    <li><a href="{{ path('fos_user_security_login') }}"><span class="glyphicon glyphicon-user"></span>Connexion</a></li>
-                                    <li><a href=""><span class="glyphicon glyphicon-info-sign"></span>A propos</a></li>
-                                </ul>                           
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="myNavbar">
+                                    <ul class="nav navbar-nav">
+                                        <li><a href=""><span class="glyphicon glyphicon-home"></span>BDE</a></li>
+                                        <li><a href="{{ path('activitiesShow') }}"><span class="glyphicon glyphicon-knight"></span>Activités</a></li>
+                                        <li><a href=""><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a></li>
+                                        <li><a href="{{ path('fos_user_registration_register') }}"><span class="glyphicon glyphicon-pencil"></span>Inscription</a></li>
+                                        <li><a href="{{ path('fos_user_security_login') }}"><span class="glyphicon glyphicon-user"></span>Connexion</a></li>
+                                        <li><a href=""><span class="glyphicon glyphicon-info-sign"></span>A propos</a></li>
+                                    </ul>  
+                                </div>                         
                             </nav>
                         </header>
                     </div>
