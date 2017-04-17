@@ -16,6 +16,7 @@ class ProductController extends Controller
 		$id = $request->request->get("id");
 		$product = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->find($id);
 		return $this->render('ShopBundle::product.html.twig', array(
+			'id' => $product->getId(),
 			'name' => $product->getName(),
 			'description' => $product->getDescription(),
 			'price' => $product->getPrice()  

@@ -1,0 +1,27 @@
+<?php
+namespace ShopBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Basket
+ *
+ * @ORM\Table(name="baskets")
+ * @ORM\Entity(repositoryClass="ShopBundle\Repository\BasketRepository")
+ */
+class Basket
+{
+	/**
+	 * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+	 * @ORM\JoinColumn(nullable=false)
+	 */
+	private $user;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="ShopBundle\Entity\Product")
+	 * @ORM\JoinColumn(nullable=false)
+	 */
+	private $product;
+}
+
+?>

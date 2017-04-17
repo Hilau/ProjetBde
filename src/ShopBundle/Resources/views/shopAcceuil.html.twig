@@ -5,12 +5,13 @@
 {% endblock %}
 
 {% block body %}
+	<aside>
 	<div class="row">
 		<h1 class="col-lg-offset-1-5" id="boutique">Boutique</h1><br><br>
 	</div>
 			
 	<!-- sous-menu -->
-	<nav class="row">
+	<nav class="row hey">
         <div class="col-lg-2 ctnListe">
             <a class="liste" href="boutique_categorie.html">Matériel informatique</a> <!-- Lien vers la page de catégorie Matos -->
         </div>
@@ -33,7 +34,7 @@
 	
 	<hr>
 
-	
+	</aside>
 
 	<div class="row">
 		<div class="col-lg-9">
@@ -43,7 +44,7 @@
 					<h2>Articles populaires :</h2>
 				</div>
 			</div>
-				
+
 			<div class="row"> 
 				{%for product in listArticle%}
 				<article> 
@@ -53,6 +54,7 @@
 									<h3 class="titleArticle"> {{product.name}} </h3>   <!-- titre article -->
 									<center><img src="image/T.jpg" alt="Bureautique" class="images"></center>
 									<p>{{product.description}}</p>
+									<button class="btn btn-primary addPanier" id="">Ajouter au panier</button>
 							</div>
 						</div>
 					</div>
@@ -88,10 +90,23 @@
 				<div class="col-lg-8 descriptionArticle">
 					heyheyheyheyheyhey
 				</div>
-				<div class="col-lg-4">
+				<div class="col-lg-4 prixArticle">
 					prixprixprix
 				</div>
 			</div>
 		</div>
 	</div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+	$(window).scroll(function() {
+		var rupture = $("aside").outerHeight();
+		if ($(window).scrollTop() > rupture) {
+			$("#panier").addClass("fixed");
+		} else {
+			$("#panier").removeClass("fixed");
+		}
+	});
+</script>
 {% endblock %}
