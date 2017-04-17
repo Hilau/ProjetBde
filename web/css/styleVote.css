@@ -115,11 +115,11 @@ td {
 .glyphicon-thumbs-up {
   font-size: 30px;
   color: blue;
+  margin-right: 10px;
+  width: 100%;
 }
 
-.glyphicon {
-  margin-right: 10px;
-}
+
 
 
 .input-group{
@@ -148,4 +148,15 @@ td {
   max-height: 15vh;
   width: auto;
 
+}
+
+@media screen (max-width: 900px){
+  .activityVote{
+    width: 100%;
+  }
+
+  .img1{
+    height: 200px
+    width: 300px;
+  }
 }

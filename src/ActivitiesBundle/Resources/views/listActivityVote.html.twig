@@ -9,30 +9,31 @@
 					<h3>Voter pour vos activités préférées</h3>
 					{% for activityIdea in listActivitiesIdea %}
 
-					<div class="col-lg-offset-1 col-lg-4 activityVote">
+					<div class="col-lg-offset-1 col-lg-4 col-xs-offset-1 col-xs-10 activityVote">
 						<h4>{{activityIdea.name}}</h4><br>
 						<div class="conteneurImg"><img src="{{ asset('img/index.jpg') }}" alt="photo activite" class="img1"><br></div>
 						<a href="#">Plus de détails</a>
 						<p>Choisissez votre date et votre horaire :</p>
-						<div class="row">
-							<div class="col-lg-6 btnAdj">
-								<form class="formActivities" name="voter" method="post" action="{{ path('activitiesVote') }}">
+						<div class="row btnAdj">
+							<form class="formActivities" name="voter" method="post" action="{{ path('activitiesVote') }}">
+								<div class="col-lg-7 col-xs-5">
 									<select name="horaire" id="{{ activityIdea.id }}" class="form-control horaire">
 										{% for date in dates[activityIdea.id] %}											
 											<option value="{{ date|date('Y-m-d H:i:s') }}">{{ date|date('d/m/Y H:i:s') }}</option>
 										{% endfor %}
 									</select>
-									<div class="col-lg-3 btnAdj">
-										<input type="hidden" name="id" value="{{ activityIdea.id }}">
-										<button class="btn btn-primary voter" type="submit">Voter</button>
-									</div>
-									<div class="col-lg-offset-2 col-lg-1">
-										<span id="vote{{ activityIdea.id }}">{{ votes[activityIdea.id] }}</span>
-										<span class="glyphicon glyphicon-thumbs-up"></span>	
-									</div>		
-									<br><br>
-								</form>	
-							</div>							
+								</div>
+								<div class="col-lg-2 col-xs-2 btnAdj">
+									<input type="hidden" name="id" value="{{ activityIdea.id }}">
+									<button class="btn btn-primary voter" type="submit">Voter</button>
+								</div>
+								<div class="col-lg-1 col-xs-offset-3 col-xs-1">
+									<span class="glyphicon glyphicon-thumbs-up"></span>	
+								</div>
+								<div class=" col-lg-offset-1 col-lg-l  col-xs-1">
+									<span id="vote{{ activityIdea.id }}">{{ votes[activityIdea.id] }}</span>
+								</div>
+							</form>							
 						</div>
 					</div>
 					{% endfor %}
