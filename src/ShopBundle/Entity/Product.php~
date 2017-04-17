@@ -188,27 +188,4 @@ class Product
     {
         return $this->image;
     }
-
-    /**
-     * Set nbAchat
-     *
-     * @param integer $nbAchat
-     * @return Product
-     */
-    public function setNbAchat($nbAchat)
-    {
-        $this->nbAchat = $nbAchat;
-
-        return $this;
-    }
-
-    /**
-     * Get nbAchat
-     *
-     * @return integer 
-     */
-    public function getNbAchat()
-    {
-        return $this->nbAchat;
-    }
 }

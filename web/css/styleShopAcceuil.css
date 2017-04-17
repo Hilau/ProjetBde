@@ -165,3 +165,30 @@ hr
 {
   text-align: center;
 }
+
+.titleArticle
+{
+  text-align: center;
+}
+
+.descriptionArticle
+{
+  text-align: left;
+}
+
+#panier {
+  text-align: center;
+  background-color: gray;
+  border: 2px solid black;
+}
+
+#panier.fixed {
+  position: fixed;
+  display: inline;
+  top: 0;
+}
+
+.contenuPanier
+{
+  text-align: left;
+}
