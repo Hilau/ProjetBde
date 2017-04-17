@@ -15,9 +15,9 @@
 						<label>Choix de l'activité</label>
 					</div>
 					<div class="col-lg-6">
-						<select name="activities" class="form-control activite">
+						<select name="activities" class="form-control activities">
 							{% for activity in activities%}
-							<option value="{{ activity.name }}" id="{{activity.id}}" class="nameActivity" >{{ activity.name }}</option>
+								<option value="{{ activity.name }}" id="{{ activity.id }}" class="nameActivity" >{{ activity.name }}</option>
 							{% endfor%}
 						</select>
 					</div>				
@@ -28,7 +28,7 @@
 						<label>Date retenue :</label>
 					</div>
 					<div class="col-lg-6">
-						<input id="dateActivity" type="text" name="date" value="{{dates[1][0]|date('d/m/Y H:i:s')}}" readonly="readonly" class="form-control">
+						<input id="dateActivity" type="text" name="date" value="{{ date|date('d/m/Y H:i:s') }}" readonly="readonly" class="form-control">
 					</div>
 				</div>
 				<br>
@@ -37,7 +37,7 @@
 						<label>Nombre d'inscrits :</label>
 					</div>
 					<div class="col-lg-6">
-						<input id="activityUsersRegistered" type="text" name="nbInscrits" value="{{ nbInscrits }}" readonly="readonly" class="form-control">	
+						<input id="activityUsersRegistered" type="text" name="nbInscrit" value="{{ nbInscrit }}" readonly="readonly" class="form-control">	
 					</div>
 				</div>
 				<br>
@@ -56,35 +56,16 @@
 					<th>Adresse mail</th>
 				</thead>
 
-				<tbody>
-					<tr>
-						<td>Julie</td>
-						<td>MEYER</td>
-						<td>A2</td>
-						<td>Autres</td>
-						<td>julie.meyer@viacesi.fr</td>
-					</tr>
-					<tr>
-						<td>Mélanie</td>
-						<td>GSTALTER</td>
-						<td>A2</td>
-						<td>Autres</td>
-						<td>melanie.gstalter@viacesi.fr</td>
-					</tr>
-					<tr>
-						<td>Hugo</td>
-						<td>HUILIER</td>
-						<td>A2</td>
-						<td>Autres</td>
-						<td>hugo.huilier@viacesi.fr</td>
-					</tr>
-					<tr>
-						<td>François</td>
-						<td>SCHAEFER</td>
-						<td>A2</td>
-						<td>Autres</td>
-						<td>francois.schaefer@viacesi.fr</td>
-					</tr>
+				<tbody id="usersInfo">
+					{% for userInfo in usersInfo %}
+						<tr>
+							<td>{{ userInfo[0] }}</td>
+							<td>{{ userInfo[1] }}</td>
+							<td>{{ userInfo[2] }}</td>
+							<td>{{ userInfo[3] }}</td>
+							<td>{{ userInfo[4] }}</td>
+						</td>
+					{% endfor %}
 				</tbody>
 			</table>
 		</div>
@@ -96,18 +77,52 @@
 <script type="text/javascript">
 $(function()
 {
-	$('.activite').on("change", function()
+	$('.activities').on("change", function()
 	{
-		var activity_id = $('.nameActivity').attr("id");
+		var activity_id = $(this).find(":selected").attr("id");
 
 		$.ajax({
 			type: "GET",
 			url: "{{ path('showUsersRegistered') }}",
 			cache: false,
-			data: 'activity_id='+ activity_id,
+			data: {activity_id: activity_id},
 			success: function(data){
-	           $('#dateActivity').val(data);
-	           //$('#activityUsersRegistered').attr('value', data);
+				var date = new Date(data[0]['date']);
+				var day = date.getDate();
+				var month = parseInt(date.getMonth()+1);
+
+				if(month >= 1 && month <= 9)
+				{
+					month = '0'+month;
+				}
+
+				var year = date.getFullYear();
+
+				var hour = date.getHours();
+
+
+				if(hour >= 0 && hour <= 9)
+				{
+					hour = '0'+hour;
+				}
+
+				var minute = date.getMinutes();
+
+				if(minute >= 0 && minute <= 9)
+				{
+					minute = '0'+minute;
+				}
+
+				var second = date.getSeconds();
+
+				if(second >= 0 && second <= 9)
+				{
+					second = '0'+second;
+				}
+
+	           	$('#dateActivity').val(day+'/'+month+'/'+year+' '+hour+':'+minute+':'+second);
+	           	$('#activityUsersRegistered').val(data[1]);
+	            $('#usersInfo').html(data[2]);
 	        }
 		});
 	});	

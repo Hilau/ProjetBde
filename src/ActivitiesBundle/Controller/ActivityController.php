@@ -83,63 +83,6 @@ class ActivityController extends Controller
 	}
 
 	/**
-	 * @Route("activity", name="activityShow")
-	 */
-	public function showActivityAction(){
-		/*$id = $request->request->get("id");
-
-		$activity = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->find($id);
-		$photos = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->findBy(array('activity'=>$activity));
-
-		
-
-		$em = $this->getDoctrine()->getManager();
-	    $activityUser = new ActivityUser();
-	    $user = $this->get('security.context')->getToken()->getUser();
-
-		$form = $this->createFormBuilder($activityUser)
-	        ->add('user', HiddenType::class)
-	        ->add('activity', HiddenType::class)
-	        ->add('save', 'submit')
-	        ->getForm();
-	        
-		$form->handleRequest($request);
-
-	    if ($form->isSubmitted() && $form->isValid()) {	        
-	        $activityUser = $form->getData();
-	        $activityUser->setUser($user);
-	       	        
-	        $em->persist($activityUser);
-	        $em->flush();
-
-
-	        $this->addFlash(
-	            'success',
-	            'Vous êtes inscrit !'
-	        );
-
-	        // return $this->redirectToRoute('activityShow');
-	    }
-
-	    else if($form->isSubmitted() && !$form->isValid())
-	    {
-	    	$this->addFlash(
-	            'error',
-	            'Error !'
-	        );
-	    }
-			
-
-		return $this->render('ActivitiesBundle::activity.html.twig', array(
-			'titre'=> $activity->getName(),
-			'description' => $activity->getDescription(),
-			'vote' =>$activity->getVote(),
-			'photos' => $photos,
-			'form' => $form->createView(),
-			));*/
-	}
-
-	/**
 	* @Route("showActivitiesVote", name="showActivitiesVote")
 	*/
 	public function showActivitiesVoteAction(){
@@ -172,31 +115,30 @@ class ActivityController extends Controller
 	/**
 	* @Route("summary", name="summaryActivity")
 	*/
-	public function showSummaryActivityAction(){
+	public function showSummaryActivityAction()
+	{
 		$listActivities = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->findAll();
-		$ActivitiesUsers = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityUser');
-		$listUsers = $this->getDoctrine()->getManager()->getRepository('UserBundle:User');
+		$activitiesUsers = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityUser');
 
-		$dates = [];
-		$users = [];
+		$firstActivity = $listActivities[0];
+		$date = $firstActivity->getDate();
 
-		foreach ($listActivities as $activity) {
-			$dates[$activity->getID()][] = $activity->getDate();
-			$listActivitiesUsers = $ActivitiesUsers->findByActivity($activity);
+		$firstActivityUsers = $activitiesUsers->findByActivity(1);
 
-			foreach($listActivitiesUsers as $user)
-			{
-				$users[$activity->getId()][] = $listUsers->findBy($user);
-			}
+		$nbInscrit = count($firstActivityUsers);
+
+		$usersInfo = [];
+
+		foreach($firstActivityUsers as $user)
+		{
+			$usersInfo[] = array($user->getUser()->getNom(), $user->getUser()->getPrenom(), $user->getUser()->getPromotion(), "Aucun", $user->getUser()->getEmail());
 		}
 
-		$usersRegistered = count($users);
-
 		return $this->render('ActivitiesBundle::summaryActivity.html.twig', array(
-			"activities" => $listActivities,
-			"dates" => $dates,
-			"participants" => $users,
-			"nbInscrits" => $usersRegistered
+				"activities" => $listActivities,
+				"date" => $date,
+				"nbInscrit" => $nbInscrit,
+				"usersInfo" => $usersInfo,
 			));
 	}
 
@@ -344,11 +286,36 @@ class ActivityController extends Controller
 			$repositoryActivities = $this->getDoctrine()->getRepository('ActivitiesBundle:Activity');
 			$activity = $repositoryActivities->find($activity_id);
 
+			$activitiesUsers = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityUser');
+			$activityUser = $activitiesUsers->findByActivity($activity_id);
+
 			$date = $activity->getDate();
 
-			return $this->container->get('templating')->renderResponse('ActivitiesBundle::testInscrit.html.twig', array(
-            	'date' => $date,
-            ));
+			$usersInfo = [];
+
+			foreach($activityUser as $user)
+			{
+				$usersInfo[] = array($user->getUser()->getNom(), $user->getUser()->getPrenom(), $user->getUser()->getPromotion(), "Aucun", $user->getUser()->getEmail());
+			}
+
+			$table = [];
+
+			foreach ($usersInfo as $user) {
+				$table[] = 	"<tr>
+								<td>".$user[0]."</td>
+								<td>".$user[1]."</td>
+								<td>".$user[2]."</td>
+								<td>".$user[3]."</td>
+								<td>".$user[4]."</td>
+							</tr>";
+			}
+
+			$data = [$date, count($activityUser), $table];
+
+			$response = new Response(json_encode($data));
+		    $response->headers->set('Content-Type', 'application/json');
+
+		    return $response;
         }
 
         return new Response("Erreur");
