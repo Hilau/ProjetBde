@@ -32,10 +32,3 @@ security:
                 path: fos_user_security_logout
                 target: /
             anonymous: true
-
-    access_control:
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/bde/, role: ROLE_BDE }
-        - { path: ^/tuteur/, role: ROLE_TUTEUR }

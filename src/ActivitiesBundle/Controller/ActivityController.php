@@ -35,6 +35,10 @@ class ActivityController extends Controller
 	 */
 	public function signInActivityAction(Request $request, $activity_id)
 	{
+		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }
+
 		$em = $this->getDoctrine()->getManager();
 		$activity = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->find($activity_id);
 		$photos = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->findByActivity($activity);
@@ -86,6 +90,10 @@ class ActivityController extends Controller
 	* @Route("showActivitiesVote", name="showActivitiesVote")
 	*/
 	public function showActivitiesVoteAction(){
+		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }
+
 		$listActivitiesIdea = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityIdea')->findAll();
 		$listActivitiesVote = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivitiesVote');
 
@@ -117,6 +125,10 @@ class ActivityController extends Controller
 	*/
 	public function showSummaryActivityAction()
 	{
+		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY') || !$this->container->get('security.authorization_checker')->isGranted('ROLE_BDE')) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }
+
 		$listActivities = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->findAll();
 		$activitiesUsers = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityUser');
 
@@ -147,6 +159,10 @@ class ActivityController extends Controller
 	*/
 	public function formActivityIdeaAction(Request $request)
 	{
+		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }
+
 		$em = $this->getDoctrine()->getManager();
 	    $activityIdea = new activityIdea();
 	    $user = $this->get('security.context')->getToken()->getUser();
@@ -220,6 +236,10 @@ class ActivityController extends Controller
 	* @Route("activitiesVote", name="activitiesVote")
 	*/
 	public function VoteAction(Request $request){
+		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return new Response("Erreur");
+        }
+
 		$em = $this->getDoctrine()->getManager();
 	    $repositoryActivityVote = $this->getDoctrine()->getRepository('ActivitiesBundle:ActivitiesVote');
 
@@ -247,6 +267,10 @@ class ActivityController extends Controller
 	*/
 	public function showActivityLikeAction()
 	{
+		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return new Response("Erreur");
+        }
+
 		$request = $this->container->get('request');
 
 		if($request->isXmlHttpRequest())
@@ -277,6 +301,10 @@ class ActivityController extends Controller
 	* @Route("showUsersRegistered", name="showUsersRegistered")
 	*/
 	public function showUsersRegisteredAction(){
+		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return new Response("Erreur");
+        }
+
 		$request = $this->container->get('request');
 
 		if($request->isXmlHttpRequest())
@@ -325,6 +353,10 @@ class ActivityController extends Controller
 	* @Route("showPhotoGallery", name="showPhotoGallery")
 	*/
 	public function showPhotoGalleryAction(){
+		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY') || !$this->container->get('security.authorization_checker')->isGranted('ROLE_TUTEUR')) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }
+
 		$photos = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->findAll();
 
 		return $this->render('ActivitiesBundle::moderationPhotos.html.twig', array(
@@ -336,7 +368,10 @@ class ActivityController extends Controller
 	* @Route("deletephoto", name="deletePhoto")
 	*/
 	public function deletePhotoAction(Request $request){
-
+		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY') || !$this->container->get('security.authorization_checker')->isGranted('ROLE_TUTEUR')) {
+            return new Response("Erreur");
+        }
+        
 		$photoASupprimer = $request->request->get('photo');
 		
 		foreach ($photoASupprimer as $photo) {
