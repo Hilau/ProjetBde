@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use ShopBundle\Entity\Basket;
 
 class ProductController extends Controller 
 {
@@ -19,16 +20,43 @@ class ProductController extends Controller
 			'id' => $product->getId(),
 			'name' => $product->getName(),
 			'description' => $product->getDescription(),
-			'price' => $product->getPrice()  
+			'price' => $product->getPrice()
 			));
 	}
 
 	/**
 	 * @Route("acceuilShop", name="acceuilShopShow")
 	 */
-	public function showAcceuilShopAction(){
+	public function showAcceuilShopAction(Request $request){
 		$listArticle = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->findAll();
-		return $this->render('ShopBundle::shopAcceuil.html.twig', array('listArticle' => $listArticle));
+		$user = $this->get('security.context')->getToken()->getUser();
+		$products = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Basket')->findByUser($user);
+		$productRepository = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product');
+		$productsInfo = [];
+
+		/*$product_id = $request->request->get("product_id");
+		$newProduct = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->find($product_id);
+		$newProduct = new Basket();
+		$newProduct->setProduct($product_id);
+		$em = $this->getDoctrine()->getManager();
+		$em->persist($newProduct);
+		$em->flush();*/
+
+			
+		foreach($products as $product)
+		{
+			$productData = $productRepository->find($product);
+			$productsInfo[] = [
+				"name" => $productData->getName(),
+				"price" => $productData->getPrice()
+			];
+		}
+
+		return $this->render('ShopBundle::shopAcceuil.html.twig', array(
+			'listArticle' => $listArticle,
+			'productRepository' => $productRepository,
+			'productsInfo' => $productsInfo
+			));
 	}
 
 	/**

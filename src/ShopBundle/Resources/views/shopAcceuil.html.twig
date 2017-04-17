@@ -13,7 +13,7 @@
 	<!-- sous-menu -->
 	<nav class="row hey">
         <div class="col-lg-2 ctnListe">
-            <a class="liste" href="boutique_categorie.html">Matériel informatique</a> <!-- Lien vers la page de catégorie Matos -->
+            <a class="liste" href="{{path('categorieShopShow')}}">Matériel informatique</a> <!-- Lien vers la page de catégorie Matos -->
         </div>
         <div class="col-lg-2 ctnListe">
             <a class="liste" href="#">T-shirts</a>
@@ -54,7 +54,10 @@
 									<h3 class="titleArticle"> {{product.name}} </h3>   <!-- titre article -->
 									<center><img src="image/T.jpg" alt="Bureautique" class="images"></center>
 									<p>{{product.description}}</p>
-									<button class="btn btn-primary addPanier" id="">Ajouter au panier</button>
+									<form action="ProductController" method="post">
+										<input type="hidden" name="product_id" value="{{product.id}}">
+										<input type="submit" class="btn btn-primary" value="Ajouter au panier"></button>
+									</form>
 							</div>
 						</div>
 					</div>
@@ -88,10 +91,14 @@
 			<div class="row">
 				<h4>Mon panier</h4>
 				<div class="col-lg-8 descriptionArticle">
-					heyheyheyheyheyhey
+					{%for product in productsInfo%}
+						{{product.name}}<br>
+					{%endfor%}
 				</div>
 				<div class="col-lg-4 prixArticle">
-					prixprixprix
+					{%for product in productsInfo%}
+						{{product.price}}<br>
+					{%endfor%}
 				</div>
 			</div>
 		</div>
