@@ -37,29 +37,19 @@
 										<input class="form-control" type="text" placeholder="Commentaire" id="example-text-input">
 									</div>
 								</div><br>
-								<div class="row comment">
-									<div class="col-lg-2">
-										<img class="avatar" src="{{ asset('img/index.jpg') }}">
+								{% for comment in commentsInfo %}								
+									<div class="row comment">
+										<div class="col-lg-2">
+											<img class="avatar" src="{{ asset('avatars/') }}{{ comment.avatar }}">
+										</div>
+										<div class="col-lg-10 textComment">
+											{{ comment.comment }}
+										</div>
+										<div class="row">
+											<p class="col-lg-3 date">{{ comment.date|date("d/m/Y H:i:s") }}</p>
+										</div>
 									</div>
-									<div class="col-lg-10 textComment">
-										Je suis un commentaire, je suis un commentaire , je suis un commentaire , je suis un commentaire , je suis un commentaire.<br><br> 
-									</div>
-									<div class="row">
-										<p class="col-lg-3 date">15 Avril 2017 à 15:47</p>
-									</div>
-								</div>
-								<div class="row comment">
-									<div class="col-lg-2">
-										<img class="avatar" src="{{ asset('img/index.jpg') }}">
-									</div>
-									<div class="col-lg-10 textComment">
-										Je suis un commentaire, je suis un commentaire , je suis un commentaire , je suis un commentaire , je suis un commentaire. Je suis un commentaire, je suis un commentaire , je suis un commentaire , je suis un commentaire , je suis un commentaire. Je suis un commentaire, je suis un commentaire , je suis un commentaire , je suis un commentaire , je suis un commentaire.<br><br>
-									</div>
-									<div class="row">
-										<p class="col-lg-3 date">15 Avril 2017 à 15:47</p>
-									</div>
-								</div>
-
+								{% endfor %}
 							</div>
 						</div>
 					</div>

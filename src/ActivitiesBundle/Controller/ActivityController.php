@@ -42,6 +42,7 @@ class ActivityController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$activity = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->find($activity_id);
 		$photos = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->findByActivity($activity);
+		$commentsRepository = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:PhotoComment');
 		$user = $this->get('security.context')->getToken()->getUser();
 
 		$activityUserRepository = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityUser');
@@ -49,6 +50,21 @@ class ActivityController extends Controller
 				"activity" => $activity,
 				"user" => $user,
 			));
+
+		$commentsInfo = [];
+
+		foreach($photos as $photo)
+		{
+			$comments = $commentsRepository->findByPhoto($photo);
+
+			foreach($comments as $comment)
+			{
+				$comment_user = $comment->getUser();
+				$user_avatar = $comment_user->getAvatar();
+
+				$commentsInfo[] = ["avatar" => $user_avatar, "comment" => $comment->getComment(), "date" => $comment->getDate()];
+			}
+		}
 
 		$activityUser = new ActivityUser();
 
@@ -68,7 +84,6 @@ class ActivityController extends Controller
 		       	        
 		        $em->persist($activityUser);
 		        $em->flush();
-
 
 		        $this->addFlash(
 		            'success',
@@ -92,6 +107,7 @@ class ActivityController extends Controller
 				'photos' => $photos,
 				'form' => $form->createView(),
 				'alreadySignIn' => count($alreadySignIn),
+				'commentsInfo' => $commentsInfo,
 			));
 	}
 

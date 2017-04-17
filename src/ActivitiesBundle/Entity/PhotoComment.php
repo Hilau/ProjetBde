@@ -103,4 +103,50 @@ class PhotoComment
     {
         return $this->date;
     }
+
+    /**
+     * Set user
+     *
+     * @param \UserBundle\Entity\User $user
+     * @return User
+     */
+    public function setUser(\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set photo
+     *
+     * @param \ActivitiesBundle\Entity\ActivityPhoto $photo
+     * @return photo
+     */
+    public function setPhoto(\ActivitiesBundle\Entity\ActivityPhoto $photo = null)
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return \ActivitiesBundle\Entity\ActivityPhoto
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
 }
