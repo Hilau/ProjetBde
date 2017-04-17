@@ -15,9 +15,9 @@
 						<label>Choix de l'activité</label>
 					</div>
 					<div class="col-lg-6">
-						<select name="activite" class="form-control">
+						<select name="activities" class="form-control activite">
 							{% for activity in activities%}
-							<option value="{{ activity.name }}">{{ activity.name }}</option>
+							<option value="{{ activity.name }}" id="{{activity.id}}" class="nameActivity" >{{ activity.name }}</option>
 							{% endfor%}
 						</select>
 					</div>				
@@ -28,7 +28,7 @@
 						<label>Date retenue :</label>
 					</div>
 					<div class="col-lg-6">
-						<input type="text" name="date" value="15 Avril 2017" readonly="readonly" class="form-control">
+						<input id="dateActivity" type="text" name="date" value="{{dates[1][0]|date('d/m/Y H:i:s')}}" readonly="readonly" class="form-control">
 					</div>
 				</div>
 				<br>
@@ -37,7 +37,7 @@
 						<label>Nombre d'inscrits :</label>
 					</div>
 					<div class="col-lg-6">
-						<input type="text" name="nbInscrits" value="29" readonly="readonly" class="form-control">	
+						<input id="activityUsersRegistered" type="text" name="nbInscrits" value="{{ nbInscrits }}" readonly="readonly" class="form-control">	
 					</div>
 				</div>
 				<br>
@@ -90,4 +90,27 @@
 		</div>
 	</div>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+$(function()
+{
+	$('.activite').on("change", function()
+	{
+		var activity_id = $('.nameActivity').attr("id");
+
+		$.ajax({
+			type: "GET",
+			url: "{{ path('showUsersRegistered') }}",
+			cache: false,
+			data: 'activity_id='+ activity_id,
+			success: function(data){
+	           $('#dateActivity').val(data);
+	           //$('#activityUsersRegistered').attr('value', data);
+	        }
+		});
+	});	
+});
+</script>
 {% endblock %}

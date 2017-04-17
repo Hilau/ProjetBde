@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ActivityUser
  *
  * @ORM\Table(name="activitiesUsers")
- * @ORM\Entity(repositoryClass="ActivitiesBundle\Repository\ActivityUserRepository")
+ * @ORM\Entity(repositoryClass="ActivitiesBundle\Repository\ActivityParticipantRepository")
  */
 class ActivityUser
 {

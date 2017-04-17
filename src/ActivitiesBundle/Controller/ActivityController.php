@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use ActivitiesBundle\Entity\ActivityIdea;
 use ActivitiesBundle\Entity\ActivityUser;
 use ActivitiesBundle\Entity\ActivitiesVote;
+use UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
@@ -172,9 +173,30 @@ class ActivityController extends Controller
 	* @Route("summary", name="summaryActivity")
 	*/
 	public function showSummaryActivityAction(){
-		$activities = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->findAll();
+		$listActivities = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->findAll();
+		$ActivitiesUsers = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityUser');
+		$listUsers = $this->getDoctrine()->getManager()->getRepository('UserBundle:User');
+
+		$dates = [];
+		$users = [];
+
+		foreach ($listActivities as $activity) {
+			$dates[$activity->getID()][] = $activity->getDate();
+			$listActivitiesUsers = $ActivitiesUsers->findByActivity($activity);
+
+			foreach($listActivitiesUsers as $user)
+			{
+				$users[$activity->getId()][] = $listUsers->findBy($user);
+			}
+		}
+
+		$usersRegistered = count($users);
+
 		return $this->render('ActivitiesBundle::summaryActivity.html.twig', array(
-			"activities" => $activities
+			"activities" => $listActivities,
+			"dates" => $dates,
+			"participants" => $users,
+			"nbInscrits" => $usersRegistered
 			));
 	}
 
@@ -306,7 +328,30 @@ class ActivityController extends Controller
         }
 
         return new Response("Erreur");
+			
+	}
+
+	/**
+	* @Route("showUsersRegistered", name="showUsersRegistered")
+	*/
+	public function showUsersRegisteredAction(){
+		$request = $this->container->get('request');
+
+		if($request->isXmlHttpRequest())
+    	{
+    		$activity_id = $request->query->get('activity_id');
 		
+			$repositoryActivities = $this->getDoctrine()->getRepository('ActivitiesBundle:Activity');
+			$activity = $repositoryActivities->find($activity_id);
+
+			$date = $activity->getDate();
+
+			return $this->container->get('templating')->renderResponse('ActivitiesBundle::testInscrit.html.twig', array(
+            	'date' => $date,
+            ));
+        }
+
+        return new Response("Erreur");
 	}
 
 	/**
