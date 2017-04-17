@@ -107,6 +107,11 @@ margin: 0 10px 0 40px;
   background-color: rgb(0, 173, 237);
 }
 
+.navbar-collapse
+{
+  padding: 0;
+}
+
 ul
 {
   width: 100%;
@@ -225,32 +230,3 @@ input
 {
   height: 30px;
 }
-
-/*.form
-{
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.glyphicon-lock,
-.glyphicon-user {
-    color: #FFFFFF;
-    font-size: 2vh;
-}
-
-input
-{
-    border-radius: 10px;
-    text-align: center;
-    border-style: none;
-    height: 3vh;
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
-.loginForm {
-    margin-top: 2vh;
-    width: 15vw;
-}*/

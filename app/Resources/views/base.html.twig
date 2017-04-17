@@ -66,7 +66,7 @@
                                                 {% endif %}
                                             </ul>
                                         </li>
-                                        <li><a href="{{ path('acceuilShopShow') }}"><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a></li>
+                                        <li><a href=""><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a></li>
                                         <li><a href=""><span class="glyphicon glyphicon-info-sign"></span>A propos</a></li>
                                         <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span>Déconnexion</a></li>
                                     </ul>
@@ -82,19 +82,14 @@
                         {{ app.user.prenom }}         
                     </div>
                 {% else %}
-                    <div class="col-xs-8 col-lg-8">
+                    <div class="col-lg-8">
                         <header>
-                            <nav class="navbar navbar-inverse">
-                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>
+                            <nav class="navbar navbar-inverse">                                
                                 <div class="collapse navbar-collapse" id="myNavbar">
                                     <ul class="nav navbar-nav">
                                         <li><a href=""><span class="glyphicon glyphicon-home"></span>BDE</a></li>
                                         <li><a href="{{ path('activitiesShow') }}"><span class="glyphicon glyphicon-knight"></span>Activités</a></li>
-                                        <li><a href="{{ path('acceuilShopShow') }}"><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a></li>
+                                        <li><a href=""><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a></li>
                                         <li><a href="{{ path('fos_user_registration_register') }}"><span class="glyphicon glyphicon-pencil"></span>Inscription</a></li>
                                         <li><a href="{{ path('fos_user_security_login') }}"><span class="glyphicon glyphicon-user"></span>Connexion</a></li>
                                         <li><a href=""><span class="glyphicon glyphicon-info-sign"></span>A propos</a></li>
