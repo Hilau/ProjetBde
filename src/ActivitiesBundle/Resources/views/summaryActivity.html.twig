@@ -1,18 +1,18 @@
 {% extends "::base.html.twig" %}
 
 {% block header %}
-	<link rel="stylesheet" type="text/css" href="{{ asset('css/styleVote.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/styleInscrits.css') }}">
 {% endblock %}
 
 {% block body %}
 	<div class="row">
-		<h3>Récapitulatif des inscrits</h3>
+		<h3 class="row">Récapitulatif des inscrits</h3>
 		<br>
 		<form class="formActivities">
-			<div class="col-lg-offset-1 col-lg-8">
+			<div class="col-lg-offset-3 col-lg-8 col-xs-offset-2 col-xs-8">
 				<div class="row">
 					<div class="col-lg-3">
-						<label>Choix de l'activité</label>
+						<label>Choix de l'activité :</label>
 					</div>
 					<div class="col-lg-6">
 						<select name="activities" class="form-control activities">
@@ -44,10 +44,15 @@
 			</div>
 		</form>
 		<br>
+		
+		<dir class="row">
+			<br><br>
+		</dir>
 
 	<div class="row">
-		<div class="col-lg-offset-1 col-lg-10">
-			<table class="table table-responsive">
+		<br><br>
+		<div class="col-lg-offset-1 col-lg-10  col-xs-offset-2 col-xs-8 responsive-table-line">
+			<table class="table table-body-center">
 				<thead>
 					<th>Nom</th>
 					<th>Prénom</th>
@@ -59,11 +64,11 @@
 				<tbody id="usersInfo">
 					{% for userInfo in usersInfo %}
 						<tr>
-							<td>{{ userInfo[0] }}</td>
-							<td>{{ userInfo[1] }}</td>
-							<td>{{ userInfo[2] }}</td>
-							<td>{{ userInfo[3] }}</td>
-							<td>{{ userInfo[4] }}</td>
+							<td data-title="Nom">{{ userInfo[0] }}</td>
+							<td data-title="Prenom">{{ userInfo[1] }}</td>
+							<td data-title="Promotion">{{ userInfo[2] }}</td>
+							<td data-title="Problemes">{{ userInfo[3] }}</td>
+							<td data-title="Adresse mail">{{ userInfo[4] }}</td>
 						</td>
 					{% endfor %}
 				</tbody>

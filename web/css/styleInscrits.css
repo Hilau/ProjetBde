@@ -6,15 +6,15 @@ html,body{
 
 body
 {
-	background-color: rgb(27, 109, 171);
+  background-color: rgb(27, 109, 171);
 }
 
 .container
 {
-	background-color: rgb(190, 190, 190);
-	border: solid 1px rgb(190, 190, 190);
-	border-radius: 5px;
-	min-height: 100%;
+  background-color: rgb(190, 190, 190);
+  border: solid 1px rgb(190, 190, 190);
+  border-radius: 5px;
+  min-height: 100%;
   padding: 1%;
 }
 
@@ -101,84 +101,28 @@ hr
   border-radius: 5px;
 }
 
-div h3 {
-  text-align: center;
+.responsive-table-line td { 
+position: relative;
+border: 0px solid transparent;
+padding-left: 50%; 
+white-space: normal;
+text-align: right;
 }
 
-
-
-.activityVote {
-  border: solid 1px black;
-  background-color: white;
-  box-shadow: 6px 6px 6px #535860;
+.responsive-table-line td:before { 
+position: absolute;
+top: 0px;
+left: 0px;
+width: 45%; 
+padding-right: 15px; 
+height:100%;
+white-space: nowrap;
+text-overflow: ellipsis;
+overflow:hidden;
+text-align:left;
+background-color:#f8f8f8;
+padding:2px;
 }
-
-.activityVote h4 
-{
-  text-align: center;
-}
-
-.glyphicon-thumbs-up {
-  font-size: 30px;
-  color: rgb(27, 109, 171);
-  margin-right: 10px;
-  width: 100%;
-  margin-left: 0px;
-}
-
-.pouce
-{
-  margin: 0;
-  margin-left: 15px;
-  padding: 0;
-}
-
-.champVote
-{
-  margin: 0;
-  margin-left: 10px;
-  padding: 0;
-}
-
-.input-group{
-  line-height: 50px;
-  vertical-align: middle;
-}
-
-.btnAdj {
-  padding: 0;
-}
-
-.formActivities {
-  margin: 0;
-}
-
-.activityVote a {
-  text-decoration: none;
-  color: rgb(27, 109, 171);
-}
-
-.activityVote a:hover 
-{
-  text-decoration: none;
-  color: black;
-}
-
-.activityVote
-{
-  padding-bottom: 10px;
-}
-
-.conteneurImg {
-  text-align: center;
-}
-
-.img1 {
-  max-height: 15vh;
-  width: auto;
-
-}
-
 
 @media screen and (max-width: 900px){
   h3 
@@ -191,15 +135,15 @@ div h3 {
   }
 
 
-  .activityVote{
-  }
+  .responsive-table-line td:before { content: attr(data-title); }
+  .responsive-table-line table, 
+  .responsive-table-line thead, 
+  .responsive-table-line tbody, 
+  .responsive-table-line td, 
+  .responsive-table-line tr { 
+    display: block; 
+    }
 
-  .img1{
-    height: 200px
-    width: 300px;
-  }
-
+    .responsive-table-line th{
+    display: none;}
 }
-
-
-

@@ -2,3 +2,19 @@
 	opacity:0.5;
 	color:#996;
 }
+
+.ti{
+	text-align: center;
+	margin-left: 100px;
+}
+
+@media screen and (max-width: 900px){
+  .h3 
+  {
+    font-size: 10px;
+  }
+
+  div .h3 {
+    text-align: center;
+  }
+}
