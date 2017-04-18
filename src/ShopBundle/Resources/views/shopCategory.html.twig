@@ -5,30 +5,17 @@
 {% endblock %}
 
 {% block body %}
-	<div class="row">
-		<h1 class="col-lg-offset-1-5" id="boutique">Boutique</h1>
+	<div class="row" id="boutique">
+		<h1>Boutique</h1><br><br>
 	</div>
 	
 	<!-- sous-menu -->
 	<nav class="row">
+		{% for category in categories %}
         <div class="col-lg-2 ctnListe">
-            <a class="liste" href="boutique_categorie.html">Matériel informatique</a> <!-- Lien vers la page de catégorie Matos -->
+            <a class="liste" href="{{path('categorieShopShow', {'category_id':category.id} )}}">{{category.name}}</a> <!-- Lien vers la page de catégorie Matos -->
         </div>
-        <div class="col-lg-2 ctnListe">
-            <a class="liste" href="#">T-shirts</a>
-    	</div>
-        <div class="col-lg-2 ctnListe">
-            <a class="liste" href="#">Mug</a>
-        </div>
-        <div class="col-lg-2 ctnListe">
-            <a class="liste" href="#">Déguisements</a>
-        </div>
-        <div class="col-lg-2 ctnListe">
-            <a class="liste" href="#">Poster</a>
-        </div>
-        <div class="col-lg-2 ctnListe">
-            <a class="liste" href="#">Livres</a>
-        </div>
+        {% endfor %}
     </nav>
 	
 	<hr>
@@ -38,27 +25,21 @@
 		<section class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		
 			{%for product in listArticle%}
-			<article> 
 				<div class="col-xs-12 col-md-3 col-lg-3">
 					<div class="thumbnail">
-						<div class="caption">
-								<h3 class="arcticlepop"> {{product.name}} </h3>   <!-- titre article -->
-								<center><img src="image/T.jpg" alt="Bureautique" class="images"></center>
-								<form name="achat" method="post" action="product">
-									<input type="hidden" name="id" value="{{product.id}}">
-									<center> <button type="submit" class="btn btn-default details">Détails</button> </center>
-								</form>
-								<div class="prix">{{product.price}} €</div><br/><br>
-								
-								<center> <button type="submit" class="btn btn-default">Ajouter au panier</button> </center>
-						</div>
+						<h3 class="arcticlepop"> {{product.name}} </h3>
+						<center><img src="{{asset(product.image)}}" alt="Images de l'article" class="images"></center>
+						<form name="achat" method="post" action="product">
+							<input type="hidden" name="id" value="{{product.id}}">
+							<center> <button type="submit" class="btn btn-default details">Détails</button> </center>
+						</form>
+						<div class="prix">{{product.price}} €</div><br/><br>
+						
+						<center> <button type="submit" class="btn btn-default">Ajouter au panier</button> </center>
 					</div>
 				</div>
-			</article>
 			{%endfor%}
-
-		
-
+			
 		</section>
 	</div>
 {% endblock %}
