@@ -55,10 +55,11 @@
                                             <a class="dropdown-toggle" data-toggle="dropdown" href=""><span class="glyphicon glyphicon-knight"></span>Activités <span class="caret"></span></a>
                                             <ul class="dropdown-menu">
                                                 <li><a href="{{ path('activitiesShow') }}">Toutes les activités</a></li>
-                                                <li><a href="{{ path('activityIdea') }}">Soumettre une activité</a></li>
+                                                <li><a href="{{ path('activityIdea') }}">Soumettre une idée d'activité</a></li>
                                                 <li><a href="{{ path('showActivitiesVote') }}">Voter pour une activité</a></li>
                                                 {% if app.user.roles[0] == "ROLE_BDE" %}
                                                     <li><a href="{{ path('summaryActivity') }}">Voir les inscrits</a></li>
+                                                    <li><a href="{{ path('') }}">Ajouter un évènement</a></li>
                                                 {% endif %}
 
                                                 {% if app.user.roles[0] == "ROLE_TUTEUR" %}
@@ -66,7 +67,20 @@
                                                 {% endif %}
                                             </ul>
                                         </li>
-                                        <li><a href="{{ path('acceuilShopShow') }}"><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a></li>
+                                        {% if app.user.roles[0] == "ROLE_BDE" and app.user.roles[0] == "ROLE_ETUDIANT"%}
+                                        <li>
+                                            <a href="{{ path('acceuilShopShow') }}"><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a>
+                                        </li>
+                                        {% endif %}
+                                        {%if app.user.roles[0] == "ROLE_TUTEUR"%}
+                                        <li>
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href=""><span class="glyphicon glyphicon-shopping-cart"></span>Boutique<span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                    <li><a href="{{ path('acceuilShopShow') }}">Accéder à la boutique</a></li>
+                                                    <li><a href="{{ path('editShop') }}">Gestion de la boutique</a></li>
+                                            </ul>
+                                        </li>
+                                        {% endif %}
                                         <li><a href=""><span class="glyphicon glyphicon-info-sign"></span>A propos</a></li>
                                         <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span>Déconnexion</a></li>
                                     </ul>
