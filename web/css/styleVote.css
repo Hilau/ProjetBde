@@ -112,15 +112,32 @@ td {
   box-shadow: 6px 6px 6px #535860;
 }
 
-.glyphicon-thumbs-up {
-  font-size: 30px;
-  color: blue;
-  margin-right: 10px;
-  width: 100%;
+.activityVote h4 
+{
+  text-align: center;
 }
 
+.glyphicon-thumbs-up {
+  font-size: 30px;
+  color: rgb(27, 109, 171);
+  margin-right: 10px;
+  width: 100%;
+  margin-left: 0px;
+}
 
+.pouce
+{
+  margin: 0;
+  margin-left: 15px;
+  padding: 0;
+}
 
+.champVote
+{
+  margin: 0;
+  margin-left: 10px;
+  padding: 0;
+}
 
 .input-group{
   line-height: 50px;
@@ -132,12 +149,23 @@ td {
 }
 
 .formActivities {
-    margin-left: 10px;
+  margin: 0;
 }
-
 
 .activityVote a {
   text-decoration: none;
+  color: rgb(27, 109, 171);
+}
+
+.activityVote a:hover 
+{
+  text-decoration: none;
+  color: black;
+}
+
+.activityVote
+{
+  padding-bottom: 10px;
 }
 
 .conteneurImg {
@@ -150,9 +178,18 @@ td {
 
 }
 
-@media screen (max-width: 900px){
+@media screen and (max-width: 900px){
+  h3 
+  {
+    font-size: 20px;
+  }
+
+  div h3 {
+    text-align: center;
+  }
+
+
   .activityVote{
-    width: 100%;
   }
 
   .img1{
