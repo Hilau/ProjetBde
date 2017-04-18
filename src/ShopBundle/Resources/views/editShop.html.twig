@@ -1,43 +1,70 @@
 {%extends "::base.html.twig"%}
 
 {% block header %}
-	<link rel="stylesheet" type="text/css" href="{{ asset('css/styleShopAcceuil.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/styleInscrits.css') }}">
 {% endblock %}
 
 {% block body %}
-	<table class="table">
-		<thead>
-			<th>Nom</th>
-			<th>Description</th>
-			<th>Categorie</th>
-			<th>Prix</th>
-			<th>Update</th>
-			<th>Delete</th>
-		</thead>
-		<tbody>
-			{%for product in products%}
-				<tr>
-					<td>{{product.name}}</td>
-					<td>{{product.description}}</td>
-					<td>{{categories[product.category.id].name}}</td>
-					<td>{{product.price}}</td>
-					<td>
-						<a href="{{path('updateProduct', {'id':product.id})}}">
-							<button class="btn" type="submit"><span class="glyphicon glyphicon-edit"></span></button>
-						</a>
-					</td>
-					<td>
-						<a href="{{path('deleteProduct', {'id':product.id})}}">
-							<button class="btn" type="submit"><span class="glyphicon glyphicon-remove"></span></button>
-						</a>
-					</td>
-				</tr>
-			{%endfor%}
-		</tbody>
-	</table>
+	<div class="row">
+		<div class="col-lg-offset-1 col-lg-10 responsive-table-line">
+			
+			<table class="table table-body-center">
+				<div class="row">
+					<thead>
+						<th>Nom</th>
+						<th>Description</th>
+						<th>Categorie</th>
+						<th>Prix</th>
+						<th>Update</th>
+						<th>Delete</th>
+					</thead>
+					<tbody>
+						{%for product in products%}
+							<tr>
+								<td data-title="Nom">{{product.name}}</td>
+								<td data-title="Description">{{product.description}}</td>
+								<td data-title="Categorie">{{categories[0].name}}</td>
+								<td data-title="Prix">{{product.price}}</td>
+								<td data-title="Update" class="hidden-xs">
+									<a href="{{path('updateProduct', {'id':product.id})}}">
+										<button class="btn" type="submit"><span class="glyphicon glyphicon-edit"></span></button>
+									</a>
+								</td>
+								<td data-title="Delete" class="hidden-xs">
+									<a href="{{path('deleteProduct', {'id':product.id})}}">
+										<button class="btn" type="submit"><span class="glyphicon glyphicon-remove"></span></button>
+									</a>
+								</td>
+							</tr>
+							<div class="row visible-xs">
+								<div class="col-xs-offset-6 col-xs-2">
+									<a href="{{path('updateProduct', {'id':product.id})}}">
+										<button class="btn" type="submit"><span class="glyphicon glyphicon-edit"></span></button>
+									</a>
+								</div>
+								<div class="col-xs-2">
+									<a href="{{path('deleteProduct', {'id':product.id})}}">
+										<button class="btn" type="submit"><span class="glyphicon glyphicon-remove"></span></button>
+									</a>
+								</div>
+							</div>
+							{%endfor%}
+					</tbody>
+				</div>
+			</table>
+			
+				
+				
+						
+					
 
-	<a href="{{path('addProduct')}}">
-		<button class="btn" type="submit"><span class="glyphicon glyphicon-plus"></span> Nouveau produit</button>
-	</a>
+
+			<a href="{{path('addProduct')}}">
+				<button class="btn" type="submit"><span class="glyphicon glyphicon-plus"></span> Nouveau produit</button>
+			</a>
+		</div>
+		
+	</div>
+	
 	
 {% endblock %}

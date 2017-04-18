@@ -12,8 +12,19 @@
 	<!-- sous-menu -->
 	<nav class="row">
 		{% for category in categories %}
-        <div class="col-lg-2 ctnListe">
-            <a class="liste" href="{{path('categorieShopShow', {'category_id':category.id} )}}">{{category.name}}</a> <!-- Lien vers la page de catégorie Matos -->
+        <div class="navbar navbar-inverse">
+        	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar2">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="myNavbar2">
+                <ul class="nav navbar-nav">
+                	<li><a class="liste" href="{{path('categorieShopShow', {'category_id':category.id} )}}">{{category.name}}</a></li>
+                </ul>
+            </div>
+
+             <!-- Lien vers la page de catégorie Matos -->
         </div>
         {% endfor %}
     </nav>

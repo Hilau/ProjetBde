@@ -106,7 +106,6 @@ position: relative;
 border: 0px solid transparent;
 padding-left: 50%; 
 white-space: normal;
-text-align: right;
 }
 
 .responsive-table-line td:before { 
@@ -124,7 +123,7 @@ background-color:#f8f8f8;
 padding:2px;
 }
 
-@media screen and (max-width: 900px){
+@media screen and (max-width: 700px){
   h3 
   {
     font-size: 20px;
@@ -139,11 +138,15 @@ padding:2px;
   .responsive-table-line table, 
   .responsive-table-line thead, 
   .responsive-table-line tbody, 
-  .responsive-table-line td, 
+  
   .responsive-table-line tr { 
     display: block; 
     }
 
     .responsive-table-line th{
     display: none;}
+
+    .responsive-table-line td{
+      text-align: left;
+    }
 }
