@@ -1,0 +1,71 @@
+{%extends "::base.html.twig"%}
+
+{% block header %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/style3.css') }}">
+{% endblock%}
+
+{% block body %}
+	<div class="row">
+		<div class="col-lg-offset-3 col-lg-6 form-horizontal">
+			{{ form_errors(form) }}
+
+			{{ form_start(form, {'method': 'post', 'action': path('addActivity')}) }}
+
+				<div class="form-group">
+		      		<label class="control-label col-lg-4" for="name">Nom de l'activité:</label>
+		      		<div class="col-lg-6">
+		        		{{ form_widget(form.name, { 'attr': { 'class': 'form-control','placeholder': 'Nom de l\'activité' } }) }}
+		      		</div>
+
+		      		{{ form_errors(form.name) }}
+		    	</div>
+
+		    	<div class="form-group">
+		      		<label class="control-label col-lg-4" for="description">Description:</label>
+		      		<div class="col-lg-6">
+		        		{{ form_widget(form.description, { 'attr': { 'class': 'form-control','placeholder': 'Description' } }) }}
+		      		</div>
+
+		      		{{ form_errors(form.description) }}
+		    	</div>
+
+		    	<div class="form-group">
+		      		<label class="control-label col-lg-4" for="date">Date:</label>
+		      		<div class="col-lg-6">
+		        		{{ form_widget(form.date) }}
+		      		</div>
+
+		      		{{ form_errors(form.date) }}
+		    	</div>
+
+		    	<div class="form-group">
+		      		<label class="control-label col-lg-4" for="photo">Photo</label>
+		      		<div class="col-lg-6">
+		        		{{ form_widget(form.photo) }}
+		      		</div>
+
+		      		{{ form_errors(form.photo) }}
+		    	</div>
+				
+				<div class="form-group">		    
+				    <div class="col-lg-offset-4 col-lg-8">
+				    	<input type="submit" class="btn btn-primary" value="Ajouter l'activité" />
+				    </div>		    
+				</div>	
+
+				{% for flash_message in app.session.flashBag.get('success') %}
+				    <div class="alert alert-success">
+						{{ flash_message }}
+					</div>
+				{% endfor %}
+
+				{% for flash_message in app.session.flashBag.get('error') %}
+				    <div class="alert alert-danger">
+						{{ flash_message }}
+					</div>
+				{% endfor %}	
+			{{ form_end(form) }}
+    	</div>
+	</div>
+{% endblock %}
+

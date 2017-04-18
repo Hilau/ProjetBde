@@ -59,7 +59,7 @@
                                                 <li><a href="{{ path('showActivitiesVote') }}">Voter pour une activité</a></li>
                                                 {% if app.user.roles[0] == "ROLE_BDE" %}
                                                     <li><a href="{{ path('summaryActivity') }}">Voir les inscrits</a></li>
-                                                    <li><a href="{{ path('') }}">Ajouter un évènement</a></li>
+                                                    <li><a href="{{ path('addActivity') }}">Ajouter un évènement</a></li>
                                                 {% endif %}
 
                                                 {% if app.user.roles[0] == "ROLE_TUTEUR" %}
@@ -67,7 +67,7 @@
                                                 {% endif %}
                                             </ul>
                                         </li>
-                                        {% if app.user.roles[0] == "ROLE_BDE" and app.user.roles[0] == "ROLE_ETUDIANT"%}
+                                        {% if app.user.roles[0] == "ROLE_BDE" or app.user.roles[0] == "ROLE_ETUDIANT" %}
                                         <li>
                                             <a href="{{ path('acceuilShopShow') }}"><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a>
                                         </li>

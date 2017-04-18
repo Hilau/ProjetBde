@@ -11,7 +11,7 @@ class ActivityPhotoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('photo', FileType::class, array('label' => 'Photo', 'required' => true, 'multiple' => true));
+            ->add('photo', FileType::class, array('label' => false, 'required' => true, 'multiple' => true));
     }
 }
 ?>

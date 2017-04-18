@@ -34,8 +34,16 @@
 					</div>
 					<div class="col-lg-l  col-xs-1">
 						<span id="vote{{ activityIdea.id }}">{{ votes[activityIdea.id] }}</span>
+					</div>					
+				</form>
+				{% if app.user.roles[0] == "ROLE_BDE" %}
+				<br><br>
+					<div class="row">
+						<div class="col-lg-offset-1 col-lg-4">
+							<a href="{{ path('closingVote', {'activityIdea_id': activityIdea.id}) }}"><button class="btn btn-primary">Cloturer les votes</button></a>
+						</div>
 					</div>
-				</form>							
+				{% endif %}
 			</div>
 		</div>
 		{% endfor %}

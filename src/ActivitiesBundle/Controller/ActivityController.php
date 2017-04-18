@@ -16,11 +16,13 @@ use ActivitiesBundle\Entity\ActivityUser;
 use ActivitiesBundle\Entity\ActivitiesVote;
 use ActivitiesBundle\Entity\PhotoComment;
 use ActivitiesBundle\Entity\ActivityPhoto;
+use ActivitiesBundle\Entity\Activity;
 use UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use ActivitiesBundle\Form\ActivityPhotoType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class ActivityController extends Controller 
 {
@@ -267,7 +269,7 @@ class ActivityController extends Controller
 	        
 		$form->handleRequest($request);
 
-	    if ($form->isSubmitted() && $form->isValid()) {	        
+	    if ($form->isSubmitted() && $form->isValid()) {
 	        $activityIdea = $form->getData();
 	        $activityIdea->setUser($user);
 	       	        
@@ -308,7 +310,7 @@ class ActivityController extends Controller
 	            'Votre idée d\'activité a bien été soumise !'
 	        );
 
-	        // return $this->redirectToRoute('activityIdea');
+	        return $this->redirectToRoute('activityIdea');
 	    }
 
 	    else if($form->isSubmitted() && !$form->isValid())
@@ -524,6 +526,126 @@ class ActivityController extends Controller
 
 		return $this->redirectToRoute('showPhotoGallery');
 	}
+
+	/**
+	* @Route("addActivity", name="addActivity")
+	*/
+	public function addActivityAction(Request $request){
+		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY') || !$this->container->get('security.authorization_checker')->isGranted('ROLE_BDE')) {
+             return $this->redirectToRoute('fos_user_security_login');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+	    $user = $this->get('security.context')->getToken()->getUser();
+	    $activity = new Activity();
+
+		$form = $this->createFormBuilder($activity)
+	        ->add('name', TextType::class)
+	        ->add('description', TextareaType::class)
+	        ->add('date', DateTimeType::class)
+	        ->add('photo', ActivityPhotoType::class, array('mapped' => false))
+	        ->getForm();
+	        
+		$form->handleRequest($request);
+
+	    if ($form->isSubmitted() && $form->isValid()) {
+	    	$activity = $form->getData();
+
+	    	$em->persist($activity);
+	    	$em->flush();
+
+	    	$photos = $form['photo']->getData();
+
+	    	$activityPhotoRepository = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto');
+
+		    $id = 1;
+
+		    foreach($photos['photo'] as $photo)
+		    {
+		    	$photoActivity = new ActivityPhoto();
+
+		    	$photoName = $activity->getName().$id.'.'.$photo->guessExtension();
+
+		    	$id++;
+
+		    	$photo->move(
+	                $this->getParameter('imgActivities'),
+	                $photoName
+	            );
+		    	
+		    	$photoActivity->setActivity($activity);
+		    	$photoActivity->setPhoto($photoName);
+		    	$photoActivity->setLove(0);
+
+		    	$em->persist($photoActivity);
+		   		$em->flush();
+		    }
+
+	        $this->addFlash(
+	            'success',
+	            'Votre activité a bien été ajouté !'
+	        );
+
+	        return $this->redirectToRoute('addActivity');
+	    }
+
+	    else if($form->isSubmitted() && !$form->isValid())
+	    {
+	    	$this->addFlash(
+	            'error',
+	            'Error !'
+	        );
+	    }
+
+		return $this->render('ActivitiesBundle::formActivity.html.twig', array(
+				'form' => $form->createView(),
+			));
+		
+	}
+
+	/**
+	* @Route("closingVote/{activityIdea_id}", name="closingVote")
+	*/
+	public function closingVoteAction(Request $request, $activityIdea_id){
+		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY') || !$this->container->get('security.authorization_checker')->isGranted('ROLE_BDE')) {
+             return $this->redirectToRoute('fos_user_security_login');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $repositoryActivitiesIdeas = $this->getDoctrine()->getRepository('ActivitiesBundle:ActivityIdea');
+        $repositoryActivitiesVotes = $this->getDoctrine()->getRepository('ActivitiesBundle:ActivitiesVote');
+
+		$activityIdea = $repositoryActivitiesIdeas->find($activityIdea_id);
+		
+		$query = $repositoryActivitiesVotes->createQueryBuilder('av')
+							->where('av.activity = :activity')
+							->setParameter('activity', $activityIdea)
+                            ->orderBy('av.vote', 'DESC')
+                            ->getQuery();
+
+        $bestDate = $query->setMaxResults(1)->getResult()[0]->getDate();
+
+		$activity = new Activity();
+		$activity->setName($activityIdea->getName());
+		$activity->setDescription($activityIdea->getDescription());
+		$activity->setDate($bestDate);
+
+		$em->persist($activity);
+		$em->flush();
+
+		$activityVote = $repositoryActivitiesVotes->findByActivity($activityIdea_id);
+
+		foreach($activityVote as $activity)
+		{
+			$em->remove($activity);
+			$em->flush();
+		}
+
+		$em->remove($activityIdea);
+		$em->flush();
+
+        return $this->redirectToRoute('showActivitiesVote');
+    }
 
 }
 ?>
