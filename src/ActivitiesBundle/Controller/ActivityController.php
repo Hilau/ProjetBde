@@ -47,7 +47,11 @@ class ActivityController extends Controller
 	}
 
 	/**
-	 * @Route("signInActivity/{activity_id}", name="signInActivity")
+	 * @Route("signInActivity/{activity_id}", name="signInActivity",
+	 * 			defaults={"activity_id": 1},
+     *     		requirements={     *        		
+     *         		"activity_id": "\d+"
+     *			})
 	 */
 	public function signInActivityAction(Request $request, $activity_id)
 	{
@@ -604,8 +608,12 @@ class ActivityController extends Controller
 	}
 
 	/**
-	* @Route("closingVote/{activityIdea_id}", name="closingVote")
-	*/
+	 * @Route("closingVote/{activityIdea_id}", name="closingVote",
+	 * 			defaults={"activityIdea_id": 1},
+     *     		requirements={     *        		
+     *         		"activityIdea_id": "\d+"
+     *			})
+	 */
 	public function closingVoteAction(Request $request, $activityIdea_id){
 		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY') || !$this->container->get('security.authorization_checker')->isGranted('ROLE_BDE')) {
              return $this->redirectToRoute('fos_user_security_login');

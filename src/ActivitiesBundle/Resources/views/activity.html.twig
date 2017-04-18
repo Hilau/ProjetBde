@@ -28,7 +28,7 @@
 				</div>
 			{% else %}
 				<div class="col-xs-5 col-lg-2 img-click" id="{{ loop.index0 }}">
-					<img class="img-responsive" style="height: 20vh; width: auto;" src="{{ asset('imgActivities/') }}{{ photo.photo }}">
+					<img class="img-responsive" src="{{ asset('imgActivities/') }}{{ photo.photo }}">
 				</div>
 			{% endif %}
 
@@ -273,5 +273,6 @@ $(function()
 		}		
 	});
 });
+	
 </script>				
 {% endblock %}

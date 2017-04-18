@@ -15,15 +15,23 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller 
 {
 	/**
-	 * @Route("product", name="productShow")
+	 * @Route(
+	 *			"product/{product_id}",
+	 *			name="productShow",
+	 * 			defaults={"product_id": 1},
+     *     		requirements={     *        		
+     *         		"product_id": "\d+"
+     *			}
+     *		)
 	 */
-	public function showProductAction(Request $request){
-		$id = $request->request->get("id");
-		$product = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->find($id);
+	public function showProductAction($product_id){
+		$product = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->find($product_id);
+
 		return $this->render('ShopBundle::product.html.twig', array(
 			'id' => $product->getId(),
 			'name' => $product->getName(),
@@ -233,7 +241,59 @@ class ProductController extends Controller
 		return $this->redirectToRoute('editShop');
 	}
 
+	/**
+	* @Route("addToBasket", name="addToBasket")
+	*/
+	public function addToBaskettAction()
+	{
+		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return new Response("Erreur");
+        }
 
+		$request = $this->container->get('request');
+		$em = $this->getDoctrine()->getManager();
+
+		if($request->isXmlHttpRequest())
+    	{
+    		$product_id = $request->query->get('product_id');
+    		$user = $this->get('security.context')->getToken()->getUser();
+    	
+    		$repositoryBasket = $this->getDoctrine()->getRepository('ShopBundle:Basket');
+
+    		$repositoryProduct = $this->getDoctrine()->getRepository('ShopBundle:Product');
+    		$product = $repositoryProduct->find($product_id);
+
+    		$basketProduct = $repositoryBasket->findBy(array(
+				"user" => $user,
+				"product" => $product,
+			));
+
+			$data = ["erreur" => "Le produit est déjà dans votre panier"];
+
+			if(count($basketProduct) == 0)
+			{
+	    		$basket = new Basket();
+	    		$basket->setUser($user);
+	    		$basket->setProduct($product);
+
+	    		$em->persist($basket);
+	    		$em->flush();
+
+	    		$data = ["name" => $product->getName(), "price" => $product->getPrice(), "erreur" => ""];
+	    	}
+
+	    	$response = new Response(json_encode($data));
+			$response->headers->set('Content-Type', 'application/json');
+
+			return $response;
+
+        }
+
+        else
+        {
+        	return new Response("Erreur");
+        }
+	}
 
 }
 

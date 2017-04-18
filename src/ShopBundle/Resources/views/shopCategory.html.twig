@@ -39,18 +39,33 @@
 				<div class="col-xs-12 col-md-3 col-lg-3">
 					<div class="thumbnail">
 						<h3 class="arcticlepop"> {{product.name}} </h3>
-						<center><img src="{{asset(product.image)}}" alt="Images de l'article" class="images"></center>
-						<form name="achat" method="post" action="product">
-							<input type="hidden" name="id" value="{{product.id}}">
-							<center> <button type="submit" class="btn btn-default details">Détails</button> </center>
-						</form>
-						<div class="prix">{{product.price}} €</div><br/><br>
-						
-						<center> <button type="submit" class="btn btn-default">Ajouter au panier</button> </center>
+						<center><img src="{{asset(product.image)}}" alt="Images de l'article" class="images"></center>						
+						<center><a href="{{ path('productShow', {'product_id': product.id}) }}"><button class="btn btn-default details">Détails</button></a></center>
+						<div class="prix">{{product.price}} €</div><br/><br>						 
+						<center><button type="submit" class="btn btn-primary addToBasket" id="{{ product.id }}">Ajouter au panier</button></center>
 					</div>
 				</div>
 			{%endfor%}
 			
 		</section>
 	</div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+$(function()
+{
+	$('.addToBasket').on('click', function()
+	{
+		var product_id = $(this).attr("id");
+
+		$.ajax({
+			type: "GET",
+			url: "{{ path('addToBasket') }}",
+			cache: false,
+			data: {product_id: product_id},
+		});
+	});
+});
+</script>
 {% endblock %}

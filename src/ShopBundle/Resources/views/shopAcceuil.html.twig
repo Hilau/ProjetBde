@@ -46,11 +46,8 @@
 						<div class="thumbnail">
 							<h3 class="titleProduct"> {{product.name}} </h3>   <!-- titre article -->
 							<center><img src="{{asset(product.image)}}" alt="Image du produit" class="imagesProduit"></center>
-							<p>{{chaineDescription[product.id]}}...</p>
-							<form action="ProductController" method="post" class="titleProduct">
-								<input type="hidden" name="product_id" value="{{product.id}}">
-								<input type="submit" class="btn btn-primary" value="Ajouter au panier"></button>
-							</form>
+							<p>{{chaineDescription[product.id]}}...</p>							
+							<button type="submit" class="btn btn-primary addToBasket" id="{{ product.id }}">Ajouter au panier</button>
 						</div>
 					</div>
 				{%endfor%}
@@ -69,10 +66,7 @@
 							<h3 class="titleProduct"> {{product.name}} </h3>   <!-- titre article -->
 							<center><img src="{{asset(product.image)}}" alt="Image" class="images"></center>
 							<p>{{product.description}} <br/><br/></p>
-							<form action="ProductController" method="post" class="titleProduct">
-								<input type="hidden" name="product_id" value="{{product.id}}">
-								<input type="submit" class="btn btn-primary" value="Ajouter au panier"></button>
-							</form>
+							<button class="btn btn-primary addToBasket" id="{{ product.id }}">Ajouter au panier</button>
 						</div>
 					</div>
 				{%endfor%}
@@ -81,15 +75,17 @@
 		<div id="panier" class="col-lg-3">
 			<div class="row">
 				<h4>Mon panier</h4>
-				<div class="col-lg-8 descriptionArticle">
-					{%for product in productsInfo%}
-						{{product.name}}<br>
-					{%endfor%}
-				</div>
-				<div class="col-lg-4 prixArticle">
-					{%for product in productsInfo%}
-						{{product.price}}<br>
-					{%endfor%}
+				<div id="basket">
+					<div class="col-lg-8 descriptionArticle">
+						{%for product in productsInfo%}
+							{{product.name}}<br>
+						{%endfor%}
+					</div>
+					<div class="col-lg-4 prixArticle">
+						{%for product in productsInfo%}
+							{{product.price}}€<br>
+						{%endfor%}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -97,8 +93,34 @@
 {% endblock %}
 
 {% block javascripts %}
-<script src="C:\wamp64\www\projetWEB-BDE\web\js\stickyKit.js" type="text/javascript"></script>
+<script src="{{ asset('js/stickyKit.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 	$("#panier").stick_in_parent();
+
+$(function()
+{
+	$('.addToBasket').on('click', function()
+	{
+		var product_id = $(this).attr("id");
+
+		$.ajax({
+			type: "GET",
+			url: "{{ path('addToBasket') }}",
+			cache: false,
+			data: {product_id: product_id},
+		}).done(function(data)
+		{
+			if(data['erreur'] != "")
+			{
+				alert(data['erreur']);
+			}
+
+			else
+			{
+				$('#basket').append("<div class=\"col-lg-8 descriptionArticle\">"+data['name']+"</div><div class=\"col-lg-4 prixArticle\">"+data['price']+"€<br></div>");
+			}
+		});
+	});
+});
 </script>
 {% endblock %}
