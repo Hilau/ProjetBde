@@ -63,6 +63,11 @@ class Product
      */
     private $nbAchat;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="ShopBundle\Entity\Category")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
 
     /**
      * Get id
@@ -210,5 +215,28 @@ class Product
     public function getNbAchat()
     {
         return $this->nbAchat;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \ShopBundle\Entity\Category $category
+     * @return Product
+     */
+    public function setCategory(\ShopBundle\Entity\Category $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \ShopBundle\Entity\Category 
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

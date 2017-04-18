@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use ShopBundle\Entity\Basket;
+use ShopBundle\Entity\Category;
 
 class ProductController extends Controller 
 {
@@ -34,6 +35,8 @@ class ProductController extends Controller
 		$productRepository = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product');
 		$productsInfo = [];
 
+		$categories = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Category')->findAll();
+
 		/*$product_id = $request->request->get("product_id");
 		$newProduct = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->find($product_id);
 		$newProduct = new Basket();
@@ -55,16 +58,22 @@ class ProductController extends Controller
 		return $this->render('ShopBundle::shopAcceuil.html.twig', array(
 			'listArticle' => $listArticle,
 			'productRepository' => $productRepository,
-			'productsInfo' => $productsInfo
+			'productsInfo' => $productsInfo,
+			'categories' => $categories
 			));
 	}
 
 	/**
-	 * @Route("categoryShop", name="categorieShopShow")
+	 * @Route("categoryShop/{category_id}", name="categorieShopShow")
 	 */
-	public function showCategoryShopAction(){
-		$listArticle = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->findAll();
-		return $this->render('ShopBundle::shopCategory.html.twig', array('listArticle' => $listArticle));
+	public function showCategoryShopAction(Request $request, $category_id){
+		$listArticle = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->findByCategory($category_id);
+		$categories = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Category')->findAll();
+
+		return $this->render('ShopBundle::shopCategory.html.twig', array(
+			'listArticle' => $listArticle,
+			'categories' => $categories
+			));
 	}
 
 

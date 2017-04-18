@@ -149,13 +149,6 @@ hr
   float: right;
 }
 
-.trump{
-  float: right;
-  width: 30%;
-  height: 30%;
-  margin: 0px 50px 0px 0px;
-}
-
 .thumbnail{
   background-color: white;
   box-shadow: 2px 2px 2px 2px #535860;
@@ -191,4 +184,9 @@ hr
 .prixArticle
 {
   text-align: right;
+}
+
+.imagesProduit {
+  height: 10vh;
+  width: auto;
 }

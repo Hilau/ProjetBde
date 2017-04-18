@@ -5,36 +5,22 @@
 {% endblock %}
 
 {% block body %}
-	<aside>
-	<div class="row">
-		<h1 class="col-lg-offset-1-5" id="boutique">Boutique</h1><br><br>
+	
+	<div class="row" id="boutique">
+		<h1>Boutique</h1><br><br>
 	</div>
 			
 	<!-- sous-menu -->
-	<nav class="row hey">
+	<nav class="row">
+		{% for category in categories %}
         <div class="col-lg-2 ctnListe">
-            <a class="liste" href="{{path('categorieShopShow')}}">Matériel informatique</a> <!-- Lien vers la page de catégorie Matos -->
+            <a class="liste" href="{{path('categorieShopShow', {'category_id':category.id} )}}">{{category.name}}</a>
         </div>
-        <div class="col-lg-2 ctnListe">
-            <a class="liste" href="#">T-shirts</a>
-    	</div>
-        <div class="col-lg-2 ctnListe">
-            <a class="liste" href="#">Mug</a>
-        </div>
-        <div class="col-lg-2 ctnListe">
-            <a class="liste" href="#">Déguisements</a>
-        </div>
-        <div class="col-lg-2 ctnListe">
-            <a class="liste" href="#">Poster</a>
-        </div>
-        <div class="col-lg-2 ctnListe">
-            <a class="liste" href="#">Livres</a>
-        </div>
+        {% endfor %}
     </nav>
 	
 	<hr>
 
-	</aside>
 
 	<div class="row">
 		<div class="col-lg-9">
@@ -46,22 +32,18 @@
 			</div>
 
 			<div class="row"> 
-				{%for product in listArticle%}
-				<article> 
+				{%for product in listArticle%} 
 					<div class="col-xs-12 col-md-4 col-lg-4">
 						<div class="thumbnail">
-							<div class="caption">
-									<h3 class="titleArticle"> {{product.name}} </h3>   <!-- titre article -->
-									<center><img src="image/T.jpg" alt="Bureautique" class="images"></center>
-									<p>{{product.description}}</p>
-									<form action="ProductController" method="post">
-										<input type="hidden" name="product_id" value="{{product.id}}">
-										<input type="submit" class="btn btn-primary" value="Ajouter au panier"></button>
-									</form>
-							</div>
+							<h3 class="titleArticle"> {{product.name}} </h3>   <!-- titre article -->
+							<center><img src="{{asset(product.image)}}" alt="Image du produit" class="imagesProduit"></center>
+							<p>{{product.description}}</p>
+							<form action="ProductController" method="post">
+								<input type="hidden" name="product_id" value="{{product.id}}">
+								<input type="submit" class="btn btn-primary" value="Ajouter au panier"></button>
+							</form>
 						</div>
 					</div>
-				</article>
 				{%endfor%}
 			</div>
 
@@ -78,7 +60,7 @@
 						<div class="thumbnail">
 							<div class="caption">
 									<h3 class="arcticlepop"> {{product.name}} </h3>   <!-- titre article -->
-									<center><img src="image/T.jpg" alt="Bureautique" class="images"></center>
+									<center><img src="{{asset(product.image)}}" alt="Image" class="images"></center>
 									<p>{{product.description}} <br/><br/></p>
 							</div>
 						</div>
@@ -106,14 +88,8 @@
 {% endblock %}
 
 {% block javascripts %}
+<script src="C:\wamp64\www\projetWEB-BDE\web\js\stickyKit.js" type="text/javascript"></script>
 <script type="text/javascript">
-	$(window).scroll(function() {
-		var rupture = $("aside").outerHeight();
-		if ($(window).scrollTop() > rupture) {
-			$("#panier").addClass("fixed");
-		} else {
-			$("#panier").removeClass("fixed");
-		}
-	});
+	$("#panier").stick_in_parent();
 </script>
 {% endblock %}
