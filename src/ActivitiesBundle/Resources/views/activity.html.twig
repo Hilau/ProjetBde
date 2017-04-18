@@ -21,7 +21,7 @@
 				</div>
 			{% else %}
 				<div class="col-lg-2 img-click" id="{{ loop.index0 }}">
-					<img class="img-responsive" src="{{ asset('imgActivities/') }}{{ photo.photo }}">
+					<img class="img-responsive" style="height: 20vh; width: auto;" src="{{ asset('imgActivities/') }}{{ photo.photo }}">
 				</div>
 			{% endif %}
 
@@ -87,8 +87,22 @@
 	      		<div class="col-lg-offset-2 col-lg-2">
 	      			<input type="submit" class="btn btn-primary" value="Ajouter" />
 	      		</div>
-	    	
+
 		{{ form_end(formPhoto) }}
+		</div>
+
+		<div class="col-lg-offset-4 col-lg-4">
+			{% for flash_message in app.session.flashBag.get('success_photo') %}
+			    <div class="alert alert-success">
+					{{ flash_message }}
+				</div>
+			{% endfor %}
+
+			{% for flash_message in app.session.flashBag.get('error_photo') %}
+				<div class="alert alert-danger">
+					{{ flash_message }}
+				</div>
+			{% endfor %}
 		</div>
 	</div><br>
 	

@@ -153,7 +153,7 @@ class ActivityController extends Controller
 		    }
 		       	   
 		    $this->addFlash(
-		        'success',
+		        'success_photo',
 		        'Photo(s) uploadée(s)'
 		    );
 
@@ -163,7 +163,7 @@ class ActivityController extends Controller
 	    else if($formPhoto->isSubmitted() && !$formPhoto->isValid())
 	    {
 	    	$this->addFlash(
-	            'error',
+	            'error_photo',
 	            'Error !'
 	        );
 	    }
