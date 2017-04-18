@@ -164,6 +164,11 @@ hr
   text-align: center;
 }
 
+.titleProduct
+{
+  text-align: center;
+}
+
 .descriptionArticle
 {
   text-align: left;
@@ -191,3 +196,27 @@ hr
   width: auto;
 }
 
+@media screen and (max-width: 900px){
+  .valid 
+  {
+    text-align: center;
+  }
+
+  .noMargin
+  {
+    margin: 0;
+  }
+
+  .title 
+  {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .titleProduct
+  {
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+  }
+}
