@@ -116,7 +116,7 @@ hr
   font-weight: bold;
 }
 
-.date
+.dateComment
 {
   float: right;
 }
@@ -205,3 +205,50 @@ hr
   width: auto;
 }
 
+
+
+@media screen and (max-width: 900px){
+  .title 
+  {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .date 
+  {
+    font-size: 15px;
+  }
+
+  .description 
+  {
+    font-size: 15px;
+  }
+
+  .titleActivity
+  {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .moderation
+  {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .noMargin
+  {
+    margin: 0;
+  }
+
+  .avatar 
+  {
+    width: 100%;
+  }
+
+  .dateComment
+  {
+    font-size: 14px;
+    text-align: right;
+  }
+}
