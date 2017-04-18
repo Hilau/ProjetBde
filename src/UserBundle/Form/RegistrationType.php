@@ -24,7 +24,7 @@ class RegistrationType extends AbstractType
                 ->add('password', PasswordType::class, array('label' => 'Mot de passe'))
                 ->add('plainPassword', PasswordType::class, array('label' => 'Vérification'))
                 ->add('email', EmailType::class, array('label' => 'Adresse mail'))
-                ->add('avatar', FileType::class, array('label' => 'Avatar', 'required' => false))
+                ->add('avatar', FileType::class, array('label' => 'Avatar', 'required' => true))
                 ->add('roles', 'collection', array(
                         'label' => 't',
                         'type' => 'choice',

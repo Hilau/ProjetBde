@@ -16,12 +16,12 @@
 			{% if loop.index0 == 0 %}
 				<div class="col-lg-offset-1 col-lg-10">
 					<a href="" data-toggle="modal" id="imgToReplace" data-target="#modalCommentaire{{ loop.index0 }}">
-						<img class="img-responsive" id="{{ loop.index0 }}" src="{{ asset(photo.photo) }}">
+						<img class="img-responsive" id="{{ loop.index0 }}" src="{{ asset('imgActivities/') }}{{ photo.photo }}">
 					</a>
 				</div>
 			{% else %}
 				<div class="col-lg-2 img-click" id="{{ loop.index0 }}">
-					<img class="img-responsive" src="{{ asset(photo.photo) }}">
+					<img class="img-responsive" src="{{ asset('imgActivities/') }}{{ photo.photo }}">
 				</div>
 			{% endif %}
 
@@ -35,7 +35,7 @@
 							<div class="row">
 								<div class="col-lg-offset-1 col-lg-10">
 									<div class="row">
-										<img class="image" src="{{ asset(photo.photo) }}">
+										<img class="image" src="{{ asset('imgActivities/') }}{{ photo.photo }}">
 										<div class="row">
 											<div class="form-group row">
 												<input class="form-control search" type="text" placeholder="Commentaire" id="{{ photo.id }}">
@@ -68,13 +68,27 @@
 		{% endfor %}
 
 	<div class="row">
-		<div class="col-lg-offset-8 col-lg-2">
+		<div class="col-lg-offset-6 col-lg-2">
 			{% if app.user.roles[0] == "ROLE_TUTEUR" %}
 				<a href="{{ path('showPhotoGallery') }}"><button class="btn btn-primary">Modérer les photos</button></a>
 			{% endif %}
 		</div>
-		<div class="col-lg-2">
-			<button class="btn btn-primary addImg">Ajouter des photos</button>
+		<div class="col-lg-4">
+		{{ form_errors(formPhoto) }}
+
+		{{ form_start(formPhoto, {'method': 'post', 'action': path('signInActivity', {activity_id: activity.id}) }) }}
+	    	
+			   	<label class="control-label col-lg-2" for="photos">Photos:</label>
+			   	<div class="col-lg-8">
+	        		{{ form_widget(formPhoto.photo, { 'attr': { 'class': 'form-control-file','placeholder': 'Photo' } }) }}
+	      		</div>
+	      		{{ form_errors(formPhoto.photo) }}
+
+	      		<div class="col-lg-offset-2 col-lg-2">
+	      			<input type="submit" class="btn btn-primary" value="Ajouter" />
+	      		</div>
+	    	
+		{{ form_end(formPhoto) }}
 		</div>
 	</div><br>
 	

@@ -15,10 +15,12 @@ use ActivitiesBundle\Entity\ActivityIdea;
 use ActivitiesBundle\Entity\ActivityUser;
 use ActivitiesBundle\Entity\ActivitiesVote;
 use ActivitiesBundle\Entity\PhotoComment;
+use ActivitiesBundle\Entity\ActivityPhoto;
 use UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
+use ActivitiesBundle\Form\ActivityPhotoType;
 
 class ActivityController extends Controller 
 {
@@ -27,8 +29,19 @@ class ActivityController extends Controller
 	 */
 	public function showAllAction(){
 		$listActivities = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->findAll();
+		$repositoryActivityPhoto = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto');
 
-		return $this->render('ActivitiesBundle::listActivity.html.twig', array('listActivities' => $listActivities));
+		$activitiesPhoto = [];
+
+		foreach($listActivities as $activity)
+		{
+			$photo = $repositoryActivityPhoto->findByActivity($activity);
+			$photo = $photo[0];
+
+			$activitiesPhoto[$activity->getId()] = $photo->getPhoto();
+		}
+
+		return $this->render('ActivitiesBundle::listActivity.html.twig', array('listActivities' => $listActivities, 'activitiesPhoto' => $activitiesPhoto));
 	}
 
 	/**
@@ -101,7 +114,59 @@ class ActivityController extends Controller
 	            'error',
 	            'Error !'
 	        );
-	    }			
+	    }
+
+	    $activityPhotoRepository = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto');
+
+	    $activityPhoto = new ActivityPhoto();
+
+	    $formPhoto = $this->createForm(ActivityPhotoType::class, $activityPhoto);
+
+	    $formPhoto->handleRequest($request);
+
+	    if ($formPhoto->isSubmitted() && $formPhoto->isValid()) {
+		    $activityPhoto = $formPhoto->getData();
+
+		    $lastIdActivityPhoto = $activityPhotoRepository->findOneBy(array('activity' => $activity), array('id' => 'DESC'))->getId();
+
+		    $id = $lastIdActivityPhoto+1;
+
+		    foreach($activityPhoto->getPhoto() as $photo)
+		    {
+		    	$photoActivity = new ActivityPhoto();
+
+		    	$photoName = $activity->getName().$id.'.'.$photo->guessExtension();
+
+		    	$id++;
+
+		    	$photo->move(
+	                $this->getParameter('imgActivities'),
+	                $photoName
+	            );
+		    	
+		    	$photoActivity->setActivity($activity);
+		    	$photoActivity->setPhoto($photoName);
+		    	$photoActivity->setLove(0);
+
+		    	$em->persist($photoActivity);
+		   		$em->flush();
+		    }
+		       	   
+		    $this->addFlash(
+		        'success',
+		        'Photo(s) uploadée(s)'
+		    );
+
+		    return $this->redirectToRoute('signInActivity', array('activity_id' => $activity_id));
+	    }
+
+	    else if($formPhoto->isSubmitted() && !$formPhoto->isValid())
+	    {
+	    	$this->addFlash(
+	            'error',
+	            'Error !'
+	        );
+	    }
 
 		return $this->render('ActivitiesBundle::activity.html.twig', array(
 				'activity' => $activity,
@@ -109,6 +174,7 @@ class ActivityController extends Controller
 				'form' => $form->createView(),
 				'alreadySignIn' => count($alreadySignIn),
 				'commentsInfo' => $commentsInfo,
+				'formPhoto' => $formPhoto->createView(),
 			));
 	}
 

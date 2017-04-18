@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block body %}
-
 	<div class="row">
 		<h3>Nos activités</h3>
 		<hr>
@@ -16,21 +15,21 @@
 	<div class="row">
 		<div class="col-xs-12 col-lg-offset-1 col-lg-10 activity">
 			<div class="row">
-				<h4 class="title">{{activity.name}}</h4>
-				<h4 class="date">13/04/2017</h4><br><br>
+				<h4 class="title">{{ activity.name }}</h4>
+				<h4 class="date">{{ activity.date|date('d/m/Y H:i:s') }}</h4><br><br>
 			</div>
 			<div class="row activityInfo">
 				<div class="col-xs-3 col-lg-3 ctnBtn">
-					<img class="img-responsive" src="{{ asset('img/bataille.jpg') }}">
+					<img class="img-responsive" src="{{ asset('imgActivities/') }}{{ activitiesPhoto[activity.id] }}">
 				</div>
 				<div class="col-xs-9 col-lg-9">
 					<p class="description">
-					{{activity.description}}
+						{{ activity.description }}
 					</p>
 					
 					<a href="{{ path('signInActivity', {'activity_id': activity.id}) }}"><button type="submit" class="btn btn-primary subscribe">S'inscrire</button></a>
 					
-					<a class="details" href="#">Plus de détails</a>
+					<a class="details" href="{{ path('signInActivity', {'activity_id': activity.id}) }}">Plus de détails</a>
 				</div>
 			</div>
 		</div>	

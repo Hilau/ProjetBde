@@ -97,4 +97,27 @@ class ActivityPhoto
     {
         return $this->love;
     }
+
+    /**
+     * Set activity
+     *
+     * @param \ActivitiesBundle\Entity\Activity $activity
+     * @return Activity
+     */
+    public function setActivity(\ActivitiesBundle\Entity\Activity $activity = null)
+    {
+        $this->activity = $activity;
+
+        return $this;
+    }
+
+    /**
+     * Get activity
+     *
+     * @return \ActivitiesBundle\Entity\Activity
+     */
+    public function getActivity()
+    {
+        return $this->activity;
+    }
 }
