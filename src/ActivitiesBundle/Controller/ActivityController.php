@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use ActivitiesBundle\Entity\ActivityIdea;
 use ActivitiesBundle\Entity\ActivityUser;
 use ActivitiesBundle\Entity\ActivitiesVote;
+use ActivitiesBundle\Entity\PhotoComment;
 use UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -55,17 +56,17 @@ class ActivityController extends Controller
 
 		foreach($photos as $photo)
 		{
-			$comments = $commentsRepository->findByPhoto($photo);
+			$comments = $commentsRepository->findBy(array('photo' => $photo), array('date' => 'DESC'));
 
 			foreach($comments as $comment)
 			{
 				$comment_user = $comment->getUser();
 				$user_avatar = $comment_user->getAvatar();
 
-				$commentsInfo[] = ["avatar" => $user_avatar, "comment" => $comment->getComment(), "date" => $comment->getDate()];
+				$commentsInfo[] = ["photo_id" => $comment->getPhoto()->getId(), "avatar" => $user_avatar, "comment" => $comment->getComment(), "date" => $comment->getDate()];
 			}
 		}
-
+		
 		$activityUser = new ActivityUser();
 
 		$form = $this->createFormBuilder($activityUser)	        
@@ -208,9 +209,9 @@ class ActivityController extends Controller
 	        $em->flush();
 
 	        $date = $activityIdea->getDate();
-	        $dates = [$date];   
+	        $dates = [$date];
 
-	        $date2 = clone($date);	  
+	        $date2 = clone($date);
 	        $date2->add(new \DateInterval('P1D'))->setTime(10, 0, 0);
 
 	        $dates[] = $date2;
@@ -320,6 +321,55 @@ class ActivityController extends Controller
 
         return new Response("Erreur");
 			
+	}
+
+	/**
+	* @Route("insertComment", name="insertComment")
+	*/
+	public function insertCommentAction()
+	{
+		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return new Response("Erreur");
+        }
+
+		$request = $this->container->get('request');
+		$em = $this->getDoctrine()->getManager();
+
+		if($request->isXmlHttpRequest())
+    	{
+    		$photo_id = $request->query->get('photo_id');
+    		$text = $request->query->get('text');
+
+			$user = $this->get('security.context')->getToken()->getUser();
+
+			$repositoryActivityPhoto = $this->getDoctrine()->getRepository('ActivitiesBundle:ActivityPhoto');
+			$photo = $repositoryActivityPhoto->find($photo_id);
+			
+			$photoComment = new photoComment();
+
+			$photoComment->setUser($user);
+			$photoComment->setPhoto($photo);
+			$photoComment->setComment($text);
+			$photoComment->setDate(new \DateTime("now"));
+			       	        
+			$em->persist($photoComment);
+			$em->flush();
+
+			$comment_user = $photoComment->getUser();
+			$user_avatar = $comment_user->getAvatar();
+
+			$data = ["avatar" => $user_avatar, "comment" => $photoComment->getComment(), "date" => $photoComment->getDate()->format("d/m/Y H:i:s")];
+
+			$response = new Response(json_encode($data));
+		    $response->headers->set('Content-Type', 'application/json');
+
+		    return $response;
+        }
+
+        else
+        {
+        	return new Response("Erreur");
+        }
 	}
 
 	/**

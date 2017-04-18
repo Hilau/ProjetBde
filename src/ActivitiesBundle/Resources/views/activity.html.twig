@@ -12,76 +12,66 @@
 	</div>
 
 	<div class="row">
-		<div class="col-lg-offset-1 col-lg-10">
-			<a href="" data-toggle="modal" data-target="#modalCommentaire">
-			{% for photo in photos%}
-				<img class="img-responsive" src="{{ asset(photo.photo) }}">
-			{%endfor%}
-			</a>
-		</div>
-	</div>
-
-	<div id="modalCommentaire" class="modal fade" role="dialog">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-footer">
-					<button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></button>
+		{% for photo in photos %}
+			{% if loop.index0 == 0 %}
+				<div class="col-lg-offset-1 col-lg-10">
+					<a href="" data-toggle="modal" id="imgToReplace" data-target="#modalCommentaire{{ loop.index0 }}">
+						<img class="img-responsive" id="{{ loop.index0 }}" src="{{ asset(photo.photo) }}">
+					</a>
 				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-lg-offset-1 col-lg-10">
+			{% else %}
+				<div class="col-lg-2 img-click" id="{{ loop.index0 }}">
+					<img class="img-responsive" src="{{ asset(photo.photo) }}">
+				</div>
+			{% endif %}
+
+			<div id="modalCommentaire{{ loop.index0 }}" class="modal fade" role="dialog">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-footer">
+							<button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></button>
+						</div>
+						<div class="modal-body">
 							<div class="row">
-								<img class="image" src="{{ asset('img/gateau.jpg') }}">
-								<div class="row">
-									<div class="form-group row">
-										<input class="form-control" type="text" placeholder="Commentaire" id="example-text-input">
-									</div>
-								</div><br>
-								{% for comment in commentsInfo %}								
-									<div class="row comment">
-										<div class="col-lg-2">
-											<img class="avatar" src="{{ asset('avatars/') }}{{ comment.avatar }}">
-										</div>
-										<div class="col-lg-10 textComment">
-											{{ comment.comment }}
-										</div>
+								<div class="col-lg-offset-1 col-lg-10">
+									<div class="row">
+										<img class="image" src="{{ asset(photo.photo) }}">
 										<div class="row">
-											<p class="col-lg-3 date">{{ comment.date|date("d/m/Y H:i:s") }}</p>
+											<div class="form-group row">
+												<input class="form-control search" type="text" placeholder="Commentaire" id="{{ photo.id }}">
+											</div>
+										</div><br>
+										<div id="comments{{ photo.id }}">
+											{% for comment in commentsInfo %}
+												{% if comment.photo_id == photo.id %}
+													<div class="row comment">
+														<div class="col-lg-2">
+															<img class="avatar" src="{{ asset('avatars/') }}{{ comment.avatar }}">
+														</div>
+														<div class="col-lg-10 textComment">
+															{{ comment.comment }}
+														</div>
+														<div class="row">
+															<p class="col-lg-3 date">{{ comment.date|date("d/m/Y H:i:s") }}</p>
+														</div>
+													</div>
+												{% endif %}
+											{% endfor %}
 										</div>
 									</div>
-								{% endfor %}
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-lg-2">
-			<img class="img-responsive ptImg" src="{{ asset('img/index.jpg') }}">
-		</div>
-		<div class="col-lg-2">
-			<img class="img-responsive ptImg" src="{{ asset('img/gateau.jpg') }}">
-		</div>
-		<div class="col-lg-2">
-			<img class="img-responsive ptImg" src="{{ asset('img/logo.png') }}">
-		</div>
-		<div class="col-lg-2">
-			<img class="img-responsive ptImg" src="{{ asset('img/gateau.jpg') }}">
-		</div>
-		<div class="col-lg-2">
-			<img class="img-responsive ptImg" src="{{ asset('img/gateau.jpg') }}">
-		</div>
-		<div class="col-lg-2">
-			<img class="img-responsive ptImg" src="{{ asset('img/gateau.jpg') }}">
-		</div>
-	</div>
+		{% endfor %}
 
 	<div class="row">
 		<div class="col-lg-offset-8 col-lg-2">
-			<button class="btn btn-primary">Supprimer la selection</button>
+			{% if app.user.roles[0] == "ROLE_TUTEUR" %}
+				<a href="{{ path('showPhotoGallery') }}"><button class="btn btn-primary">Modérer les photos</button></a>
+			{% endif %}
 		</div>
 		<div class="col-lg-2">
 			<button class="btn btn-primary addImg">Ajouter des photos</button>
@@ -97,8 +87,10 @@
 	</div><br>
 
 	<div class="row">
-		<h3>Inscrivez vous !</h3>
-		<hr>
+		<div class="col-lg-12">
+			<h3>Inscrivez vous !</h3>
+			<hr>
+		</div>
 	</div>
 
 	<div class="well">
@@ -205,4 +197,46 @@
 			</form>
 		</div>
 	</div>-->
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+$(function()
+{
+	$('.img-click').on('click', function()
+	{
+		var imgToReplace_tmp = $('#imgToReplace').html();
+		var imgClick_tmp = $(this).html();
+
+		var imgToReplace_id = $('#imgToReplace').children("img").attr("id");
+		var imgClick_id = $(this).attr("id");
+
+		$('#imgToReplace').html(imgClick_tmp).attr("data-target", "#modalCommentaire"+imgClick_id).children("img").attr("id", imgClick_id);
+		$(this).html(imgToReplace_tmp).attr("id", imgToReplace_id);
+	});
+
+	$('.search').on('keyup', function(e)
+	{
+		if(e.keyCode == 13)
+		{
+			var photo_id = $(this).attr("id");
+			var comment = $(this).val();
+
+			$.ajax({
+				type: "GET",
+				url: "{{ path('insertComment') }}",
+				cache: false,
+				data: {photo_id: photo_id, text: comment},
+			}).done(function(data)
+			{
+				alert("Commentaire ajouté");
+
+				$('#comments'+photo_id).prepend("<div class=\"row comment\"><div class=\"col-lg-2\"><img class=\"avatar\" src=\"{{ asset('avatars/') }}"+data['avatar']+"\"></div><div class=\"col-lg-10 textComment\">"+data['comment']+"</div><div class=\"row\"><p class=\"col-lg-3 date\">"+data['date']+"</p></div></div>");
+
+				$('.search').val("");
+			});
+		}		
+	});
+});
+</script>				
 {% endblock %}
