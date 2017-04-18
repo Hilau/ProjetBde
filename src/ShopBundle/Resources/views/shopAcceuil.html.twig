@@ -32,12 +32,12 @@
 			</div>
 
 			<div class="row"> 
-				{%for product in listArticle%} 
+				{%for product in bestOfProduct%} 
 					<div class="col-xs-12 col-md-4 col-lg-4">
 						<div class="thumbnail">
 							<h3 class="titleArticle"> {{product.name}} </h3>   <!-- titre article -->
 							<center><img src="{{asset(product.image)}}" alt="Image du produit" class="imagesProduit"></center>
-							<p>{{product.description}}</p>
+							<p>{{chaineDescription[product.id]}}...</p>
 							<form action="ProductController" method="post">
 								<input type="hidden" name="product_id" value="{{product.id}}">
 								<input type="submit" class="btn btn-primary" value="Ajouter au panier"></button>
@@ -54,7 +54,7 @@
 				</div>
 			</div>
 			<div class="row"> 
-				{%for product in listArticle%}
+				{%for product in nouveaute%}
 				<article> 
 					<div class="col-xs-12 col-md-4 col-lg-4">
 						<div class="thumbnail">
@@ -62,6 +62,10 @@
 									<h3 class="arcticlepop"> {{product.name}} </h3>   <!-- titre article -->
 									<center><img src="{{asset(product.image)}}" alt="Image" class="images"></center>
 									<p>{{product.description}} <br/><br/></p>
+									<form action="ProductController" method="post">
+										<input type="hidden" name="product_id" value="{{product.id}}">
+										<input type="submit" class="btn btn-primary" value="Ajouter au panier"></button>
+									</form>
 							</div>
 						</div>
 					</div>
