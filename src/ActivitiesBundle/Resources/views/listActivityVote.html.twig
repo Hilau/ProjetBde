@@ -11,7 +11,7 @@
 		{% for activityIdea in listActivitiesIdea %}
 
 		<div class="col-lg-offset-1 col-lg-4 col-xs-offset-1 col-xs-10 activityVote" style="margin-bottom: 15px;" >
-			<a class="noStyle" href="#">
+			<a class="noStyle" href="{{ path('showActivityToVote', {'activity_id': activityIdea.id}) }}">
 				<h4>{{activityIdea.name}}</h4>
 			</a><br>
 			<div class="conteneurImg"><img src="{{ asset('imgActivities/index.jpg') }}" alt="photo activite" class="img1"><br></div>

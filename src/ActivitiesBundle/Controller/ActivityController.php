@@ -234,15 +234,35 @@ class ActivityController extends Controller
 	     *			})
 		 */
 		public function showActivityToVoteAction(Request $request, $activity_id){
+			if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+	            return $this->redirectToRoute('fos_user_security_login');
+	        }
+
 			$em = $this->getDoctrine()->getManager();
 			$activity = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityIdea')->find($activity_id);
+			$listActivitiesVote = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivitiesVote');
+
+			$dates = [];
+			$votes = [];
+
+			$activityDates = $listActivitiesVote->findByActivity($activity);
+			$activityVote = $listActivitiesVote->findOneByActivity($activity);
+
+			foreach($activityDates as $date)
+			{
+				$dates[$activity->getId()][] = $date->getDate();				
+			}
+
+			$votes[$activity->getId()] = $activityVote->getVote();
 
 			if (!$activity) {
 		        throw $this->createNotFoundException('L\'activité n\'existe pas !');
 		    }
 
 			return $this->render('ActivitiesBundle::activityToVote.html.twig', array(
-				'activity' => $activity
+				'activity' => $activity,
+				'dates' => $dates,
+				'votes' => $votes,
 			));
 }
 
