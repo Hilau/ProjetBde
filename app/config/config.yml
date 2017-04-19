@@ -12,6 +12,7 @@ parameters:
     locale: fr
     avatars: avatars
     imgActivities: imgActivities
+    imgProducts: imgProducts
 
 framework:
     #esi: ~

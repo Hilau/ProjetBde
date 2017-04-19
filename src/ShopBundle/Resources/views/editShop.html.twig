@@ -23,7 +23,7 @@
 							<tr>
 								<td data-title="Nom" >{{product.name}}</td>
 								<td data-title="Description">{{product.description}}</td>
-								<td data-title="Categorie">{{categories[product.category.id].name}}</td>
+								<td data-title="Categorie">{{categories[product.category.id-1].name}}</td>
 								<td data-title="Prix">{{product.price}}</td>
 								<td data-title="Update" class="hidden-xs">
 									<a href="{{path('updateProduct', {'id':product.id})}}">

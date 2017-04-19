@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse" id="myNavbar2">
                 <ul class="nav navbar-nav">
                 {% for category in categories %}
-                	<li><a class="liste" href="{{path('categorieShopShow', {'category_id':category.id} )}}">{{category.name}}</a></li>
+                	<li style="width: calc(100% / {{ nbCategory }} );"><a class="liste" href="{{path('categorieShopShow', {'category_id':category.id} )}}">{{category.name}}</a></li>
                 {% endfor %}
                 </ul>
             </div>

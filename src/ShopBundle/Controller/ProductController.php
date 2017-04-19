@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,16 +32,22 @@ class ProductController extends Controller
 	 */
 	public function showProductAction($product_id){
 		$product = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->find($product_id);
+		$categories = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Category')->findAll();
+
+		$nbCategory = count($categories);
 
 		if (!$product) {
 	        throw $this->createNotFoundException('Le produit n\'existe pas !');
 	    }
 
 		return $this->render('ShopBundle::product.html.twig', array(
-			'id' => $product->getId(),
-			'name' => $product->getName(),
-			'description' => $product->getDescription(),
-			'price' => $product->getPrice()
+				'id' => $product->getId(),
+				'name' => $product->getName(),
+				'description' => $product->getDescription(),
+				'price' => $product->getPrice(),
+				'image' => $product->getImage(),
+				'categories' => $categories,
+				'nbCategory' => $nbCategory,
 			));
 	}
 
@@ -56,14 +63,7 @@ class ProductController extends Controller
 
 		$categories = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Category')->findAll();
 
-		/*$product_id = $request->request->get("product_id");
-		$newProduct = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->find($product_id);
-		$newProduct = new Basket();
-		$newProduct->setProduct($product_id);
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($newProduct);
-		$em->flush();*/
-
+		$nbCategory = count($categories);
 			
 		foreach($products as $product)
 		{
@@ -103,7 +103,8 @@ class ProductController extends Controller
 			'productsInfo' => $productsInfo,
 			'categories' => $categories,
 			'bestOfProduct' => $bestOfProduct,
-			'chaineDescription' => $chaineDescription
+			'chaineDescription' => $chaineDescription,
+			'nbCategory' => $nbCategory,
 			));
 	}
 
@@ -114,9 +115,12 @@ class ProductController extends Controller
 		$listArticle = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->findByCategory($category_id);
 		$categories = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Category')->findAll();
 
+		$nbCategory = count($categories);
+
 		return $this->render('ShopBundle::shopCategory.html.twig', array(
-			'listArticle' => $listArticle,
-			'categories' => $categories
+				'listArticle' => $listArticle,
+				'categories' => $categories,
+				'nbCategory' => $nbCategory,
 			));
 	}
 
@@ -128,8 +132,8 @@ class ProductController extends Controller
 		$categories= $this->getDoctrine()->getManager()->getRepository('ShopBundle:Category')->findAll();
 
 		return $this->render('ShopBundle::editShop.html.twig', array(
-			'products' => $products,
-			'categories' => $categories
+				'products' => $products,
+				'categories' => $categories
 			));
 	}
 
@@ -152,7 +156,7 @@ class ProductController extends Controller
 	        	'multiple' => false,
 	        	'expanded' => false
 	        	))
-	        ->add('image', TextType::class)
+	        ->add('image', FileType::class, array('label' => 'Image', 'required' => true))
 	        ->getForm();
 	        
 		$form->handleRequest($request);
@@ -160,12 +164,19 @@ class ProductController extends Controller
 	    if ($form->isSubmitted() && $form->isValid()) {
 	       	$product = $form->getData();
 
+            $file = $product->getImage();
+            $fileName = $product->getName().'.'.$file->guessExtension();
+            $file->move(
+                $this->getParameter('imgProducts'),
+                $fileName
+            );
+
 	       	$category = $product->getCategory();
 	       	$idCat = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Category')->findOneByName($category->getName());
 	       	
 	       	$product->setDate(new \DateTime('now'));
 	       	$product->setNbAchat(0);
-
+	       	$product->setImage($fileName);
 	       	$product->setCategory($idCat);
 	        $em->persist($product);
 	        $em->flush();

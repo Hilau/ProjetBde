@@ -34,6 +34,8 @@ class ActivityController extends Controller
 		$repositoryActivityPhoto = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto');
 
 		$activitiesPhoto = [];
+		$activitiesPast = [];
+		$activitiesFutur = [];
 
 		foreach($listActivities as $activity)
 		{
@@ -41,9 +43,24 @@ class ActivityController extends Controller
 			$photo = $photo[0];
 
 			$activitiesPhoto[$activity->getId()] = $photo->getPhoto();
+
+			$date = $activity->getDate();
+			$dateToday = new \DateTime("now");
+
+			if($dateToday > $date)
+			{
+				$activitiesPast[] = $activity;
+			}
+
+			else
+			{
+				$activitiesFutur[] = $activity;
+			}
+
 		}
 
-		return $this->render('ActivitiesBundle::listActivity.html.twig', array('listActivities' => $listActivities, 'activitiesPhoto' => $activitiesPhoto));
+		return $this->render('ActivitiesBundle::listActivity.html.twig', array('activitiesPast' => $activitiesPast, 'activitiesFutur' => 
+			$activitiesFutur, 'activitiesPhoto' => $activitiesPhoto));
 	}
 
 	/**
@@ -602,6 +619,11 @@ class ActivityController extends Controller
         }
 
 		$photoASupprimer = $request->request->get('photo');
+
+		if(!$photoASupprimer)
+		{
+			return $this->redirectToRoute('showPhotoGallery');
+		}
 		
 		foreach ($photoASupprimer as $photo) {
 			$suppr = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->find($photo);
