@@ -54,8 +54,7 @@ class User extends BaseUser
     protected $avatar;
 
     /**
-     * @ORM\Column(type="integer", length=11)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="integer", length=11, nullable=true)
      * @Assert\Type("integer")
      * @Assert\Range(
      *      min = 1,

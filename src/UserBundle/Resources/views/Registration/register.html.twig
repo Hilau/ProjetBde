@@ -70,11 +70,12 @@
 	      		{{ form_errors(form.roles) }}
 	    	</div>
 
-	    	<div class="form-group">
+	    	<div class="form-group" id="promotion">
 			    <label class="control-label col-lg-4" for="promotion">Promotion:</label>
 			    <div class="col-lg-8">
 			    	{{ form_widget(form.promotion, { 'attr': { 'class': 'form-control'} }) }}
-			    </div>		    
+			    </div>	
+			    {{ form_errors(form.promotion) }}	    
 			</div>
 
 			<div class="form-group">		    
@@ -92,7 +93,20 @@
 <script type="text/javascript">
 $(function()
 {
+	$('#fos_user_registration_form_roles_0').on('change', function()
+	{
+		if($(this).val() == "ROLE_TUTEUR")
+		{
+			$('#fos_user_registration_form_promotion').val(0);
+			$('#promotion').hide();
+		}
 
+		else
+		{
+			$('#fos_user_registration_form_promotion').val(1);
+			$('#promotion').show();			
+		}
+	});
 });
 </script>
 {% endblock %}
