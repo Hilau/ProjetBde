@@ -101,13 +101,17 @@ hr
   border-radius: 5px;
 }
 
+.responsive-table-line thead tr { 
+display:none;
+}
 .responsive-table-line td { 
 position: relative;
 border: 0px solid transparent;
-padding-left: 50%; 
+padding-left: 50% !important; 
 white-space: normal;
+text-align:right; 
 }
-
+ 
 .responsive-table-line td:before { 
 position: absolute;
 top: 0px;
@@ -116,14 +120,14 @@ width: 45%;
 padding-right: 15px; 
 height:100%;
 white-space: nowrap;
-text-overflow: ellipsis;
-overflow:hidden;
+text-overflow: ellipsis !important;
+overflow:hidden !important;
 text-align:left;
 background-color:#f8f8f8;
 padding:2px;
 }
 
-@media screen and (max-width: 700px){
+@media screen and (max-width: 900px){
   h3 
   {
     font-size: 20px;
@@ -133,20 +137,32 @@ padding:2px;
     text-align: center;
   }
 
+ .responsive-table-line td:before { content: attr(data-title);
+ position: absolute;
+ left: 10px;
+ top:  0;
+ width: 50%;
+  }
+.responsive-table-line table{
+  display: block;
+  background-color: red;
+} 
+.responsive-table-line thead{
+  display: block;
+} 
+.responsive-table-line tbody{
+  display: block;
+}
+.responsive-table-line th{
+  display: block;
+} 
+.responsive-table-line td {
+  position: relative;
+  padding-left: 50%;
+  display: block;
+} 
+.responsive-table-line tr { 
+display: block; 
 
-  .responsive-table-line td:before { content: attr(data-title); }
-  .responsive-table-line table, 
-  .responsive-table-line thead, 
-  .responsive-table-line tbody, 
-  
-  .responsive-table-line tr { 
-    display: block; 
-    }
-
-    .responsive-table-line th{
-    display: none;}
-
-    .responsive-table-line td{
-      text-align: left;
-    }
+   
 }
