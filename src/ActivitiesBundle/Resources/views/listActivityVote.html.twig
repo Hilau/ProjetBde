@@ -20,7 +20,7 @@
 			<div class="row btnAdj">
 				<form class="formActivities" name="voter" method="post" action="{{ path('activitiesVote') }}">
 					<div class="col-lg-7 col-xs-6 champVote">
-						<select name="horaire" id="{{ activityIdea.id }}" class="form-control">
+						<select name="horaire" class="horaire" id="{{ activityIdea.id }}" class="form-control">
 							{% for date in dates[activityIdea.id] %}											
 								<option value="{{ date|date('Y-m-d H:i:s') }}">{{ date|date('d/m/Y H:i:s') }}</option>
 							{% endfor %}
