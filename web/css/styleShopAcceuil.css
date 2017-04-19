@@ -206,9 +206,16 @@ hr
   text-align: center;
 }
 
-ul .nav .navbar-nav
+.noStyle
 {
-  
+  text-decoration: none;
+  color: black;
+}
+
+.noStyle:hover
+{
+  color: rgb(27, 109, 171);
+  text-decoration: none;
 }
 
 @media screen and (max-width: 900px){
@@ -235,7 +242,7 @@ ul .nav .navbar-nav
     font-weight: bold;
   }
 
-  .glyphicon-shopping-cart 
+  .caddie 
   {
     margin: 8px;
     font-size: 30px;

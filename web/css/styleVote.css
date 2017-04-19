@@ -18,7 +18,14 @@ body
   padding: 1%;
 }
 
-
+.details 
+{
+  text-align: left;
+  background: transparent;
+  border: 0px;
+  cursor: pointer;
+  text-decoration: underline;
+}
 
 
 /* liScroll styles */
@@ -153,16 +160,16 @@ div h3 {
   margin: 0;
 }
 
-.activityVote a {
+/*.activityVote a {
   text-decoration: none;
   color: rgb(27, 109, 171);
-}
+}*/
 
-.activityVote a:hover 
+/*.activityVote a:hover 
 {
   text-decoration: none;
   color: black;
-}
+}*/
 
 .activityVote
 {
@@ -176,7 +183,20 @@ div h3 {
 .img1 {
   max-height: 15vh;
   width: auto;
+  font-weight: bold;
+}
 
+.noStyle
+{
+  text-decoration: none;
+  color: black;
+}
+
+.noStyle:hover
+{
+  color: rgb(27, 109, 171);
+  text-decoration: none;
+  font-weight: bold;
 }
 
 

@@ -38,16 +38,16 @@
 
 
 	<div class="row">
-		<div id="panier" class="col-lg-3 hidden-xs">
+		<div id="panier" class="col-lg-3 col-xs-offset-1 col-xs-10">
 			<div class="row">
 				<h4>Mon panier</h4>
 				<div id="basket">
-					<div class="col-lg-8 descriptionArticle">
+					<div class="col-lg-8 col-xs-8 descriptionArticle">
 						{%for product in productsInfo%}
 							{{product.name}}<br>
 						{%endfor%}
 					</div>
-					<div class="col-lg-4 prixArticle">
+					<div class="col-lg-4 col-xs-4 prixArticle">
 						{%for product in productsInfo%}
 							{{product.price}}€<br>
 						{%endfor%}

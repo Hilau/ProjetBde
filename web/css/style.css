@@ -182,15 +182,11 @@ hr
   margin-top: 8px;
 }
 
-
-
-
-
 #container-login
 {
   background-image: url("http://commons.studyrama.com/data/bc2e/20952/photo_953.jpg");
   background-repeat: no-repeat;
-  background-size: 100%
+  background-size: 100%;
 }
 
 .element
@@ -199,7 +195,9 @@ hr
     border-radius: 10px;
     padding: 2%;
     position: absolute;
-    margin: auto;
+    margin-top: 18%;
+    margin-left: auto;
+    margin-right: auto;
     height: 225px;
     width: 300px;
     top: 0;
@@ -232,6 +230,12 @@ input
   height: 30px;
 }
 
+.remember
+{
+  position: relative; 
+  bottom: 11px; 
+}
+
 @media screen and (max-width: 900px) {
   .noMargin {
     margin: 0;
@@ -244,6 +248,24 @@ input
 
   .nav > li {
     display: inline;
+  }
+
+  .element
+  {
+      margin-top: 80%;
+      padding-top: 12%;
+      background-image: url("http://commons.studyrama.com/data/bc2e/20952/photo_953.jpg");
+      background-size: 100%;
+  }
+
+  #container-login
+  {
+    background-image: none;
+  }
+
+  .remember
+  {
+    color: white;
   }
 
 }

@@ -10,10 +10,12 @@
 		<hr>
 		{% for activityIdea in listActivitiesIdea %}
 
-		<div class="col-lg-offset-1 col-lg-4 col-xs-offset-1 col-xs-10 activityVote">
-			<h4>{{activityIdea.name}}</h4><br>
-			<div class="conteneurImg"><img src="{{ asset('img/index.jpg') }}" alt="photo activite" class="img1"><br></div>
-			<a href="#">Plus de détails</a>
+		<div class="col-lg-offset-1 col-lg-4 col-xs-offset-1 col-xs-10 activityVote" style="margin-bottom: 15px;" >
+			<a class="noStyle" href="#">
+				<h4>{{activityIdea.name}}</h4>
+			</a><br>
+			<div class="conteneurImg"><img src="{{ asset('imgActivities/index.jpg') }}" alt="photo activite" class="img1"><br></div>
+			<a href="#"><button class="btn btn-default details">Détails</button></a>
 			<p>Choisissez votre date et votre horaire :</p>
 			<div class="row btnAdj">
 				<form class="formActivities" name="voter" method="post" action="{{ path('activitiesVote') }}">
@@ -45,6 +47,9 @@
 					</div>
 				{% endif %}
 			</div>
+		</div>
+		<div class="col-lg-1">
+			<br>
 		</div>
 		{% endfor %}
 	</div>

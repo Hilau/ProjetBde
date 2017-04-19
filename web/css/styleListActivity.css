@@ -141,6 +141,10 @@ hr
 .details 
 {
 	float: right;
+  background: transparent;
+  border: 0px;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .subscribe
@@ -203,6 +207,17 @@ hr
 {
   max-height: 150px;
   width: auto;
+}
+
+.noStyle
+{
+  text-decoration: none;
+  color: black;
+}
+
+.noStyle:hover
+{
+  color: rgb(27, 109, 171);
 }
 
 

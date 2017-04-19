@@ -308,6 +308,33 @@ class ProductController extends Controller
         }
 	}
 
+	/**
+	 * @Route("panier", name="panierShow")
+	 */
+	public function panierShowAction(){
+		$user = $this->get('security.context')->getToken()->getUser();
+		$basket = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Basket')->findByUser($user);
+		$categories = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Category')->findAll();
+		
+		$products = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Basket')->findByUser($user);
+		$productRepository = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product');
+		$productsInfo = [];
+		foreach($products as $product)
+		{
+			$productData = $productRepository->find($product);
+			$productsInfo[] = [
+				"name" => $productData->getName(),
+				"price" => $productData->getPrice()
+			];
+		}
+
+		return $this->render('ShopBundle::panier.html.twig', array(
+			'basket' => $basket,
+			'categories' => $categories,
+			'productsInfo' => $productsInfo
+			));
+	}
+
 }
 
 ?>
