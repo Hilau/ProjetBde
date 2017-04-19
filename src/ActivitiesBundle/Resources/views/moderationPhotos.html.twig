@@ -47,14 +47,17 @@
 			
 				<div class="row noMargin">
 					<div class="col-lg-1 col-xs-offset-1 col-xs-3 noMargin">
-						<br><br><input type="submit" name="supprimer" class="btn btn-danger" value="Supprimer">
+						<br><br><input style="height: 34px;" type="submit" name="supprimer" class="btn btn-danger" value="Supprimer">
 					</div>
 				</div>
 			</form>
-		</div>	
 
-		
-		
+			<div class="row noMargin">
+				<div class="col-lg-1 col-xs-offset-1 col-xs-3 noMargin">
+					<a href="{{ path('dlPhotos') }}"><button class="btn btn-primary">Télécharger toutes les photos</button></a>
+				</div>
+			</div>
+		</div>	
 	</div>
 {% endblock %}
 
@@ -62,8 +65,8 @@
 <script type="text/javascript">
 	$(function()
 	{
-    	$(".checkbox").on('click', function(){
-
+    	$(".checkbox").on('click', function()
+    	{
     		var id = $(this).val();
 
     		if($('#img'+id).hasClass("checked"))

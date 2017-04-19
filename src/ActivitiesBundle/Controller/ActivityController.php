@@ -701,5 +701,44 @@ class ActivityController extends Controller
         return $this->redirectToRoute('showActivitiesVote');
     }
 
+    /**
+	 * @Route("dlPhotos", name="dlPhotos")
+	 */
+	public function dlPhotoAction(){
+		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY') || !$this->container->get('security.authorization_checker')->isGranted('ROLE_TUTEUR')) {
+             return $this->redirectToRoute('fos_user_security_login');
+        }
+
+        $photos = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->findAll();
+        $pathImgActivities = "http://localhost/ProjetWEB/projetWEB-BDE/web/imgActivities/";
+
+        $imgs = [];
+
+        foreach($photos as $photo)
+        {        	
+			$filename = $photo->getPhoto();
+
+			$imgs[] = $pathImgActivities.$filename;
+        }
+
+        $zip = new \ZipArchive();
+        $zipName = 'Images'.date("dmY").".zip";
+        $zip->open($zipName, \ZipArchive::CREATE);
+
+        foreach($imgs as $img)
+        {
+        	$zip->addFromString(basename($img), file_get_contents($img));
+        }
+
+        $zip->close();
+
+        header('Content-Type', 'application/zip');
+		header('Content-disposition: attachment; filename="' . $zipName . '"');
+		header('Content-Length: ' . filesize($zipName));
+		readfile($zipName);
+
+        return $this->redirectToRoute('showPhotoGallery');
+    }
+
 }
 ?>
