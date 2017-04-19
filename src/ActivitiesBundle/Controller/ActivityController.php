@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use ActivitiesBundle\Entity\ActivityIdea;
-use ActivitiesBundle\Entity\ActivityUser;
+use ActivitiesBundle\Entity\ActivityUserProblem;
 use ActivitiesBundle\Entity\ActivitiesVote;
 use ActivitiesBundle\Entity\PhotoComment;
 use ActivitiesBundle\Entity\ActivityPhoto;
@@ -61,11 +61,17 @@ class ActivityController extends Controller
 
 		$em = $this->getDoctrine()->getManager();
 		$activity = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->find($activity_id);
+
+		if (!$activity) {
+	        throw $this->createNotFoundException('L\'activité n\'existe pas !');
+	    }
+
+
 		$photos = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->findByActivity($activity);
 		$commentsRepository = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:PhotoComment');
 		$user = $this->get('security.context')->getToken()->getUser();
 
-		$activityUserRepository = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityUser');
+		$activityUserRepository = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityUserProblem');
 		$alreadySignIn = $activityUserRepository->findBy(array(
 				"activity" => $activity,
 				"user" => $user,
@@ -86,7 +92,7 @@ class ActivityController extends Controller
 			}
 		}
 		
-		$activityUser = new ActivityUser();
+		$activityUser = new ActivityUserProblem();
 
 		$form = $this->createFormBuilder($activityUser)	        
 	        ->add('S\'inscrire', 'submit')
@@ -624,6 +630,10 @@ class ActivityController extends Controller
         $repositoryActivitiesVotes = $this->getDoctrine()->getRepository('ActivitiesBundle:ActivitiesVote');
 
 		$activityIdea = $repositoryActivitiesIdeas->find($activityIdea_id);
+
+		if (!$activityIdea) {
+	        throw $this->createNotFoundException('L\'activité n\'existe pas !');
+	    }
 		
 		$query = $repositoryActivitiesVotes->createQueryBuilder('av')
 							->where('av.activity = :activity')

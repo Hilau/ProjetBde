@@ -5,8 +5,10 @@ parameters:
     database_name: bde
     database_user: root
     database_password: null
-    mailer_transport: gmail
-    mailer_host: 127.0.0.1
-    mailer_user: huilierhugo@gmail.com
-    mailer_password: ragerage
+
+    mailer_transport: smtp
+    mailer_host: smtp.gmail.com
+    mailer_encryption: ssl
+    mailer_user: tnpcclqp
+    mailer_password: pornugenial
     secret: ThisTokenIsNotSoSecretChangeIt

@@ -16,13 +16,14 @@ security:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
-                csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
+                csrf_provider: security.csrf.token_manager
                 login_path: fos_user_security_login
                 use_forward: false
                 check_path: fos_user_security_check
                 failure_path: null
                 default_target_path: /
                 remember_me: true
+                require_previous_session: false
             remember_me:
                 key: %secret%
                 lifetime: 3600
