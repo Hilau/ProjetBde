@@ -186,3 +186,18 @@ hr
 {
   text-align: center;
 }
+
+@media screen and (width: 900px)
+{
+  .caddie 
+  {
+    margin: 8px;
+    font-size: 30px;
+    color: white;
+  }
+
+  .noMargin
+  {
+    margin: 0;
+  }
+}
