@@ -129,6 +129,7 @@ class ActivityController extends Controller
 	    	{
 		        $otherParticipation = $request->request->get('optradio');
 		        $getProblems = $request->request->get('problems');
+		        $comment = $request->request->get('comment');
 
 		        $arrayGetProblems = [];
 
@@ -157,6 +158,7 @@ class ActivityController extends Controller
 				        $activityUserProblem->setProblem($problem);
 				        $activityUserProblem->setActivity($activity);
 				        $activityUserProblem->setOtherParticipation($otherParticipation);
+				        $activityUserProblem->setComment($comment);
 				       	        
 				        $em->persist($activityUserProblem);
 				        $em->flush();
@@ -326,21 +328,40 @@ class ActivityController extends Controller
             return $this->redirectToRoute('fos_user_security_login');
         }
 
+        $em = $this->getDoctrine()->getManager();
+
 		$listActivities = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->findAll();
 		$activitiesUsers = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityUserProblem');
 
 		$firstActivity = $listActivities[0];
 		$date = $firstActivity->getDate();
 
-		$firstActivityUsers = $activitiesUsers->findByActivity(1);
+		$query = $activitiesUsers->createQueryBuilder('a')
+								 ->select('DISTINCT (a.user) as user_id')
+							     ->where('a.activity = :activity')
+							     ->setParameter('activity', 1)
+							     ->getQuery();
+
+		$firstActivityUsers = $query->getResult();
 
 		$nbInscrit = count($firstActivityUsers);
 
-		$usersInfo = [];
+		$usersInfo = [];		
 
 		foreach($firstActivityUsers as $user)
 		{
-			$usersInfo[] = array($user->getUser()->getNom(), $user->getUser()->getPrenom(), $user->getUser()->getPromotion(), "Aucun", $user->getUser()->getEmail());
+			$problems = "";
+
+			$getOneUserActivityProblem = $activitiesUsers->findOneBy(array('activity' => 1, 'user' => $user));
+
+			$getProblems = $activitiesUsers->findBy(array('activity' => 1, 'user' => $user));
+
+			foreach($getProblems as $problem)
+			{
+				$problems .= $problem->getProblem()->getName()." ";
+			}
+
+			$usersInfo[] = array($getOneUserActivityProblem->getUser()->getNom(), $getOneUserActivityProblem->getUser()->getPrenom(), $getOneUserActivityProblem->getUser()->getPromotion(), $problems, $getOneUserActivityProblem->getUser()->getEmail());
 		}
 
 		return $this->render('ActivitiesBundle::summaryActivity.html.twig', array(
@@ -555,13 +576,48 @@ class ActivityController extends Controller
 
 		if($request->isXmlHttpRequest())
     	{
+    		/*$query = $activitiesUsers->createQueryBuilder('a')
+								 ->select('DISTINCT (a.user) as user_id')
+							     ->where('a.activity = :activity')
+							     ->setParameter('activity', 1)
+							     ->getQuery();
+
+			$firstActivityUsers = $query->getResult();
+
+			$nbInscrit = count($firstActivityUsers);
+
+			$usersInfo = [];		
+
+			foreach($firstActivityUsers as $user)
+			{
+				$problems = "";
+				
+				$getOneUserActivityProblem = $activitiesUsers->findOneBy(array('activity' => 1, 'user' => $user));
+
+				$getProblems = $activitiesUsers->findBy(array('activity' => 1, 'user' => $user));
+
+				foreach($getProblems as $problem)
+				{
+					$problems .= $problem->getProblem()->getName()." ";
+				}
+
+				$usersInfo[] = array($getOneUserActivityProblem->getUser()->getNom(), $getOneUserActivityProblem->getUser()->getPrenom(), $getOneUserActivityProblem->getUser()->getPromotion(), $problems, $getOneUserActivityProblem->getUser()->getEmail());
+			}*/
+
     		$activity_id = $request->query->get('activity_id');
 		
 			$repositoryActivities = $this->getDoctrine()->getRepository('ActivitiesBundle:Activity');
 			$activity = $repositoryActivities->find($activity_id);
 
-			$activitiesUsers = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityUser');
-			$activityUser = $activitiesUsers->findByActivity($activity_id);
+			$activitiesUsers = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityUserProblem');
+
+			$query = $activitiesUsers->createQueryBuilder('a')
+								 ->select('DISTINCT (a.user) as user_id')
+							     ->where('a.activity = :activity')
+							     ->setParameter('activity', $activity)
+							     ->getQuery();
+
+			$activityUser = $query->getResult();
 
 			$date = $activity->getDate();
 
@@ -569,7 +625,18 @@ class ActivityController extends Controller
 
 			foreach($activityUser as $user)
 			{
-				$usersInfo[] = array($user->getUser()->getNom(), $user->getUser()->getPrenom(), $user->getUser()->getPromotion(), "Aucun", $user->getUser()->getEmail());
+				$problems = "";
+				
+				$getOneUserActivityProblem = $activitiesUsers->findOneBy(array('activity' => $activity, 'user' => $user));
+
+				$getProblems = $activitiesUsers->findBy(array('activity' => $activity, 'user' => $user));
+
+				foreach($getProblems as $problem)
+				{
+					$problems .= $problem->getProblem()->getName()." ";
+				}
+
+				$usersInfo[] = array($getOneUserActivityProblem->getUser()->getNom(), $getOneUserActivityProblem->getUser()->getPrenom(), $getOneUserActivityProblem->getUser()->getPromotion(), $problems, $getOneUserActivityProblem->getUser()->getEmail());
 			}
 
 			$table = [];
