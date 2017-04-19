@@ -226,6 +226,26 @@ class ActivityController extends Controller
 			));
 	}
 
+		/**
+		 * @Route("showActivityToVote/{activity_id}", name="showActivityToVote",
+		 * 			defaults={"activity_id": 1},
+	     *     		requirements={     *        		
+	     *         		"activity_id": "\d+"
+	     *			})
+		 */
+		public function showActivityToVoteAction(Request $request, $activity_id){
+			$em = $this->getDoctrine()->getManager();
+			$activity = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityIdea')->find($activity_id);
+
+			if (!$activity) {
+		        throw $this->createNotFoundException('L\'activité n\'existe pas !');
+		    }
+
+			return $this->render('ActivitiesBundle::activityToVote.html.twig', array(
+				'activity' => $activity
+			));
+}
+
 	/**
 	* @Route("showActivitiesVote", name="showActivitiesVote")
 	*/
@@ -738,6 +758,13 @@ class ActivityController extends Controller
 		readfile($zipName);
 
         return $this->redirectToRoute('showPhotoGallery');
+    }
+
+    /**
+    * @Route("showMentionsLegales", name="showMentionsLegales")
+    */
+    public function showMentionsLegalesAction(){
+    	return $this->render('ActivitiesBundle::mentionLegales.html.twig');
     }
 
 }

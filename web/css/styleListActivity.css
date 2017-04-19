@@ -220,6 +220,15 @@ hr
   color: rgb(27, 109, 171);
 }
 
+.img1 {
+  height: 50vh;
+  width: auto;
+}
+
+.imgContainer {
+  text-align: center;
+}
+
 
 
 @media screen and (max-width: 900px){

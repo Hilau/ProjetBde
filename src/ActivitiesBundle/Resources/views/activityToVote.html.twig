@@ -1,0 +1,52 @@
+{%extends "::base.html.twig"%}
+
+{% block header %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/styleListActivity.css') }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=no">
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div class="col-xs-12 col-lg-8">
+			<h3 class="titleActivity">{{ activity.name }}</h3>
+		</div>
+		<div class="col-xs-12 col-lg-12 hidden-lg">
+			<hr>
+		</div>
+		<div class="col-xs-12 col-lg-12 hidden-xs">
+			<hr>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12 col-lg-offset-1 col-lg-10 imgContainer">
+			<img class="img1" id="" src="{{ asset('imgActivities/index.jpg') }}">
+		</div>
+	</div>
+	
+	<div class="row noMargin">
+		<div class="col-xs-12 col-lg-offset-1 col-lg-10">
+			<p class="description">{{ activity.description }}</p>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+$(function()
+{
+	$('.img-click').on('click', function()
+	{
+		var imgToReplace_tmp = $('#imgToReplace').html();
+		var imgClick_tmp = $(this).html();
+
+		var imgToReplace_id = $('#imgToReplace').children("img").attr("id");
+		var imgClick_id = $(this).attr("id");
+
+		$('#imgToReplace').html(imgClick_tmp).attr("data-target", "#modalCommentaire"+imgClick_id).children("img").attr("id", imgClick_id);
+		$(this).html(imgToReplace_tmp).attr("id", imgToReplace_id);
+	});
+});
+	
+</script>				
+{% endblock %}
