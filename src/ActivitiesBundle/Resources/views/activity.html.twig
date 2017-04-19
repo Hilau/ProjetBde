@@ -131,46 +131,68 @@
 		</div>
 	</div>
 
-	<div class="well">
 		{% if alreadySignIn == 0 %}
-			{{ form_errors(form) }}
+			<div class="row">
+				<div class="col-lg-offset-1 col-lg-10 formInscription">
+					{{ form_errors(form) }}
 
-			{{ form_start(form, {'method': 'post', 'action': path('signInActivity', {'activity_id': activity.id})}) }}
+					<div class="row">
+						<div class="col-lg-3">
+							<label for="problems">Problèmes rencontrés :</label>
+						</div>
+					</div><br>
 
-			{% for flash_message in app.session.flashBag.get('success') %}
-			    <div class="alert alert-success">
-					{{ flash_message }}
+					{{ form_start(form, {'method': 'post', 'action': path('signInActivity', {'activity_id': activity.id})}) }}
+
+					<div class="row">
+						{% for problem in problems %}
+							<div class="col-lg-offset-1 col-lg-3">
+								<label class="form-check-label">
+							    	<input class="form-check-input" name="problems[]" type="checkbox" value="{{ problem.id }}">
+							    	{{ problem.name }}
+								</label>
+							</div>
+						{% endfor %}
+					</div>
+
+					<div class="row">
+						<label>Avez-vous déjà pratiqué une activité de ce type :</label><br>
+						<label class="radio-inline">
+					      <input type="radio" name="optradio" value="1" checked>Oui
+					    </label>
+					    <label class="radio-inline">
+					      <input type="radio" name="optradio" value="0">Non
+					    </label>
+					</div>
+
+					<div class="row">
+						<div class="col-lg-offset-10 col-lg-2">
+							<input type="submit" class="btn btn-primary Btn-valid" value="S'inscrire">
+						</div>
+					</div>
+
+					{% for flash_message in app.session.flashBag.get('success') %}
+					    <div class="alert alert-success">
+							{{ flash_message }}
+						</div>
+					{% endfor %}
+
+					{% for flash_message in app.session.flashBag.get('error') %}
+					    <div class="alert alert-danger">
+							{{ flash_message }}
+						</div>
+					{% endfor %}	
+
+					{{ form_end(form) }}
 				</div>
-			{% endfor %}
-
-			{% for flash_message in app.session.flashBag.get('error') %}
-			    <div class="alert alert-danger">
-					{{ flash_message }}
-				</div>
-			{% endfor %}	
-
-			{{ form_end(form) }}
 		{% else %}
 			Vous êtes déjà inscrit à cette activité.
 		{% endif %}
 	</div>
 
-<!--
-	<div class="row">
+
+	<!-- <div class="row">
 		<div class="col-lg-offset-1 col-lg-10 formInscription">
-			<form>
-				<div class="row">
-					<div class="col-lg-3">
-						<label for="activity">Activité :</label>
-					</div>
-					<div class="col-lg-9">
-						<select class=form-control>
-							<option value=un></option>
-							<option value=deux>Fondue au chocolat</option>
-							<option value=trois>Anniversaire Julie</option>
-						</select>
-					</div>
-				</div><br><br>
 				<div class="row">
 					<div class="col-lg-3">
 						<label for="problems">Problèmes rencontrés :</label>
@@ -233,8 +255,8 @@
 					</div>
 				</div>
 			</form>
-		</div>
-	</div>-->
+		</div> -->
+	</div>
 {% endblock %}
 
 {% block javascripts %}

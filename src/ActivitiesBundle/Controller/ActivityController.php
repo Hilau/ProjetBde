@@ -67,6 +67,15 @@ class ActivityController extends Controller
 	    }
 
 
+	    $problemRepository = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Problem');
+
+	    $query = $problemRepository->createQueryBuilder('ap')
+						    ->where('ap.name != :name')
+						    ->setParameter('name', 'Aucun')
+						    ->getQuery();
+
+	    $problems = $query->getResult();
+
 		$photos = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->findByActivity($activity);
 		$commentsRepository = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:PhotoComment');
 		$user = $this->get('security.context')->getToken()->getUser();
@@ -94,22 +103,48 @@ class ActivityController extends Controller
 		
 		$activityUser = new ActivityUserProblem();
 
-		$form = $this->createFormBuilder($activityUser)	        
-	        ->add('S\'inscrire', 'submit')
-	        ->getForm();
+		$form = $this->createFormBuilder($activityUser)->getForm();
 
 	    $form->handleRequest($request);
 
 	    if ($form->isSubmitted() && $form->isValid()) {
 	    	if(count($alreadySignIn) == 0)
 	    	{
-		        $activityUser = $form->getData();
-		        $activityUser->setUser($user);
-		        $activityUser->setActivity($activity);
-		        $activityUser->setOtherParticipation(0);
-		       	        
-		        $em->persist($activityUser);
-		        $em->flush();
+		        $otherParticipation = $request->request->get('optradio');
+		        $getProblems = $request->request->get('problems');
+
+		        $arrayGetProblems = [];
+
+		        if(!is_null($getProblems))
+		        {
+		        	foreach($getProblems as $problem)
+		        	{
+		        		$arrayGetProblems[] = $problem;
+		        	}
+		        }
+
+		        else
+		        {
+		        	$arrayGetProblems[] = 3;
+		        }
+
+		        foreach($arrayGetProblems as $problem_id)
+		        {
+		        	$activityUserProblem = new ActivityUserProblem();
+
+		        	$problem = $problemRepository->find($problem_id);
+
+		        	if($problem)
+		        	{
+			        	$activityUserProblem->setUser($user);
+				        $activityUserProblem->setProblem($problem);
+				        $activityUserProblem->setActivity($activity);
+				        $activityUserProblem->setOtherParticipation($otherParticipation);
+				       	        
+				        $em->persist($activityUserProblem);
+				        $em->flush();
+				    }
+		        }
 
 		        $this->addFlash(
 		            'success',
@@ -187,6 +222,7 @@ class ActivityController extends Controller
 				'alreadySignIn' => count($alreadySignIn),
 				'commentsInfo' => $commentsInfo,
 				'formPhoto' => $formPhoto->createView(),
+				'problems' => $problems,
 			));
 	}
 
@@ -234,7 +270,7 @@ class ActivityController extends Controller
         }
 
 		$listActivities = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity')->findAll();
-		$activitiesUsers = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityUser');
+		$activitiesUsers = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityUserProblem');
 
 		$firstActivity = $listActivities[0];
 		$date = $firstActivity->getDate();
