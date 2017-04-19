@@ -1,0 +1,72 @@
+{%extends "::base.html.twig"%}
+
+{% block header %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/styleShopAcceuil.css') }}">
+{% endblock %}
+
+{% block body %}
+	
+	<div class="row" id="boutique">
+		<h1>Boutique</h1><br><br>
+	</div>
+			
+	<!-- sous-menu -->
+	<nav class="row">
+        <div class="navbar navbar-inverse">
+        	<div class="col-xs-3">
+        		<a href=""><span class="glyphicon glyphicon-shopping-cart caddie"></span></a>
+        	</div>
+        	<div class="col-xs-9">
+        		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar2">
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		        </button>
+        	</div>
+        	
+            <div class="collapse navbar-collapse" id="myNavbar2">
+                <ul class="nav navbar-nav">
+                {% for category in categories %}
+                	<li><a class="liste" href="{{path('categorieShopShow', {'category_id':category.id} )}}">{{category.name}}</a></li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+	
+	<hr>
+
+
+	<div class="row">
+		<div id="panier" class="col-lg-3 hidden-xs">
+			<div class="row">
+				<h4>Mon panier</h4>
+				<div id="basket">
+					<div class="col-lg-8 descriptionArticle">
+						{%for product in productsInfo%}
+							{{product.name}}<br>
+						{%endfor%}
+					</div>
+					<div class="col-lg-4 prixArticle">
+						{%for product in productsInfo%}
+							{{product.price}}€<br>
+						{%endfor%}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
