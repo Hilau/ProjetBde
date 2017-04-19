@@ -39,6 +39,11 @@ class ActivityUserProblem
      */
     private $activity;
 
+    /**
+     * @ORM\Column(name="otherParticipation", type="boolean")
+     */
+    private $otherParticipation;
+
 
     /**
      * Get id
@@ -117,5 +122,28 @@ class ActivityUserProblem
     public function getActivity()
     {
         return $this->activity;
+    }
+
+    /**
+     * Set otherParticipation
+     *
+     * @param boolean $otherParticipation
+     * @return ActivityUserProblem
+     */
+    public function setOtherParticipation($otherParticipation)
+    {
+        $this->otherParticipation = $otherParticipation;
+
+        return $this;
+    }
+
+    /**
+     * Get otherParticipation
+     *
+     * @return boolean 
+     */
+    public function getOtherParticipation()
+    {
+        return $this->otherParticipation;
     }
 }
