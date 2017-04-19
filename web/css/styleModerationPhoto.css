@@ -5,7 +5,34 @@
 
 .ti{
 	text-align: center;
-	margin-left: 100px;
+}
+
+.photoModeration
+{
+  height: 15vh;
+  width: auto;
+}
+
+.photoModal
+{
+  height: auto;
+  width: 100%;
+}
+
+.align
+{
+  text-align: center;
+}
+
+.noMargin
+{
+  margin: 0;
+  padding: 0;
+}
+
+.modal-dialog
+{
+  
 }
 
 @media screen and (max-width: 900px){

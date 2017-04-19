@@ -214,9 +214,10 @@ hr
     text-align: center;
   }
 
-  .date 
+  .dateActivity 
   {
     font-size: 15px;
+    text-align: right;
   }
 
   .description 

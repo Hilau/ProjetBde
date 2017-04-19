@@ -196,6 +196,16 @@ hr
   width: auto;
 }
 
+.date
+{
+  text-align: right;
+}
+
+.addToBasket 
+{
+  text-align: center;
+}
+
 @media screen and (max-width: 900px){
   .valid 
   {
