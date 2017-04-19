@@ -47,8 +47,8 @@
 							<h3 class="titleProduct"> {{product.name}} </h3>   <!-- titre article -->
 							<center><img src="{{asset(product.image)}}" alt="Image du produit" class="imagesProduit"></center>
 							<p>{{chaineDescription[product.id]}}...</p>							
-							<div class="addToBasket">
-								<button type="submit" class="btn btn-primary" id="{{ product.id }}">Ajouter au panier</button>
+							<div class="addToBasket" id="{{ product.id }}">
+								<button type="submit" class="btn btn-primary">Ajouter au panier</button>
 							</div>
 						</div>
 					</div>
@@ -68,8 +68,8 @@
 							<h3 class="titleProduct"> {{product.name}} </h3>   <!-- titre article -->
 							<center><img src="{{asset(product.image)}}" alt="Image" class="imagesProduit"></center>
 							<p>{{chaineDescription[product.id]}}...</p>							
-							<div class="addToBasket">
-								<button type="submit" class="btn btn-primary" id="{{ product.id }}">Ajouter au panier</button>
+							<div class="addToBasket" id="{{ product.id }}">
+								<button type="submit" class="btn btn-primary">Ajouter au panier</button>
 							</div>
 						</div>
 					</div>
@@ -101,30 +101,30 @@
 <script type="text/javascript">
 	$("#panier").stick_in_parent();
 
-$(function()
-{
-	$('.addToBasket').on('click', function()
+	$(function()
 	{
-		var product_id = $(this).attr("id");
-
-		$.ajax({
-			type: "GET",
-			url: "{{ path('addToBasket') }}",
-			cache: false,
-			data: {product_id: product_id},
-		}).done(function(data)
+		$('.addToBasket').on('click', function()
 		{
-			if(data['erreur'] != "")
-			{
-				alert(data['erreur']);
-			}
+			var product_id = $(this).attr("id");
 
-			else
+			$.ajax({
+				type: "GET",
+				url: "{{ path('addToBasket') }}",
+				cache: false,
+				data: {product_id: product_id},
+			}).done(function(data)
 			{
-				$('#basket').append("<div class=\"col-lg-8 descriptionArticle\">"+data['name']+"</div><div class=\"col-lg-4 prixArticle\">"+data['price']+"€<br></div>");
-			}
+				if(data['erreur'] != "")
+				{
+					alert(data['erreur']);
+				}
+
+				else
+				{
+					$('#basket').append("<div class=\"col-lg-8 descriptionArticle\">"+data['name']+"</div><div class=\"col-lg-4 prixArticle\">"+data['price']+"€<br></div>");
+				}
+			});
 		});
 	});
-});
 </script>
 {% endblock %}

@@ -32,6 +32,10 @@ class ProductController extends Controller
 	public function showProductAction($product_id){
 		$product = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->find($product_id);
 
+		if (!$product) {
+	        throw $this->createNotFoundException('Le produit n\'existe pas !');
+	    }
+
 		return $this->render('ShopBundle::product.html.twig', array(
 			'id' => $product->getId(),
 			'name' => $product->getName(),
@@ -186,6 +190,10 @@ class ProductController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$product = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->findOneById($id);
 
+		if (!$product) {
+	        throw $this->createNotFoundException('Le produit n\'existe pas !');
+	    }
+
 		$form = $this->createFormBuilder($product)
 	        ->add('name', TextType::class)
 	        ->add('description', TextareaType::class)
@@ -234,6 +242,11 @@ class ProductController extends Controller
         }
 		
 		$suppr = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->findOneById($id);
+
+		if (!$suppr) {
+	        throw $this->createNotFoundException('Le produit n\'existe pas !');
+	    }
+
 		$this->getDoctrine()->getManager()->remove($suppr);
 
 		$this->getDoctrine()->getManager()->flush();
