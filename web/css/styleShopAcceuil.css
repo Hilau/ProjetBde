@@ -206,6 +206,11 @@ hr
   text-align: center;
 }
 
+ul .nav .navbar-nav
+{
+  
+}
+
 @media screen and (max-width: 900px){
   .valid 
   {
@@ -228,5 +233,12 @@ hr
     font-size: 18px;
     text-align: center;
     font-weight: bold;
+  }
+
+  .glyphicon-shopping-cart 
+  {
+    margin: 8px;
+    font-size: 30px;
+    color: white;
   }
 }
