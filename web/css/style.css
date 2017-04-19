@@ -110,6 +110,7 @@ margin: 0 10px 0 40px;
 .navbar-collapse
 {
   padding: 0;
+  width: 100%;
 }
 
 ul
@@ -229,4 +230,20 @@ footer
 input
 {
   height: 30px;
+}
+
+@media screen and (max-width: 900px) {
+  .noMargin {
+    margin: 0;
+  }
+
+  .imgLogo
+  {
+    width: 100%;
+  }
+
+  .nav > li {
+    display: inline;
+  }
+
 }
