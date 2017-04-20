@@ -144,7 +144,7 @@
 						<div class="col-xs-12 col-lg-3 noMargin">
 							<label for="problems">Problèmes rencontrés :</label>
 						</div>
-					</div><br>
+					</div>
 
 					{{ form_start(form, {'method': 'post', 'action': path('signInActivity', {'activity_id': activity.id})}) }}
 
@@ -157,16 +157,16 @@
 								</label>
 							</div>
 						{% endfor %}
-						<textarea class="form-control inpAutres" placeholder="Précisions ..." name="comment"></textarea>
+						<textarea class="form-control inpAutres" placeholder="Précisions ..." name="comment"></textarea><br>
 					</div>
 
 					<div class="row">
 						<label class="col-xs-12" style="margin-left: 10px;">Avez-vous déjà pratiqué une activité de ce type :</label><br>
 						<label class="radio-inline col-xs-4" style="margin-left: 20px;">
-					      	<input type="radio" name="optradio" value="1" checked>Oui
+					      	<input type="radio" name="optradio" value="1" checked> Oui
 					    </label>
 					    <label class="radio-inline col-xs-4">
-					    	<input type="radio" name="optradio" value="0">Non
+					    	<input type="radio" name="optradio" value="0"> Non
 					    </label>
 					</div>
 
