@@ -1,4 +1,4 @@
-html,body{
+html, body{
   height:100%;
   margin:0;
   padding:0;
@@ -6,8 +6,51 @@ html,body{
 
 body
 {
-	background-color: rgb(27, 109, 171);
+  background-color: rgb(27, 109, 171);
 }
+
+.page
+{
+  min-height: 100%;
+  position: relative;
+}
+
+.blocPrincipal
+{
+  padding-bottom: 130px;
+}
+
+footer 
+{
+  height: 100%;
+  position: absolute;
+  bottom: 87px;
+  right: 32px;
+  left: 32px;
+  padding-bottom: 60px;
+}
+
+/*html
+{
+  box-sizing: border-box;
+}
+
+body
+{
+	background-color: rgb(27, 109, 171);
+  position: relative;
+  min-height: 100%;
+  width: 100%;
+}
+
+footer
+{
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+
+}*/
+
 
 .container
 {
@@ -236,6 +279,16 @@ input
   bottom: 11px; 
 }
 
+.mentionLegales
+{
+  text-align: right;
+}
+
+.exia
+{
+  width: 100%;
+}
+
 @media screen and (max-width: 900px) {
   .noMargin {
     margin: 0;
@@ -266,6 +319,11 @@ input
   .remember
   {
     color: white;
+  }
+
+  .mentionLegales
+  {
+    text-align: left;
   }
 
 }

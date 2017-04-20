@@ -199,6 +199,20 @@ div h3 {
   font-weight: bold;
 }
 
+.titleActivity
+{
+  text-align: left;
+}
+
+.addMarges
+{
+  margin-left: 10px;
+}
+
+.noMargin
+{
+  margin-left: 0;
+}
 
 @media screen and (max-width: 900px){
   h3 
