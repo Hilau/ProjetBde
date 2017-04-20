@@ -64,14 +64,19 @@ class ProductController extends Controller
 		$categories = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Category')->findAll();
 
 		$nbCategory = count($categories);
-			
-		foreach($products as $product)
+
+		if(count($products >= 1))
 		{
-			$productData = $productRepository->find($product);
-			$productsInfo[] = [
-				"name" => $productData->getName(),
-				"price" => $productData->getPrice()
-			];
+			foreach($products as $product)
+			{
+				$productData = $productRepository->find($product->getProduct());
+
+				$productsInfo[] = [
+					"id" => $productData->getId(),
+					"name" => $productData->getName(),
+					"price" => $productData->getPrice()
+				];
+			}
 		}
 
 		$dateActuelle = new \DateTime("now");
@@ -346,6 +351,92 @@ class ProductController extends Controller
 			));
 	}
 
+	/**
+	 * @Route("pay", name="pay")
+	 */
+	public function payAction(Request $request)
+	{
+		$em = $this->getDoctrine()->getManager();
+
+		$products = $request->request->get("products");
+		$productRepository = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product');
+		$basketRepository = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Basket');
+
+		if(!$products)
+		{
+			return $this->redirectToRoute('acceuilShopShow');
+		}
+
+		foreach($products as $product_id)
+		{
+			$product = $productRepository->find($product_id);
+			$nbAchat = $product->getNbAchat() + 1;
+			$product->setNbAchat($nbAchat);
+
+			$em->persist($product);
+			$em->flush();
+
+			$productToRemove = $basketRepository->findOneByProduct($product);
+
+			$em->remove($productToRemove);
+			$em->flush();
+		}
+
+		return $this->redirectToRoute('acceuilShopShow');
+	}
+
+	/**
+	 * @Route("autocomplete", name="autocomplete")
+	 */
+	public function autocompleteAction()
+	{
+		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return new Response("Erreur");
+        }
+
+		$request = $this->container->get('request');
+
+		if($request->isXmlHttpRequest())
+    	{
+    		$text = $request->query->get('text');
+
+    		if(!$text)
+    		{
+    			$data[] = "Aucun étudiant trouvé";
+    		}
+
+    		else
+    		{
+    			$productRepository = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product');
+
+	    		$products=$productRepository->createQueryBuilder('p')
+											->where('p.name LIKE :product')
+											->setParameter('product', $text.'%')													
+											->getQuery()
+											->getResult();
+
+				$data = [];
+			
+				foreach($products as $product)
+				{
+					$data[] = "<li class=\"inputVal\">".$product->getName()."</li>";
+				}
+    		}
+
+    		
+
+	    	$response = new Response(json_encode($data));
+			$response->headers->set('Content-Type', 'application/json');
+
+			return $response;
+        }
+
+        else
+        {
+        	return new Response("Erreur");
+        }
+		
+	}
 }
 
 ?>
