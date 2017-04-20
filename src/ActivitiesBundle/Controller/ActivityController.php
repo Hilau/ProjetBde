@@ -59,8 +59,28 @@ class ActivityController extends Controller
 
 		}
 
+		$user['prenom'] = "";
+
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
+        {
+
+			$user = $this->get('security.context')->getToken()->getUser();
+
+	        if(strlen($user->getPrenom()) >= 8)
+	        {
+	            $words = explode(" ", $user->getPrenom());
+	            $initiales = '';
+	         
+	            foreach($words as $init){
+	                $initiales .= $init{0};
+	            }
+
+	            $user->setPrenom($initiales);
+	        }
+	    }
+
 		return $this->render('ActivitiesBundle::listActivity.html.twig', array('activitiesPast' => $activitiesPast, 'activitiesFutur' => 
-			$activitiesFutur, 'activitiesPhoto' => $activitiesPhoto));
+			$activitiesFutur, 'activitiesPhoto' => $activitiesPhoto, 'user' => $user));
 	}
 
 	/**
@@ -234,6 +254,18 @@ class ActivityController extends Controller
 	        );
 	    }
 
+        if(strlen($user->getPrenom()) >= 8)
+        {
+            $words = explode(" ", $user->getPrenom());
+            $initiales = '';
+         
+            foreach($words as $init){
+                $initiales .= $init{0};
+            }
+
+            $user->setPrenom($initiales);
+        }
+
 		return $this->render('ActivitiesBundle::activity.html.twig', array(
 				'activity' => $activity,
 				'photos' => $photos,
@@ -242,6 +274,7 @@ class ActivityController extends Controller
 				'commentsInfo' => $commentsInfo,
 				'formPhoto' => $formPhoto->createView(),
 				'problems' => $problems,
+				'user' => $user
 			));
 	}
 
@@ -278,10 +311,25 @@ class ActivityController extends Controller
 		        throw $this->createNotFoundException('L\'activité n\'existe pas !');
 		    }
 
+		    $user = $this->get('security.context')->getToken()->getUser();
+
+	        if(strlen($user->getPrenom()) >= 8)
+	        {
+	            $words = explode(" ", $user->getPrenom());
+	            $initiales = '';
+	         
+	            foreach($words as $init){
+	                $initiales .= $init{0};
+	            }
+
+	            $user->setPrenom($initiales);
+	        }
+
 			return $this->render('ActivitiesBundle::activityToVote.html.twig', array(
 				'activity' => $activity,
 				'dates' => $dates,
 				'votes' => $votes,
+				'user' => $user
 			));
 }
 
@@ -312,10 +360,25 @@ class ActivityController extends Controller
 			$votes[$activity->getId()] = $activityVote->getVote();
 		}
 
+		$user = $this->get('security.context')->getToken()->getUser();
+
+        if(strlen($user->getPrenom()) >= 8)
+        {
+            $words = explode(" ", $user->getPrenom());
+            $initiales = '';
+         
+            foreach($words as $init){
+                $initiales .= $init{0};
+            }
+
+            $user->setPrenom($initiales);
+        }
+
 		return $this->render('ActivitiesBundle::listActivityVote.html.twig', array(
 				'listActivitiesIdea' => $listActivitiesIdea,
 				'dates' => $dates,
 				'votes' => $votes,
+				'user' => $user
 			));
 	}
 
@@ -364,11 +427,26 @@ class ActivityController extends Controller
 			$usersInfo[] = array($getOneUserActivityProblem->getUser()->getNom(), $getOneUserActivityProblem->getUser()->getPrenom(), $getOneUserActivityProblem->getUser()->getPromotion(), $problems, $getOneUserActivityProblem->getUser()->getEmail());
 		}
 
+		$user = $this->get('security.context')->getToken()->getUser();
+
+        if(strlen($user->getPrenom()) >= 8)
+        {
+            $words = explode(" ", $user->getPrenom());
+            $initiales = '';
+         
+            foreach($words as $init){
+                $initiales .= $init{0};
+            }
+
+            $user->setPrenom($initiales);
+        }
+
 		return $this->render('ActivitiesBundle::summaryActivity.html.twig', array(
 				"activities" => $listActivities,
 				"date" => $date,
 				"nbInscrit" => $nbInscrit,
 				"usersInfo" => $usersInfo,
+				'user' => $user
 			));
 	}
 
@@ -445,8 +523,21 @@ class ActivityController extends Controller
 	        );
 	    }
 
+        if(strlen($user->getPrenom()) >= 8)
+        {
+            $words = explode(" ", $user->getPrenom());
+            $initiales = '';
+         
+            foreach($words as $init){
+                $initiales .= $init{0};
+            }
+
+            $user->setPrenom($initiales);
+        }
+
 		return $this->render('ActivitiesBundle::formActivityIdea.html.twig', array(
 				'form' => $form->createView(),
+				'user' => $user
 			));
 	}
 
@@ -644,8 +735,23 @@ class ActivityController extends Controller
 
 		$photos = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->findAll();
 
+		$user = $this->get('security.context')->getToken()->getUser();
+
+        if(strlen($user->getPrenom()) >= 8)
+        {
+            $words = explode(" ", $user->getPrenom());
+            $initiales = '';
+         
+            foreach($words as $init){
+                $initiales .= $init{0};
+            }
+
+            $user->setPrenom($initiales);
+        }
+
 		return $this->render('ActivitiesBundle::moderationPhotos.html.twig', array(
-			"photos" => $photos
+			"photos" => $photos,
+			'user' => $user
 			));
 	}
 
@@ -790,8 +896,21 @@ class ActivityController extends Controller
 	        );
 	    }
 
+        if(strlen($user->getPrenom()) >= 8)
+        {
+            $words = explode(" ", $user->getPrenom());
+            $initiales = '';
+         
+            foreach($words as $init){
+                $initiales .= $init{0};
+            }
+
+            $user->setPrenom($initiales);
+        }
+
 		return $this->render('ActivitiesBundle::formActivity.html.twig', array(
 				'form' => $form->createView(),
+				'user' => $user
 			));
 		
 	}
@@ -851,8 +970,28 @@ class ActivityController extends Controller
     /**
     * @Route("showMentionsLegales", name="showMentionsLegales")
     */
-    public function showMentionsLegalesAction(){
-    	return $this->render('ActivitiesBundle::mentionLegales.html.twig');
+    public function showMentionsLegalesAction()
+    {
+    	$user['prenom'] = "";
+
+    	if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
+    	{  
+    		$user = $this->get('security.context')->getToken()->getUser();
+
+	        if(strlen($user->getPrenom()) >= 8)
+	        {
+	            $words = explode(" ", $user->getPrenom());
+	            $initiales = '';
+	         
+	            foreach($words as $init){
+	                $initiales .= $init{0};
+	            }
+
+	            $user->setPrenom($initiales);
+	        }
+	    }
+		
+		return $this->render('ActivitiesBundle::mentionLegales.html.twig', array('user' => $user));
     }
 
 
