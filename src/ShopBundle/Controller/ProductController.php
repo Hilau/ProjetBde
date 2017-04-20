@@ -40,6 +40,20 @@ class ProductController extends Controller
 	        throw $this->createNotFoundException('Le produit n\'existe pas !');
 	    }
 
+	    $user = $this->get('security.context')->getToken()->getUser();
+
+	    if(strlen($user->getPrenom()) >= 8)
+        {
+            $words = explode(" ", $user->getPrenom());
+            $initiales = '';
+         
+            foreach($words as $init){
+                $initiales .= $init{0};
+            }
+
+            $user->setPrenom($initiales);
+        }
+
 		return $this->render('ShopBundle::product.html.twig', array(
 				'id' => $product->getId(),
 				'name' => $product->getName(),
@@ -48,6 +62,7 @@ class ProductController extends Controller
 				'image' => $product->getImage(),
 				'categories' => $categories,
 				'nbCategory' => $nbCategory,
+				'user' => $user
 			));
 	}
 
@@ -55,6 +70,10 @@ class ProductController extends Controller
 	 * @Route("acceuilShop", name="acceuilShopShow")
 	 */
 	public function showAcceuilShopAction(Request $request){
+		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }
+
 		$listArticle = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->findAll();
 		$user = $this->get('security.context')->getToken()->getUser();
 		$products = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Basket')->findByUser($user);
@@ -102,6 +121,18 @@ class ProductController extends Controller
 			$chaineDescription[$article->getId()] = substr($article->getDescription(), 0, 35);
 		}
 
+	    if(strlen($user->getPrenom()) >= 8)
+        {
+            $words = explode(" ", $user->getPrenom());
+            $initiales = '';
+         
+            foreach($words as $init){
+                $initiales .= $init{0};
+            }
+
+            $user->setPrenom($initiales);
+        }
+
 		return $this->render('ShopBundle::shopAcceuil.html.twig', array(
 			'nouveaute' => $nouveaute,
 			'productRepository' => $productRepository,
@@ -110,6 +141,7 @@ class ProductController extends Controller
 			'bestOfProduct' => $bestOfProduct,
 			'chaineDescription' => $chaineDescription,
 			'nbCategory' => $nbCategory,
+			'user' => $user
 			));
 	}
 
@@ -122,10 +154,25 @@ class ProductController extends Controller
 
 		$nbCategory = count($categories);
 
+		$user = $this->get('security.context')->getToken()->getUser();
+
+	    if(strlen($user->getPrenom()) >= 8)
+        {
+            $words = explode(" ", $user->getPrenom());
+            $initiales = '';
+         
+            foreach($words as $init){
+                $initiales .= $init{0};
+            }
+
+            $user->setPrenom($initiales);
+        }
+
 		return $this->render('ShopBundle::shopCategory.html.twig', array(
 				'listArticle' => $listArticle,
 				'categories' => $categories,
 				'nbCategory' => $nbCategory,
+				'user' => $user
 			));
 	}
 
@@ -136,9 +183,24 @@ class ProductController extends Controller
 		$products= $this->getDoctrine()->getManager()->getRepository('ShopBundle:Product')->findAll();
 		$categories= $this->getDoctrine()->getManager()->getRepository('ShopBundle:Category')->findAll();
 
+		$user = $this->get('security.context')->getToken()->getUser();
+
+	    if(strlen($user->getPrenom()) >= 8)
+        {
+            $words = explode(" ", $user->getPrenom());
+            $initiales = '';
+         
+            foreach($words as $init){
+                $initiales .= $init{0};
+            }
+
+            $user->setPrenom($initiales);
+        }
+
 		return $this->render('ShopBundle::editShop.html.twig', array(
 				'products' => $products,
-				'categories' => $categories
+				'categories' => $categories,
+				'user' => $user
 			));
 	}
 
@@ -191,11 +253,26 @@ class ProductController extends Controller
 	    	$this->addFlash('error', 'Votre produit n\'est pas valide');
 	    }
 
+	    $user = $this->get('security.context')->getToken()->getUser();
+
+	    if(strlen($user->getPrenom()) >= 8)
+        {
+            $words = explode(" ", $user->getPrenom());
+            $initiales = '';
+         
+            foreach($words as $init){
+                $initiales .= $init{0};
+            }
+
+            $user->setPrenom($initiales);
+        }
+
 	
 		return $this->render('ShopBundle::addProduct.html.twig', array(
 			'products' => $products,
 			'categories' => $categories,
-			'form'=> $form->createView()
+			'form'=> $form->createView(),
+			'user' => $user
 			));
 	}
 
@@ -242,10 +319,25 @@ class ProductController extends Controller
 	    	$this->addFlash('error', 'Votre produit n\'est pas valide');
 	    }
 
+	    $user = $this->get('security.context')->getToken()->getUser();
+
+	    if(strlen($user->getPrenom()) >= 8)
+        {
+            $words = explode(" ", $user->getPrenom());
+            $initiales = '';
+         
+            foreach($words as $init){
+                $initiales .= $init{0};
+            }
+
+            $user->setPrenom($initiales);
+        }
+
 	
 		return $this->render('ShopBundle::updateProduct.html.twig', array(
-			'product' => $product,
-			'form'=> $form->createView()
+				'product' => $product,
+				'form' => $form->createView(),
+				'user' => $user
 			));
 	}
 
@@ -282,46 +374,38 @@ class ProductController extends Controller
 		$request = $this->container->get('request');
 		$em = $this->getDoctrine()->getManager();
 
-		if($request->isXmlHttpRequest())
-    	{
-    		$product_id = $request->query->get('product_id');
-    		$user = $this->get('security.context')->getToken()->getUser();
-    	
-    		$repositoryBasket = $this->getDoctrine()->getRepository('ShopBundle:Basket');
 
-    		$repositoryProduct = $this->getDoctrine()->getRepository('ShopBundle:Product');
-    		$product = $repositoryProduct->find($product_id);
+		$product_id = $request->query->get('product_id');
+		$user = $this->get('security.context')->getToken()->getUser();
+	
+		$repositoryBasket = $this->getDoctrine()->getRepository('ShopBundle:Basket');
 
-    		$basketProduct = $repositoryBasket->findBy(array(
-				"user" => $user,
-				"product" => $product,
-			));
+		$repositoryProduct = $this->getDoctrine()->getRepository('ShopBundle:Product');
+		$product = $repositoryProduct->find($product_id);
 
-			$data = ["erreur" => "Le produit est déjà dans votre panier"];
+		$basketProduct = $repositoryBasket->findBy(array(
+			"user" => $user,
+			"product" => $product,
+		));
 
-			if(count($basketProduct) == 0)
-			{
-	    		$basket = new Basket();
-	    		$basket->setUser($user);
-	    		$basket->setProduct($product);
+		$data = ["erreur" => "Le produit est déjà dans votre panier"];
 
-	    		$em->persist($basket);
-	    		$em->flush();
+		if(count($basketProduct) == 0)
+		{
+    		$basket = new Basket();
+    		$basket->setUser($user);
+    		$basket->setProduct($product);
 
-	    		$data = ["name" => $product->getName(), "price" => $product->getPrice(), "erreur" => ""];
-	    	}
+    		$em->persist($basket);
+    		$em->flush();
 
-	    	$response = new Response(json_encode($data));
-			$response->headers->set('Content-Type', 'application/json');
+    		$data = ["name" => $product->getName(), "price" => $product->getPrice(), "erreur" => ""];
+    	}
 
-			return $response;
+    	$response = new Response(json_encode($data));
+		$response->headers->set('Content-Type', 'application/json');
 
-        }
-
-        else
-        {
-        	return new Response("Erreur");
-        }
+		return $response;
 	}
 
 	/**
@@ -344,10 +428,23 @@ class ProductController extends Controller
 			];
 		}
 
+	    if(strlen($user->getPrenom()) >= 8)
+        {
+            $words = explode(" ", $user->getPrenom());
+            $initiales = '';
+         
+            foreach($words as $init){
+                $initiales .= $init{0};
+            }
+
+            $user->setPrenom($initiales);
+        }
+
 		return $this->render('ShopBundle::panier.html.twig', array(
-			'basket' => $basket,
-			'categories' => $categories,
-			'productsInfo' => $productsInfo
+				'basket' => $basket,
+				'categories' => $categories,
+				'productsInfo' => $productsInfo,
+				'user' => $user
 			));
 	}
 

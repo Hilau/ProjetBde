@@ -39,10 +39,30 @@ class DefaultController extends Controller
             $lastActivitiesPhoto[] = $activitiesPhoto[0]->getPhoto();
         }
 
+        $user['prenom'] = "";
+
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
+        {
+            $user = $this->get('security.context')->getToken()->getUser();
+
+            if(strlen($user->getPrenom()) >= 8)
+            {
+                $words = explode(" ", $user->getPrenom());
+                $initiales = '';
+             
+                foreach($words as $init){
+                    $initiales .= $init{0};
+                }
+
+                $user->setPrenom($initiales);
+            }
+        }
+
         return $this->render('default/index.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'lastActivitiesInfo' => $lastActivitiesInfo,
             'lastActivitiesPhoto' => $lastActivitiesPhoto,
+            'user' => $user
         ));
     }
 }
