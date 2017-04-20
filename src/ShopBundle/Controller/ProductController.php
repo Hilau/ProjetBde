@@ -355,6 +355,15 @@ class ProductController extends Controller
 	        throw $this->createNotFoundException('Le produit n\'existe pas !');
 	    }
 
+	    $productsInBasket = $this->getDoctrine()->getManager()->getRepository('ShopBundle:Basket')->findByProduct($suppr);
+
+	    foreach($productsInBasket as $product)
+	    {
+	    	$this->getDoctrine()->getManager()->remove($product);
+	    }
+
+	    $this->getDoctrine()->getManager()->flush();
+
 		$this->getDoctrine()->getManager()->remove($suppr);
 
 		$this->getDoctrine()->getManager()->flush();
