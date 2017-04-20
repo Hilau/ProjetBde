@@ -374,46 +374,38 @@ class ProductController extends Controller
 		$request = $this->container->get('request');
 		$em = $this->getDoctrine()->getManager();
 
-		if($request->isXmlHttpRequest())
-    	{
-    		$product_id = $request->query->get('product_id');
-    		$user = $this->get('security.context')->getToken()->getUser();
-    	
-    		$repositoryBasket = $this->getDoctrine()->getRepository('ShopBundle:Basket');
 
-    		$repositoryProduct = $this->getDoctrine()->getRepository('ShopBundle:Product');
-    		$product = $repositoryProduct->find($product_id);
+		$product_id = $request->query->get('product_id');
+		$user = $this->get('security.context')->getToken()->getUser();
+	
+		$repositoryBasket = $this->getDoctrine()->getRepository('ShopBundle:Basket');
 
-    		$basketProduct = $repositoryBasket->findBy(array(
-				"user" => $user,
-				"product" => $product,
-			));
+		$repositoryProduct = $this->getDoctrine()->getRepository('ShopBundle:Product');
+		$product = $repositoryProduct->find($product_id);
 
-			$data = ["erreur" => "Le produit est déjà dans votre panier"];
+		$basketProduct = $repositoryBasket->findBy(array(
+			"user" => $user,
+			"product" => $product,
+		));
 
-			if(count($basketProduct) == 0)
-			{
-	    		$basket = new Basket();
-	    		$basket->setUser($user);
-	    		$basket->setProduct($product);
+		$data = ["erreur" => "Le produit est déjà dans votre panier"];
 
-	    		$em->persist($basket);
-	    		$em->flush();
+		if(count($basketProduct) == 0)
+		{
+    		$basket = new Basket();
+    		$basket->setUser($user);
+    		$basket->setProduct($product);
 
-	    		$data = ["name" => $product->getName(), "price" => $product->getPrice(), "erreur" => ""];
-	    	}
+    		$em->persist($basket);
+    		$em->flush();
 
-	    	$response = new Response(json_encode($data));
-			$response->headers->set('Content-Type', 'application/json');
+    		$data = ["name" => $product->getName(), "price" => $product->getPrice(), "erreur" => ""];
+    	}
 
-			return $response;
+    	$response = new Response(json_encode($data));
+		$response->headers->set('Content-Type', 'application/json');
 
-        }
-
-        else
-        {
-        	return new Response("Erreur");
-        }
+		return $response;
 	}
 
 	/**
