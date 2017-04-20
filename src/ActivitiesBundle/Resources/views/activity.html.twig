@@ -150,9 +150,9 @@
 
 					<div class="row">
 						{% for problem in problems %}
-							<div class="col-xs-12 col-lg-offset-1 col-lg-3 noMargin">
-								<label class="form-check-label ol-xs-12">
-							    	<input class="form-check-input" name="problems[]" type="checkbox" value="{{ problem.id }}">
+							<div class="col-xs-12 col-lg-offset-1 col-lg-3 noMargin contenantCheck">
+								<input class="form-check-input col-lg-1" name="problems[]" type="checkbox" value="{{ problem.id }}">
+								<label class="form-check-label col-xs-12 col-lg-3">
 							    	{{ problem.name }}
 								</label>
 							</div>

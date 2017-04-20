@@ -229,10 +229,17 @@ hr
 .imgContainer {
   text-align: center;
 }
+
 .textLabel
 {
-  text-align: right;
+  text-align: left;
   width: 100%;
+}
+
+.contenantCheck
+{
+  line-height: 35px;
+  vertical-align: 35px;
 }
 
 
