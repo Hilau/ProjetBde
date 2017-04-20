@@ -135,7 +135,7 @@
 		</div>
 	</div>
 
-		{% if alreadySignIn == 0 %}
+		{% if alreadySignIn == 0 and alreadyPast == 0 %}
 			<div class="row noMargin">
 				<div class="col-xs-12 col-lg-offset-1 col-lg-10 formInscription">
 					{{ form_errors(form) }}
@@ -191,10 +191,16 @@
 					{{ form_end(form) }}
 				</div>
 			</div>
-		{% else %}
+		{% elseif alreadySignIn == 1 %}
 			<div class="row noMargin">
 				<div class="col-xs-12 col-lg-offset-1 col-lg-10 formInscription">
 					Vous êtes déjà inscrit à cette activité.
+				</div>
+			</div>
+		{% elseif alreadyPast == 1 %}
+			<div class="row noMargin">
+				<div class="col-xs-12 col-lg-offset-1 col-lg-10 formInscription">
+					L'activité est déjà passée.
 				</div>
 			</div>
 		{% endif %}

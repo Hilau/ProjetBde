@@ -103,6 +103,16 @@ class ActivityController extends Controller
 	        throw $this->createNotFoundException('L\'activité n\'existe pas !');
 	    }
 
+	    $dateToday = new \DateTime("now");
+	    $dateActivity = $activity->getDate();
+
+	    $alreadyPast = 0;
+
+	    if($dateToday > $dateActivity)
+	    {
+	    	$alreadyPast = 1;
+	    }
+
 
 	    $problemRepository = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Problem');
 
@@ -145,7 +155,7 @@ class ActivityController extends Controller
 	    $form->handleRequest($request);
 
 	    if ($form->isSubmitted() && $form->isValid()) {
-	    	if(count($alreadySignIn) == 0)
+	    	if(count($alreadySignIn) == 0 && $alreadyPast == 0)
 	    	{
 		        $otherParticipation = $request->request->get('optradio');
 		        $getProblems = $request->request->get('problems');
@@ -274,7 +284,8 @@ class ActivityController extends Controller
 				'commentsInfo' => $commentsInfo,
 				'formPhoto' => $formPhoto->createView(),
 				'problems' => $problems,
-				'user' => $user
+				'user' => $user,
+				'alreadyPast' => $alreadyPast
 			));
 	}
 
