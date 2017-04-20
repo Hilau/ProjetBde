@@ -11,7 +11,7 @@
 		</div>
 		<hr>
 		<div class="col-lg-offset-1 col-lg-10 col-xs-offset-1 col-xs-10">
-			<form class="form-group" method="POST" action="{{ path('deletePhoto') }}">
+			<form class="form-group" method="POST" action="{{ path('dlORrmPhoto') }}">
 				<div class="row">
 					{% for photo in photos%}
 						<div class="col-lg-3 col-sm-4 col-xs-6">
@@ -20,7 +20,7 @@
 								<img class="img-responsive img-thumbnail photoModeration" id="img{{ photo.id }}" src="{{ asset('imgActivities/'~photo.photo) }}">
 							</a>			
 							</label>
-							<input type="checkbox" name="photo[]" value="{{ photo.id }}" class="checkbox">
+							<input type="checkbox" name="photo[]" value="{{ photo.id }}" class="checkbox">							
 						</div>
 
 						<div id="modalCommentaireimg{{ photo.id }}" class="modal fade" role="dialog">
@@ -42,21 +42,20 @@
 							</div>
 						</div>
 
-					{% endfor %}
+					{% endfor %}					
+				</div>
+
+				<div class="row">
+					<input type="radio" name="action" value="dl">Télécharger
+					<input type="radio" name="action" value="rm">Supprimer
 				</div>
 			
 				<div class="row noMargin">
 					<div class="col-lg-1 col-xs-offset-1 col-xs-3 noMargin">
-						<br><br><input style="height: 34px;" type="submit" name="supprimer" class="btn btn-danger" value="Supprimer">
+						<br><br><input style="height: 34px;" type="submit" name="execute" class="btn btn-default" value="Exécuter">
 					</div>
 				</div>
 			</form>
-
-			<div class="row noMargin">
-				<div class="col-lg-1 col-xs-offset-1 col-xs-3 noMargin">
-					<a href="{{ path('dlPhotos') }}"><button class="btn btn-primary">Télécharger toutes les photos</button></a>
-				</div>
-			</div>
 		</div>	
 	</div>
 {% endblock %}

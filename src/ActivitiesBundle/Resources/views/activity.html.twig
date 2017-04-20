@@ -47,7 +47,11 @@
 									<div class="row">
 										<img class="image" src="{{ asset('imgActivities/') }}{{ photo.photo }}">
 										<div class="row">
-											<div class="form-group col-xs-offset-1 col-xs-10 col-lg-12">
+											<div class="form-group col-xs-1 col-lg-1">
+												<span id="nbLike{{photo.id}}">{{ photo.love }}</span>
+												<span style="color:blue; font-size: 2vw;" class="glyphicon glyphicon-thumbs-up like" id="{{ photo.id }}"></span>				
+											</div>
+											<div class="form-group col-xs-10 col-lg-10">
 												<input class="form-control search" type="text" placeholder="Commentaire" id="{{ photo.id }}">
 											</div>
 										</div><br>
@@ -190,20 +194,6 @@
 			Vous êtes déjà inscrit à cette activité.
 		{% endif %}
 	</div>
-
-
-	<!-- <div class="row">
-				<div class="row">
-					<div class="col-lg-8">
-						<label class="form-check-label">
-					    	<input class="form-check-input" type="checkbox" value="">
-					    	Autres
-					    	<input type="text" class="form-control inpAutres" placeholder="Autres">
-						</label>
-					</div>
-				</div><br>
-			</form>
-		</div> -->
 	</div>
 {% endblock %}
 
@@ -242,6 +232,21 @@ $(function()
 				$('.search').val("");
 			});
 		}		
+	});
+
+	$('.like').on('click', function()
+	{
+		var photo_id = $(this).attr("id");
+
+		$.ajax({
+			type: "GET",
+			url: "{{ path('likePhoto') }}",
+			cache: false,
+			data: {photo_id: photo_id}
+		}).done(function(data)
+		{
+			$('#nbLike'+photo_id).html(data['like']);
+		});
 	});
 });
 	

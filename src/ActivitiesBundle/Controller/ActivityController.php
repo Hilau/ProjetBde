@@ -576,34 +576,6 @@ class ActivityController extends Controller
 
 		if($request->isXmlHttpRequest())
     	{
-    		/*$query = $activitiesUsers->createQueryBuilder('a')
-								 ->select('DISTINCT (a.user) as user_id')
-							     ->where('a.activity = :activity')
-							     ->setParameter('activity', 1)
-							     ->getQuery();
-
-			$firstActivityUsers = $query->getResult();
-
-			$nbInscrit = count($firstActivityUsers);
-
-			$usersInfo = [];		
-
-			foreach($firstActivityUsers as $user)
-			{
-				$problems = "";
-				
-				$getOneUserActivityProblem = $activitiesUsers->findOneBy(array('activity' => 1, 'user' => $user));
-
-				$getProblems = $activitiesUsers->findBy(array('activity' => 1, 'user' => $user));
-
-				foreach($getProblems as $problem)
-				{
-					$problems .= $problem->getProblem()->getName()." ";
-				}
-
-				$usersInfo[] = array($getOneUserActivityProblem->getUser()->getNom(), $getOneUserActivityProblem->getUser()->getPrenom(), $getOneUserActivityProblem->getUser()->getPromotion(), $problems, $getOneUserActivityProblem->getUser()->getEmail());
-			}*/
-
     		$activity_id = $request->query->get('activity_id');
 		
 			$repositoryActivities = $this->getDoctrine()->getRepository('ActivitiesBundle:Activity');
@@ -678,26 +650,69 @@ class ActivityController extends Controller
 	}
 
 	/**
-	* @Route("deletephoto", name="deletePhoto")
+	* @Route("dlORrmPhoto", name="dlORrmPhoto")
 	*/
-	public function deletePhotoAction(Request $request){
+	public function downloadORremovePhotoAction(Request $request){
 		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY') || !$this->container->get('security.authorization_checker')->isGranted('ROLE_TUTEUR')) {
             return new Response("Erreur");
         }
 
-		$photoASupprimer = $request->request->get('photo');
+		$photos = $request->request->get('photo');
+		$action = $request->request->get('action');
 
-		if(!$photoASupprimer)
+		if(!$photos)
 		{
 			return $this->redirectToRoute('showPhotoGallery');
 		}
-		
-		foreach ($photoASupprimer as $photo) {
-			$suppr = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->find($photo);
-			$this->getDoctrine()->getManager()->remove($suppr);
+
+		if($action == "dl")
+		{
+			$pathImgActivities = "http://localhost/".$this->get('request')->getBasePath()."/imgActivities/";
+	        // $pathImgActivities = "http://localhost/ProjetWEB/projetWEB-BDE/web/imgActivities/";
+
+	        $imgs = [];
+
+	        foreach($photos as $photo)
+	        {
+	        	$getPhoto = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->find($photo);
+				$filename = $getPhoto->getPhoto();
+
+				$imgs[] = $pathImgActivities.$filename;
+	        }
+
+	        $zip = new \ZipArchive();
+	        $zipName = 'Images'.date("dmY").".zip";
+	        $zip->open($zipName, \ZipArchive::CREATE);
+
+	        foreach($imgs as $img)
+	        {
+	        	$zip->addFromString(basename($img), file_get_contents($img));
+	        }
+
+	        $zip->close();
+
+	        header('Content-Type', 'application/zip');
+			header('Content-disposition: attachment; filename="' . $zipName . '"');
+			header('Content-Length: ' . filesize($zipName));
+			readfile($zipName);
 		}
 
-		$this->getDoctrine()->getManager()->flush();
+		else if($action == "rm")
+		{
+			foreach ($photos as $photo) {
+				$supprPhoto = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->find($photo);
+				$supprComments = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:PhotoComment')->findByPhoto($photo);
+
+				foreach($supprComments as $comment)
+				{
+					$this->getDoctrine()->getManager()->remove($comment);
+				}
+				
+				$this->getDoctrine()->getManager()->remove($supprPhoto);
+			}
+
+			$this->getDoctrine()->getManager()->flush();
+		}
 
 		return $this->redirectToRoute('showPhotoGallery');
 	}
@@ -732,16 +747,19 @@ class ActivityController extends Controller
 	    	$photos = $form['photo']->getData();
 
 	    	$activityPhotoRepository = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto');
+	    	$activityRepository = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:Activity');
 
-		    $id = 1;
+		    $photo_id = 1;
+		    $last_activity = $activityRepository->findBy(array(), array('id' => 'DESC'));
+		    $activity_id = $last_activity[0]->getId();
 
 		    foreach($photos['photo'] as $photo)
 		    {
 		    	$photoActivity = new ActivityPhoto();
 
-		    	$photoName = $activity->getName().$id.'.'.$photo->guessExtension();
+		    	$photoName = "activity".$activity_id.$photo_id.'.'.$photo->guessExtension();
 
-		    	$id++;
+		    	$photo_id++;
 
 		    	$photo->move(
 	                $this->getParameter('imgActivities'),
@@ -831,50 +849,48 @@ class ActivityController extends Controller
     }
 
     /**
-	 * @Route("dlPhotos", name="dlPhotos")
-	 */
-	public function dlPhotoAction(){
-		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY') || !$this->container->get('security.authorization_checker')->isGranted('ROLE_TUTEUR')) {
-             return $this->redirectToRoute('fos_user_security_login');
-        }
-
-        $photos = $this->getDoctrine()->getManager()->getRepository('ActivitiesBundle:ActivityPhoto')->findAll();
-        $pathImgActivities = "http://localhost/ProjetWEB/projetWEB-BDE/web/imgActivities/";
-
-        $imgs = [];
-
-        foreach($photos as $photo)
-        {        	
-			$filename = $photo->getPhoto();
-
-			$imgs[] = $pathImgActivities.$filename;
-        }
-
-        $zip = new \ZipArchive();
-        $zipName = 'Images'.date("dmY").".zip";
-        $zip->open($zipName, \ZipArchive::CREATE);
-
-        foreach($imgs as $img)
-        {
-        	$zip->addFromString(basename($img), file_get_contents($img));
-        }
-
-        $zip->close();
-
-        header('Content-Type', 'application/zip');
-		header('Content-disposition: attachment; filename="' . $zipName . '"');
-		header('Content-Length: ' . filesize($zipName));
-		readfile($zipName);
-
-        return $this->redirectToRoute('showPhotoGallery');
-    }
-
-    /**
     * @Route("showMentionsLegales", name="showMentionsLegales")
     */
     public function showMentionsLegalesAction(){
     	return $this->render('ActivitiesBundle::mentionLegales.html.twig');
     }
+
+
+    /**
+	* @Route("likePhoto", name="likePhoto")
+	*/
+	public function likePhotoAction(){
+		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return new Response("Erreur");
+        }
+
+        $em = $this->getDoctrine()->getManager();
+		$request = $this->container->get('request');
+
+		if($request->isXmlHttpRequest())
+    	{
+    		$photo_id = $request->query->get('photo_id');
+		
+			$repositoryActivitiesPhotos = $this->getDoctrine()->getRepository('ActivitiesBundle:ActivityPhoto');
+			$photo = $repositoryActivitiesPhotos->find($photo_id);
+
+			$like = $photo->getLove() + 1;
+
+			$photo->setLove($like);
+
+			$em->persist($photo);
+			$em->flush();
+
+			$data = ['like' => $like];
+
+			$response = new Response(json_encode($data));
+		    $response->headers->set('Content-Type', 'application/json');
+
+		    return $response;
+        }
+
+        return new Response("Erreur");
+	}
 
 }
 ?>
