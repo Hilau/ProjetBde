@@ -36,7 +36,7 @@ class DefaultController extends Controller
                                                 ->getQuery();
 
             $activitiesPhoto = $query2->setMaxResults(1)->getResult();                                 
-            $lastActivitiesPhoto[] = $activitiesPhoto[0]->getPhoto();
+            // $lastActivitiesPhoto[] = $activitiesPhoto[0]->getPhoto();
         }
 
         $user['prenom'] = "";

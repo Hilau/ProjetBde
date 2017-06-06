@@ -74,21 +74,7 @@
                                                     <li><a href="{{ path('showPhotoGallery') }}">Modérer les photos</a></li>
                                                 {% endif %}
                                             </ul>
-                                        </li>
-                                        {% if app.user.roles[0] == "ROLE_BDE" or app.user.roles[0] == "ROLE_ETUDIANT" %}
-                                        <li>
-                                            <a href="{{ path('acceuilShopShow') }}"><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a>
-                                        </li>
-                                        {% endif %}
-                                        {%if app.user.roles[0] == "ROLE_TUTEUR"%}
-                                        <li>
-                                            <a class="dropdown-toggle" data-toggle="dropdown" href=""><span class="glyphicon glyphicon-shopping-cart"></span>Boutique<span class="caret"></span></a>
-                                            <ul class="dropdown-menu">
-                                                    <li><a href="{{ path('acceuilShopShow') }}">Accéder à la boutique</a></li>
-                                                    <li><a href="{{ path('editShop') }}">Gestion de la boutique</a></li>
-                                            </ul>
-                                        </li>
-                                        {% endif %}
+                                        </li>                                        
                                         <li><a href=""><span class="glyphicon glyphicon-info-sign"></span>A propos</a></li>
                                         <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span>Déconnexion</a></li>
                                     </ul>
@@ -117,7 +103,6 @@
                                     <ul class="nav navbar-nav">
                                         <li><a href="{{ path('homepage') }}"><span class="glyphicon glyphicon-home"></span>BDE</a></li>
                                         <li><a href="{{ path('activitiesShow') }}"><span class="glyphicon glyphicon-knight"></span>Activités</a></li>
-                                        <li><a href="{{ path('acceuilShopShow') }}"><span class="glyphicon glyphicon-shopping-cart"></span>Boutique</a></li>
                                         <li><a href="{{ path('fos_user_registration_register') }}"><span class="glyphicon glyphicon-pencil"></span>Inscription</a></li>
                                         <li><a href="{{ path('fos_user_security_login') }}"><span class="glyphicon glyphicon-user"></span>Connexion</a></li>
                                         <li><a href=""><span class="glyphicon glyphicon-info-sign"></span>A propos</a></li>

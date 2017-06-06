@@ -1,8 +1,3 @@
-shop:
-    resource: "@ShopBundle/Controller"
-    type: annotation
-    prefix:   /shop
-
 activities:
     resource: "@ActivitiesBundle/Controller/"
     type:     annotation

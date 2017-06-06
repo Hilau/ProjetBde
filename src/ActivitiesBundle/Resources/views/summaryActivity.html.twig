@@ -17,7 +17,7 @@
 					</div>
 					<div class="col-lg-6">
 						<select name="activities" class="form-control activities">
-							{% for activity in activities%}
+							{% for activity in activities %}
 								<option value="{{ activity.name }}" id="{{ activity.id }}" class="nameActivity" >{{ activity.name }}</option>
 							{% endfor%}
 						</select>

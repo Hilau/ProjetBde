@@ -19,7 +19,6 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new UserBundle\UserBundle(),
             new ActivitiesBundle\ActivitiesBundle(),
-            new ShopBundle\ShopBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
         );
